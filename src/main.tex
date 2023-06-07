@@ -1,0 +1,124 @@
+%! Author = Frederik Bußmann
+%! Date = 21.10.2021
+
+% Preamble
+%! Suppress = FileNotFound
+\documentclass[ngerman,12pt]{article}
+
+% Packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{csquotes}
+\usepackage[nottoc]{tocbibind}
+
+\usepackage[colorlinks,
+    urlcolor = blue,
+    linkcolor = black,
+    citecolor = black,
+    pdfpagelabels,
+    pdfstartview = FitH,
+    bookmarksopen = true,
+    bookmarksnumbered = true,
+    plainpages = false,
+    hypertexnames = false] {hyperref}
+
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{biblatex}
+
+% PDF Info
+\hypersetup{
+    pdfinfo={
+        Author={Frederik Bußmann},
+        Title={Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
+        Shopware-Platform},
+        Subject={Bachelor-Arbeit, Leitung Prof.\ Dr.-Ing. Martin Schulten},
+        Keywords={},
+    }
+}
+\title{Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
+Shopware-Platform}
+\author{Frederik Bußmann}
+\date{Juli 2023}
+
+% Commands
+\newcommand\blankpage{\null\thispagestyle{empty}\newpage}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\newcommand{\mline}{%
+    \hspace{-\arraycolsep}%
+    \strut\vrule
+    \hspace{-\arraycolsep}%
+}
+
+% Settings
+\setstretch{1.25}
+\setlength{\parindent}{0pt}
+\graphicspath{{/data}}
+\addbibresource{config/references.bib}
+\crefname{figure}{Abbildung}{Abbildung}
+\Crefname{figure}{Abbildung}{Abbildung}
+
+% Glossary Settings
+\makeglossaries
+\glstoctrue
+\input{config/glossary}
+
+% Package Configuration
+\input{config/minted}
+
+% Document
+\begin{document}
+
+    % Title page
+    \input{sections/01-titlepage}
+
+    % Table of contents
+    \pagenumbering{gobble}
+    \tableofcontents
+    \clearpage
+
+    % Document content
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \input{sections/02-introduction}
+
+    % Bibliography
+    \pagenumbering{Roman}
+    \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+    \clearpage
+
+    % List of figures
+    \listoffigures
+
+    % List of source code
+    \listoflistings
+    \clearpage
+
+    % Glossary
+    \glsaddall
+    \printglossary
+    \vspace*{-5mm}
+
+    % Acronyms
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+    \printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+    \vspace*{-5mm}
+    \clearpage
+
+    % Appendix
+    %\setcounter{secnumdepth}{0}
+    %\input{sections/appendix}
+    %\clearpage
+
+    % Statement
+    %\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+    % \input{sections/statement}
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+    \clearpage
+
+\end{document}
