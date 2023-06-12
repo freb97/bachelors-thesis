@@ -3,7 +3,7 @@
 
 % Preamble
 %! Suppress = FileNotFound
-\documentclass[ngerman,12pt]{article}
+\documentclass[ngerman,11pt]{article}
 
 % Packages
 \usepackage[T1]{fontenc}
@@ -11,6 +11,8 @@
 \usepackage{babel}
 \usepackage{csquotes}
 \usepackage[nottoc]{tocbibind}
+\usepackage[outputdir=/build/temp]{minted}
+\usepackage[backend=biber,style=numeric,citestyle=ieee,autocite=superscript]{biblatex}
 
 \usepackage[colorlinks,
     urlcolor = blue,
@@ -27,8 +29,22 @@
 \usepackage{setspace}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{geometry}
 \usepackage{afterpage}
-\usepackage{biblatex}
+\usepackage{glossaries}
+\usepackage{float}
+
+\usepackage[justification=centering]{caption}
+\usepackage[noabbrev,nameinlink]{cleveref}
+\usepackage[acronym, nonumberlist, toc, section=section]{glossaries-extra}
+
+% Full-page background pictures
+\usepackage{eso-pic}
+
+% Decorations over headline
+\usepackage{scrhack}
+\usepackage[automark,headsepline]{scrlayer-scrpage}
 
 % PDF Info
 \hypersetup{
@@ -36,7 +52,7 @@
         Author={Frederik Bußmann},
         Title={Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
         Shopware-Platform},
-        Subject={Bachelor-Arbeit, Leitung Prof.\ Dr.-Ing. Martin Schulten},
+        Subject={Bachelor-Arbeit, Leitung Prof.\ Dr.-Ing.\ Martin Schulten},
         Keywords={},
     }
 }
@@ -45,14 +61,19 @@ Shopware-Platform}
 \author{Frederik Bußmann}
 \date{Juli 2023}
 
-% Commands
+% Blank page command
 \newcommand\blankpage{\null\thispagestyle{empty}\newpage}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-\newcommand{\mline}{%
-    \hspace{-\arraycolsep}%
-    \strut\vrule
-    \hspace{-\arraycolsep}%
-}
+
+% Background picture command
+\newcommand\BackgroundPic{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+    \vfill
+    \centering
+    \includegraphics[width=\paperwidth,height=\paperheight,%
+        keepaspectratio]{images/layout/background}%
+    \vfill
+}}}
 
 % Settings
 \setstretch{1.25}
@@ -67,24 +88,37 @@ Shopware-Platform}
 \glstoctrue
 \input{config/glossary}
 
-% Package Configuration
+% Minted Configuration
 \input{config/minted}
 
 % Document
 \begin{document}
 
     % Title page
-    \input{sections/01-titlepage}
+    \AddToShipoutPicture{\BackgroundPic}
+    \pagenumbering{gobble}
+    \input{config/titlepage}
+
+    % Statement
+    \input{config/statement}
+    \ClearShipoutPicture
+
+    % Empty page
+    \afterpage{\blankpage}
+    \clearpage
+
+    % Abstract
+    \thispagestyle{empty}
+    \input{sections/00-abstract}
 
     % Table of contents
-    \pagenumbering{gobble}
     \tableofcontents
     \clearpage
 
     % Document content
     \pagenumbering{arabic}
     \setcounter{page}{1}
-    \input{sections/02-introduction}
+    \input{sections/01-introduction}
 
     % Bibliography
     \pagenumbering{Roman}
@@ -93,32 +127,25 @@ Shopware-Platform}
 
     % List of figures
     \listoffigures
+    \clearpage
 
     % List of source code
     \listoflistings
     \clearpage
 
     % Glossary
-    \glsaddall
-    \printglossary
-    \vspace*{-5mm}
+    %\glsaddall
+    %\printglossary
+    %\clearpage
 
     % Acronyms
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
-    \printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
-    \vspace*{-5mm}
-    \clearpage
+    %\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+    %\printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
+    %\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+    %\clearpage
 
     % Appendix
     %\setcounter{secnumdepth}{0}
     %\input{sections/appendix}
     %\clearpage
-
-    % Statement
-    %\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
-    % \input{sections/statement}
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
-    \clearpage
-
 \end{document}
