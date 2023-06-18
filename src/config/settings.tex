@@ -1,0 +1,80 @@
+%! Author = Frederik Bußmann
+%! Date = 18.06.23
+
+% PDF Info
+\hypersetup{
+    pdfinfo={
+        Author={Frederik Bußmann},
+        Title={Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
+        Shopware-Platform},
+        Subject={Bachelor-Arbeit, Leitung Prof.\ Dr.-Ing.\ Martin Schulten},
+        Keywords={},
+    }
+}
+\title{Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
+Shopware-Platform}
+\author{Frederik Bußmann}
+\date{Juli 2023}
+
+% Add labels to bibliography entries to hyperlink them
+\defbibenvironment{bibliography}
+{\list
+{\printtext[labelnumberwidth]{%
+    \printfield{prefixnumber}%
+    \printfield{labelnumber}}}
+{\setlength{\labelwidth}{\labelnumberwidth}%
+\setlength{\leftmargin}{\labelwidth}%
+\setlength{\labelsep}{\biblabelsep}%
+\addtolength{\leftmargin}{\labelsep}%
+\setlength{\itemsep}{\bibitemsep}%
+\setlength{\parsep}{\bibparsep}}%
+\renewcommand*{\makelabel}[1]{\hss##1}}
+{\endlist}
+{\item\label{cite.\thefield{entrykey}}}
+
+% Blank page command
+\newcommand\blankpage{\null\thispagestyle{empty}\newpage}
+
+% Full-size background picture command
+\newcommand\BackgroundPic{%
+    \put(0,0){%
+        \parbox[b][\paperheight]{\paperwidth}{%
+            \vfill
+            \centering
+            \includegraphics[width=\paperwidth,height=\paperheight,%
+                keepaspectratio]{images/layout/background}%
+            \vfill
+        }}}
+
+% General settings
+\setstretch{1.25}
+\setlength{\parindent}{0pt}
+\graphicspath{{/data}}
+\addbibresource{config/references.bib}
+\crefname{figure}{Abbildung}{Abbildung}
+\Crefname{figure}{Abbildung}{Abbildung}
+
+% Glossary settings
+\makeglossaries
+\input{config/acronyms}
+\glsaddall
+
+% Footpartcite citation command
+\DeclareCiteCommand{\footpartcite}[\mkbibfootnote]
+{\usebibmacro{prenote}}
+{%
+    \setunit{\addnbspace}
+    \hyperref[cite.\thefield{entrykey}]{%
+    \printtext{Vgl.}%
+    \printnames{labelname}%
+    \setunit{\labelnamepunct}
+    \printfield[citetitle]{title}%
+    \newunit
+    \printfield{year}}%
+}
+{\addsemicolon\space}
+{\usebibmacro{postnote}}
+
+% Footpartcites multi-citation command
+\DeclareMultiCiteCommand{\footpartcites}[\mkbibfootnote]{\footpartcite}{\addsemicolon\space}
+% To cite multiple pages: \footpartcites(See)(for example){markey}[10--15]{companion}

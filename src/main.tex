@@ -11,8 +11,7 @@
 \usepackage{babel}
 \usepackage{csquotes}
 \usepackage[nottoc]{tocbibind}
-\usepackage[outputdir=/build/temp]{minted}
-\usepackage[backend=biber,style=numeric,citestyle=ieee,autocite=superscript]{biblatex}
+\usepackage[backend=biber,style=numeric,citestyle=ieee]{biblatex}
 
 \usepackage[colorlinks,
     urlcolor = blue,
@@ -23,6 +22,7 @@
     bookmarksopen = true,
     bookmarksnumbered = true,
     plainpages = false,
+    hyperfootnotes = false,
     hypertexnames = false] {hyperref}
 
 \usepackage{listings}
@@ -46,52 +46,10 @@
 \usepackage{scrhack}
 \usepackage[automark,headsepline]{scrlayer-scrpage}
 
-% PDF Info
-\hypersetup{
-    pdfinfo={
-        Author={Frederik Bußmann},
-        Title={Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
-        Shopware-Platform},
-        Subject={Bachelor-Arbeit, Leitung Prof.\ Dr.-Ing.\ Martin Schulten},
-        Keywords={},
-    }
-}
-\title{Konzeption und Entwicklung einer Continuous-Integration-Strategie für Kundenprojekte auf Basis der
-Shopware-Platform}
-\author{Frederik Bußmann}
-\date{Juli 2023}
+% Document settings
+\input{config/settings}
 
-% Blank page command
-\newcommand\blankpage{\null\thispagestyle{empty}\newpage}
-
-% Background picture command
-\newcommand\BackgroundPic{%
-\put(0,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-    \vfill
-    \centering
-    \includegraphics[width=\paperwidth,height=\paperheight,%
-        keepaspectratio]{images/layout/background}%
-    \vfill
-}}}
-
-% Settings
-\setstretch{1.25}
-\setlength{\parindent}{0pt}
-\graphicspath{{/data}}
-\addbibresource{config/references.bib}
-\crefname{figure}{Abbildung}{Abbildung}
-\Crefname{figure}{Abbildung}{Abbildung}
-
-% Glossary Settings
-\makeglossaries
-\glstoctrue
-\input{config/glossary}
-
-% Minted Configuration
-\input{config/minted}
-
-% Document
+% Document content
 \begin{document}
 
     % Title page
@@ -112,7 +70,21 @@ Shopware-Platform}
     \input{sections/00-abstract}
 
     % Table of contents
+    \pagenumbering{Roman}
+    \setcounter{page}{1}
     \tableofcontents
+    \clearpage
+
+    % Acronyms
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+    \printglossary[type=\acronymtype,title={Abkürzungsverzeichnis},toctitle=ABKÜRZUNGSVERZEICHNIS]
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+    \clearpage
+
+    % List of figures
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+    \listoffigures
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
     \clearpage
 
     % Document content
@@ -121,28 +93,8 @@ Shopware-Platform}
     \input{sections/01-introduction}
 
     % Bibliography
-    \pagenumbering{Roman}
-    \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+    \printbibliography[heading=bibintoc,title={Literaturverzeichnis}]
     \clearpage
-
-    % List of figures
-    \listoffigures
-    \clearpage
-
-    % List of source code
-    \listoflistings
-    \clearpage
-
-    % Glossary
-    %\glsaddall
-    %\printglossary
-    %\clearpage
-
-    % Acronyms
-    %\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
-    %\printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
-    %\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
-    %\clearpage
 
     % Appendix
     %\setcounter{secnumdepth}{0}
