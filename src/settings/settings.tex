@@ -1,5 +1,5 @@
 %! Author = Frederik Bußmann
-%! Date = 18.06.23
+%! Date = 22.06.2023
 
 % PDF Info
 \hypersetup{
@@ -15,6 +15,11 @@
 Shopware-Platform}
 \author{Frederik Bußmann}
 \date{Juli 2023}
+
+% General settings
+\setstretch{1.25}
+\setlength{\parindent}{0pt}
+\graphicspath{{/data}}
 
 % Add labels to bibliography entries to hyperlink them
 \defbibenvironment{bibliography}
@@ -32,6 +37,9 @@ Shopware-Platform}
 {\endlist}
 {\item\label{cite.\thefield{entrykey}}}
 
+% Add bibliography
+\addbibresource{config/references.bib}
+
 % Blank page command
 \newcommand\blankpage{\null\thispagestyle{empty}\newpage}
 
@@ -46,18 +54,14 @@ Shopware-Platform}
             \vfill
         }}}
 
-% General settings
-\setstretch{1.25}
-\setlength{\parindent}{0pt}
-\graphicspath{{/data}}
-\addbibresource{config/references.bib}
+% Cleveref figure name settings
 \crefname{figure}{Abbildung}{Abbildung}
 \Crefname{figure}{Abbildung}{Abbildung}
 
 % Glossary settings
 \makeglossaries
-\input{config/acronyms}
-\glsaddall
+\input{config/glossary}
+\newcommand{\abbr}[1]{\gls{#1} (\glstext{#1})}
 
 % Footpartcite citation command
 \DeclareCiteCommand{\footpartcite}[\mkbibfootnote]
@@ -78,6 +82,10 @@ Shopware-Platform}
 % Footpartcites multi-citation command
 \DeclareMultiCiteCommand{\footpartcites}[\mkbibfootnote]{\footpartcite}{\addsemicolon\space}
 % To cite multiple pages: \footpartcites(See)(for example){markey}[10--15]{companion}
+
+% Footnote spacing
+\setlength{\footnotesep}{-1cm}
+\setlength{\skip\footins}{0.6cm}
 
 % Dotted table of content sections
 \dottedcontents{section}[1.5em]{\bfseries}{1.3em}{.6em}

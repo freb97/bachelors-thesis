@@ -1,18 +1,12 @@
 %! Author = Frederik Bußmann
-%! Date = 01.08.2023
+%! Date = 22.06.2023
 
 \begin{titlepage}
-    \newgeometry{left=3.6cm,right=3.6cm,top=2cm,bottom=2.5cm}
-        \begin{tikzpicture}
-            \begin{scope}
-                \node{\includegraphics[width=0.5\textwidth]{images/layout/w-hs}};
-            \end{scope}
-            \begin{scope}[xshift=8.4cm,yshift=0.38cm]
-                \node{\includegraphics[width=0.35\textwidth]{images/layout/w-hs-text}};
-            \end{scope}
-            \label{fig:title}
-        \end{tikzpicture}
-        \vspace{1.3cm}
+    \newgeometry{left=3.6cm,right=3.6cm,top=2.5cm,bottom=2.5cm}
+        \adjustbox{valign=t}{\includegraphics[width=0.5\textwidth]{images/layout/w-hs}}
+        \hspace{2.16cm}
+        \adjustbox{valign=t,raise=-0.04cm}{\includegraphics[width=0.35\textwidth]{images/layout/w-hs-text}}
+        \vspace{1.6cm}
 
         \begingroup
         \fontsize{44pt}{46pt}\selectfont

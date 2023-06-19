@@ -2,58 +2,14 @@
 %! Date = 21.10.2021
 
 % Preamble
-%! Suppress = FileNotFound
 \documentclass[ngerman,11pt]{article}
 
-% Packages
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{babel}
-\usepackage{csquotes}
-\usepackage[nottoc]{tocbibind}
-\usepackage[backend=biber,style=numeric,citestyle=ieee]{biblatex}
-
-\usepackage[colorlinks,
-    urlcolor = blue,
-    linkcolor = black,
-    citecolor = black,
-    pdfpagelabels,
-    pdfstartview = FitH,
-    bookmarksopen = true,
-    bookmarksnumbered = true,
-    plainpages = false,
-    hyperfootnotes = false,
-    hypertexnames = false] {hyperref}
-
-\usepackage{titletoc}
-\usepackage{color}
-\usepackage{listings}
-\usepackage{setspace}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{geometry}
-\usepackage{afterpage}
-\usepackage{glossaries}
-\usepackage{float}
-
-\usepackage[justification=centering]{caption}
-\usepackage[noabbrev,nameinlink]{cleveref}
-\usepackage[acronym, nonumberlist, toc, section=section]{glossaries-extra}
-
-% Full-page background pictures
-\usepackage{eso-pic}
-
-% Decorations over headline
-\usepackage{scrhack}
-\usepackage[automark,headsepline]{scrlayer-scrpage}
-
-% Document settings
-\input{config/settings}
+% Document packages and settings
+\input{settings/packages}
+\input{settings/settings}
 
 % Document content
 \begin{document}
-
     % Title page
     \AddToShipoutPicture{\BackgroundPic}
     \pagenumbering{gobble}
@@ -69,7 +25,9 @@
 
     % Abstract
     \thispagestyle{empty}
+    \newgeometry{left=25.4mm,right=25.4mm,top=25.4mm,bottom=25.4mm}
     \input{sections/00-abstract}
+    \restoregeometry
 
     % Table of contents
     \pagenumbering{Roman}
@@ -79,7 +37,7 @@
 
     % Acronyms
     \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
-    \printglossary[type=\acronymtype,title={Abkürzungsverzeichnis},toctitle=ABKÜRZUNGSVERZEICHNIS]
+    \printglossary[title={Abkürzungsverzeichnis},toctitle=ABKÜRZUNGSVERZEICHNIS]
     \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
     \clearpage
 

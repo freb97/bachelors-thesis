@@ -19,10 +19,9 @@ cp -r ${INPUTDIR}/* ${OUTPUTDIR}/.
 
 # Compile document
 SECONDS=0
-pdflatex --interaction=batchmode -draftmode -shell-escape ${ENTRYFILE}
+pdflatex -recorder -jobname=mydocument --interaction=batchmode -draftmode -shell-escape ${ENTRYFILE}
 (cd ${OUTPUTDIR} && makeglossaries ${ENTRYFILE})
 biber --quiet --input-directory=${OUTPUTDIR} --output-directory=${OUTPUTDIR} ${ENTRYFILE}
-pdflatex --interaction=batchmode -draftmode -shell-escape ${ENTRYFILE}
 pdflatex --interaction=batchmode -shell-escape ${ENTRYFILE}
 
 # Copy generated log file to build folder
