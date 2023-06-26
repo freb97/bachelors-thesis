@@ -1,0 +1,64 @@
+%! Author = Frederik Bußmann
+%! Date = 22.06.2023
+
+\section{Fachlicher Hintergrund} \label{sec:02-background}
+
+Für die Erarbeitung einer geeigneten CI-Strategie werden zunächst die Begrifflichkeiten und Prinzipien von
+Continuous-Integration definiert.
+Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Shopware-Plattform gegeben.
+
+\subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-1}
+
+Das Kernprinzip hinter Continuous Integration (CI) wurde bereits im Jahr 1991 von Grady Booch definiert.
+Hierbei werden Software-Releases nicht als ein großes Ereignis betrachtet, sondern regelmäßig durchgeführt, wobei
+die vollständige Software stetig größer wird.
+\footpartcite{booch}
+Kent Beck popularisierte im Jahr 1998 die Disziplin des \glqq Extreme Programming\grqq, wobei großer Wert auf das frühe
+und regelmäßige Testen und Integrieren der entwickelten Komponenten einer Software gelegt wird.
+Beck behauptet hierbei, dass ein Feature, für welches es keine automatisierten Tests gibt, auch nicht funktioniert.
+\footpartcite[2--4]{extreme-programming}
+Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Methodiken in dem Artikel
+\glqq Continuous Integration\grqq\ unter dem gleichnamigen Begriff zusammen.
+Fowler beschreibt Continuous Integration als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
+wobei Integration als der Build-Prozess inklusive automatisierte Tests für die vollständige Software mitsamt der
+erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
+Nachfolgend werden einige wichtige Aspekte von Continuous Integration kurz dargestellt.
+
+\subsubsection{Regelmäßige Integration}
+
+Die namensgebende Methodik der CI ist das regelmäßige Integrieren von Software und damit Verbunden ist der
+Software-Release.
+In der traditionellen Softwareentwicklung wird der Release als ein einmaliges, großes Ereignis betrachtet.
+Als Integration wird der Prozess des Einbindens einer einzeln entwickelten Komponente in die bisher bestehende
+Gesamtheit einer Software bezeichnet, wobei der Release das Zusammenfinden aller Komponenten und das Ausführen des
+Build-Prozesses bis hin zur fertigen, ausführbaren und auslieferbaren Software beschreibt.
+In der Vergangenheit wurde bei einem Release jede Einzelkomponente der Software manuell integriert und getestet, wobei
+dies als eigene Phase in der Entwicklung einer Applikation galt.
+In einem Projekt mit CI
+
+\subsubsection{Automatisierte Tests}
+
+In der Regel wird Software vor einem Release getestet, wobei diese Tests in der Vergangenheit manuell durchgeführt
+wurden.
+
+\subsubsection{Reproduzierbarkeit}
+
+\subsubsection{Feedback}
+
+\subsection{Übersicht über die Shopware-Platform} \label{subsec:02-background-2}
+
+Shopware wurde als Online-Shop-Software im Jahr 2000 durch Stefan Hamann ins Leben gerufen\footpartcite{shopware-story}
+und bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des PHP-Frameworks
+\glqq Symfony\grqq.
+Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem \gls{cms} \glqq Drupal\grqq,
+dem Shop-System \glqq Magento\grqq\ und einigen weiteren Programmen\footpartcite{symfony-projects} als Grundlage genutzt
+und bildet somit ein erprobtes Fundament für die Shopware-Plattform.
+Shopware selbst ist nach der Installation bereits voll funktionsfähig und kann mit einem Backend und optional
+mit einem Frontend oder für das Konsumieren der mitgelieferten \gls{api} eingerichtet werden.
+Die Software kann auf verschiedenen Plattformen gehostet werden, darunter Linux-Server und containerisierte Umgebungen.
+Darüber hinaus bietet Shopware als Unternehmen auch eine eigene Hosting-Lösung an, die speziell auf die Anforderungen
+der Software zugeschnitten ist.
+Die Plattform kann sowohl im Einzelbetrieb als auch als Cluster genutzt werden, um eine hohe Verfügbarkeit und
+Skalierbarkeit zu gewährleisten.
+
+\clearpage

@@ -7,6 +7,7 @@
 % Document packages and settings
 \input{settings/packages}
 \input{settings/settings}
+\input{settings/minted}
 
 % Document content
 \begin{document}
@@ -38,11 +39,9 @@
     % Acronyms
     \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
     \printglossary[title={Abkürzungsverzeichnis},toctitle=ABKÜRZUNGSVERZEICHNIS]
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
     \clearpage
 
     % List of figures
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
     \listoffigures
     \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
     \clearpage
@@ -51,6 +50,11 @@
     \pagenumbering{arabic}
     \setcounter{page}{1}
     \input{sections/01-introduction}
+    \input{sections/02-background}
+    \input{sections/03-concept}
+    \input{sections/04-implementation}
+    \input{sections/05-evaluation}
+    \input{sections/06-prospect}
 
     % Bibliography
     \printbibliography[heading=bibintoc,title={Literaturverzeichnis}]

@@ -17,9 +17,12 @@ Shopware-Platform}
 \date{Juli 2023}
 
 % General settings
-\setstretch{1.25}
+\setstretch{1.1}
 \setlength{\parindent}{0pt}
 \graphicspath{{/data}}
+
+% Omit numbering of subsubsections
+\setcounter{secnumdepth}{2}
 
 % Add labels to bibliography entries to hyperlink them
 \defbibenvironment{bibliography}
@@ -36,6 +39,11 @@ Shopware-Platform}
 \renewcommand*{\makelabel}[1]{\hss##1}}
 {\endlist}
 {\item\label{cite.\thefield{entrykey}}}
+
+% Use et al. instead of u.a.
+\DefineBibliographyStrings{ngerman}{
+    andothers = {et\addabbrvspace al\adddot},
+}
 
 % Add bibliography
 \addbibresource{config/references.bib}
@@ -78,15 +86,12 @@ Shopware-Platform}
 }
 {\addsemicolon\space}
 {\usebibmacro{postnote}}
+% To cite: \footpartcite{example}
 
 % Footpartcites multi-citation command
 \DeclareMultiCiteCommand{\footpartcites}[\mkbibfootnote]{\footpartcite}{\addsemicolon\space}
-% To cite multiple pages: \footpartcites(See)(for example){markey}[10--15]{companion}
+% To cite: \footpartcites(See)(for example){example1}[10--15]{example2}
 
 % Footnote spacing
 \setlength{\footnotesep}{-1cm}
 \setlength{\skip\footins}{0.6cm}
-
-% Dotted table of content sections
-\dottedcontents{section}[1.5em]{\bfseries}{1.3em}{.6em}
-\dottedcontents{subsection}[3em]{}{2em}{.6em}

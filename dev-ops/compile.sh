@@ -32,9 +32,15 @@ if [ -f "${OUTPUTDIR}/${ENTRYFILE}.pdf" ]; then
   mv ${OUTPUTDIR}/${ENTRYFILE}.pdf ${OUTPUTPDFDIR}
 
   LOGOUTPUT=$(printf "Compilation finished, elapsed time: %s seconds\n" ${SECONDS})
+
+  # Output log to stdout and logfile
+  echo "${LOGOUTPUT}" && echo "${LOGOUTPUT}" >> ${OUTPUTDIR}/${ENTRYFILE}.log
 else
   LOGOUTPUT=$(printf "Compilation finished with errors, elapsed time: %s seconds\n" ${SECONDS})
-fi
 
-# Output log to stdout and logfile
-echo "${LOGOUTPUT}" && echo "${LOGOUTPUT}" >> ${OUTPUTDIR}/${ENTRYFILE}.log
+  # Output log to stdout and logfile
+  echo "${LOGOUTPUT}" && echo "${LOGOUTPUT}" >> ${OUTPUTDIR}/${ENTRYFILE}.log
+
+  # Return error code
+  return 1;
+fi
