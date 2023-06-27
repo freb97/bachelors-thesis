@@ -83,10 +83,18 @@ Shopware-Platform}
     \printfield[citetitle]{title}%
     \newunit
     \printfield{year}}%
+    \begingroup%
+        \tracinglostchars=0%
+        \nullfont \thefootnote\label{citenumber.\thefield{entrykey}}
+    \endgroup
 }
 {\addsemicolon\space}
 {\usebibmacro{postnote}}
 % To cite: \footpartcite{example}
+
+% Gets the last used footpartcite number for the given key
+%! suppress = UnresolvedReference
+\newcommand{\footpartcitenumber}[1]{\textsuperscript{\ref*{citenumber.#1}}}
 
 % Footpartcites multi-citation command
 \DeclareMultiCiteCommand{\footpartcites}[\mkbibfootnote]{\footpartcite}{\addsemicolon\space}

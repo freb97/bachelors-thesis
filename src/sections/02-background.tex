@@ -4,25 +4,27 @@
 \section{Fachlicher Hintergrund} \label{sec:02-background}
 
 Für die Erarbeitung einer geeigneten CI-Strategie werden zunächst die Begrifflichkeiten und Prinzipien von
-Continuous-Integration definiert.
+Continuous Integration definiert.
 Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Shopware-Plattform gegeben.
 
 \subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-1}
 
-Das Kernprinzip hinter Continuous Integration (CI) wurde bereits im Jahr 1991 von Grady Booch definiert.
+Um die Bedeutung und den Nutzen von Continuous Integration für die Softwareentwicklung nachvollziehen zu können,
+ist es hilfreich, einen Blick auf die historische Entwicklung und die grundlegenden Prinzipien des Ansatzes zu werfen.
+Ein Kernprinzip hinter Continuous Integration wurde bereits im Jahr 1991 von Grady Booch definiert.
 Hierbei werden Software-Releases nicht als ein großes Ereignis betrachtet, sondern regelmäßig durchgeführt, wobei
-die vollständige Software stetig größer wird.
-\footpartcite{booch}
+die vollständige Software stetig größer wird.\footpartcite{booch}
 Kent Beck popularisierte im Jahr 1998 die Disziplin des \glqq Extreme Programming\grqq, wobei großer Wert auf das frühe
 und regelmäßige Testen und Integrieren der entwickelten Komponenten einer Software gelegt wird.
 Beck behauptet hierbei, dass ein Feature, für welches es keine automatisierten Tests gibt, auch nicht funktioniert.
 \footpartcite[2--4]{extreme-programming}
 Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Methodiken in dem Artikel
 \glqq Continuous Integration\grqq\ unter dem gleichnamigen Begriff zusammen.
-Fowler beschreibt Continuous Integration als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
-wobei Integration als der Build-Prozess inklusive automatisierte Tests für die vollständige Software mitsamt der
+Fowler beschreibt CI als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
+wobei Integration als der Build-Prozess, inklusive automatisierter Tests, für die vollständige Software mitsamt der
 erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
-Nachfolgend werden einige wichtige Aspekte von Continuous Integration kurz dargestellt.
+Da die erfolgreiche Implementierung von Continuous Integration also auf der Kombination von verschiedenen Methoden zur
+Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlüsselaspekte kurz dargestellt.
 
 \subsubsection{Regelmäßige Integration}
 
@@ -34,12 +36,15 @@ Gesamtheit einer Software bezeichnet, wobei der Release das Zusammenfinden aller
 Build-Prozesses bis hin zur fertigen, ausführbaren und auslieferbaren Software beschreibt.
 In der Vergangenheit wurde bei einem Release jede Einzelkomponente der Software manuell integriert und getestet, wobei
 dies als eigene Phase in der Entwicklung einer Applikation galt.
-In einem Projekt mit CI
+In einem CI-gestützten Projekt wird der Prozess des Software-Releases vollständig automatisiert, sodass jedes
+Teammitglied eine entwickelte Komponente schnell Integrieren und einen Software-Build erzeugen kann, welches sich
+positiv auf die Cycle Time auswirkt.\footpartcitenumber{fowler}
 
 \subsubsection{Automatisierte Tests}
 
 In der Regel wird Software vor einem Release getestet, wobei diese Tests in der Vergangenheit manuell durchgeführt
 wurden.
+Ein wichtiger Teil der CI ist das Implementieren automatisierter Tests.
 
 \subsubsection{Reproduzierbarkeit}
 
