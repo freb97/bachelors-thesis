@@ -69,37 +69,31 @@ Shopware-Platform}
 % Glossary settings
 \makeglossaries
 \input{config/glossary}
-\newcommand{\abbr}[1]{\gls{#1} (\glstext{#1})}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\setlength{\glslistdottedwidth}{0.32\linewidth}
 
 % Footpartcite citation command
 \DeclareCiteCommand{\footpartcite}[\mkbibfootnote]
 {\usebibmacro{prenote}}
 {%
-    \setunit{\addnbspace}
     \hyperref[cite.\thefield{entrykey}]{%
-    \printtext{Vgl.}%
-    \printnames{labelname}%
-    \setunit{\labelnamepunct}
-    \printfield[citetitle]{title}%
-    \newunit
-    \printfield{year}}%
-    \begingroup%
-        \tracinglostchars=0%
-        \nullfont \thefootnote\label{citenumber.\thefield{entrykey}}
-    \endgroup
+        \setunit{\addnbspace}
+        \printtext{Vgl.}%
+        \printnames{labelname}%
+        \setunit{\labelnamepunct}%
+        \printfield[citetitle]{title}%
+        \newunit%
+        \printfield{year}%
+    }%
 }
 {\addsemicolon\space}
 {\usebibmacro{postnote}}
 % To cite: \footpartcite{example}
-
-% Gets the last used footpartcite number for the given key
-%! suppress = UnresolvedReference
-\newcommand{\footpartcitenumber}[1]{\textsuperscript{\ref*{citenumber.#1}}}
 
 % Footpartcites multi-citation command
 \DeclareMultiCiteCommand{\footpartcites}[\mkbibfootnote]{\footpartcite}{\addsemicolon\space}
 % To cite: \footpartcites(See)(for example){example1}[10--15]{example2}
 
 % Footnote spacing
-\setlength{\footnotesep}{-1cm}
-\setlength{\skip\footins}{0.6cm}
+\setlength{\footnotesep}{0}
+\setlength{\skip\footins}{0.5cm}
