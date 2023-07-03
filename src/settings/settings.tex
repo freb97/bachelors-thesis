@@ -90,10 +90,37 @@ Shopware-Platform}
 {\usebibmacro{postnote}}
 % To cite: \footpartcite{example}
 
-% Footpartcites multi-citation command
-\DeclareMultiCiteCommand{\footpartcites}[\mkbibfootnote]{\footpartcite}{\addsemicolon\space}
-% To cite: \footpartcites(See)(for example){example1}[10--15]{example2}
+% Textpartcite citation command
+\DeclareCiteCommand{\textpartcite}
+{\usebibmacro{prenote}}
+{%
+    \hyperref[cite.\thefield{entrykey}]{%
+    \printnames{labelname}%
+    \setunit{,\ }%
+    \printfield{year}%
+}%
+}
+{\addsemicolon\space}
+{\usebibmacro{postnote}}
 
-% Footnote spacing
+% Caption cite command
+\newcommand{\captioncite}[3][]{%
+    \ifthenelse{\equal{#3}{}}{
+        \begingroup
+            \fontsize{8pt}{6pt}\selectfont
+            Quelle: \textpartcite{#1}
+        \endgroup
+        \caption{#2}
+    }{
+        \begingroup
+            \fontsize{8pt}{6pt}\selectfont
+            Quelle: #1 \textpartcite{#2}
+        \endgroup
+        \caption{#3}
+    }
+}
+
+% Footnote size and spacing
+\renewcommand{\footnotesize}{\scriptsize}
 \setlength{\footnotesep}{0}
 \setlength{\skip\footins}{0.5cm}

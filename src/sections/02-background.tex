@@ -19,7 +19,8 @@ Die Disziplin umfasst Geschäftsstrategie und Planung, sowie Entwicklung und den
 Diese kontinuierliche Integrierung von Software ist sehr kompatibel mit den häufigen iterationen in der agilen
 Softwareentwicklung und wurde unter anderem durch die agile Methodik des Extreme Programming bekannt.
 \footpartcite{fitzgerald}
-Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci}, \acrshort{cde} und \acrshort{cd} kurz erläutert.
+Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci}, \acrshort{cde} und \acrshort{cd}
+kurz erläutert.
 
 \subsubsection{Agile Software Development}
 
@@ -35,8 +36,8 @@ und Umgebungen zusammen.\footpartcite{agile}
 
 \subsubsection{Continuous Integration}
 
-Continuous Integration (\acrshort{ci}) ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen regelmäßig,
-oft mehrmals täglich, in ein gemeinsames Repository integrieren.
+Continuous Integration (\acrshort{ci}) ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen
+regelmäßig, oft mehrmals täglich, in ein gemeinsames Repository integrieren.
 Jede dieser Integrationen wird dann von einem automatisierten Build-System überprüft, um sicherzustellen, dass die
 Änderungen mit der bestehenden Codebase kompatibel sind und keine Fehler verursachen.
 Dieser Prozess ermöglicht es Teams, Probleme frühzeitig zu erkennen und zu beheben, was die Qualität der Software
@@ -48,19 +49,28 @@ Continuous Delivery (\acrshort{cde}) erweitert das Konzept der Continuous Integr
 Software stetig in einem Zustand ist, der sicher in die Produktionsumgebung ausgerollt werden kann.
 Dies wird durch das Einführen von Integrationstests, die die Funktionalität der vollständigen Software inklusive aller
 Module testen, erreicht.
-Das Ziel von \acrshort{cde} ist es, den Prozess der Softwareauslieferung zu beschleunigen und zuverlässiger zu machen, indem
-menschliche Fehler minimiert und schnelles Feedback über Probleme in der Produktionsumgebung ermöglicht wird.
+Das Ziel von \acrshort{cde} ist es, den Prozess der Softwareauslieferung zu beschleunigen und zuverlässiger zu machen,
+indem menschliche Fehler minimiert und schnelles Feedback über Probleme in der Produktionsumgebung ermöglicht wird.
 \footpartcite{humble}
 
 \subsubsection{Continuous Deployment}
 
 Continuous Deployment (\acrshort{cd}) ist der nächste Schritt nach Continuous Delivery.
-Bei \acrshort{cd} wird jede Änderung, die den automatisierten Testprozess besteht, automatisch in die Produktionsumgebung
-eingespielt.\footpartcite{tools-and-practises}
+Bei \acrshort{cd} wird jede Änderung, die den automatisierten Testprozess besteht, automatisch in die
+Produktionsumgebung eingespielt.\footpartcite[3911]{tools-and-practises}
 Dies bedeutet, dass neue Features und Updates mehrmals täglich an die Endbenutzer ausgeliefert werden können, was eine
 schnelle Reaktion auf Marktbedingungen und Kundenfeedback ermöglicht.
-Es ist jedoch zu beachten, dass \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung erfordert, um
-die Anzahl der in der Produktionsumgebung aufkommenden Fehler zu minimieren.
+Es ist jedoch zu beachten, dass \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung
+erfordert, um die Anzahl der in der Produktionsumgebung aufkommenden Fehler zu minimieren.
+Der Zusammenhang zwischen Continuous Integration, Delivery und Deployment wird in Abbildung\ \ref{fig:ci-cde-cd}
+aufgezeigt.
+
+\begin{figure}[H]
+    \centering
+    \centerline{\includegraphics[width=0.91\textwidth]{images/content/ci-cde-cd}}
+    \captioncite[Übernommen von]{tools-and-practises}{Zusammenhang zwischen \acrshort{ci}, \acrshort{cde} und \acrshort{cd}}
+    \label{fig:ci-cde-cd}
+\end{figure}
 
 \subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-2}
 
@@ -121,9 +131,9 @@ In einem \acrshort{ci}-Umfeld werden der Build- und Testing-Prozess vollständig
 bedeutet, dass diese unter den gleichen Bedingungen und mit den gleichen Ergebnissen wiederholt werden können.
 Dies ist von entscheidender Bedeutung, um sicherzustellen, dass die Software in verschiedenen Umgebungen
 (z.B.\ Entwicklung, Test, Produktion) konsistent funktioniert.
-Durch das Zentralisieren der Software und der \acrshort{ci}-Tools in einer Versionskontrolle (\acrshort{vcs}), in Verbindung mit
-dem Automatisieren des Build- und Testing-Prozesses, wird das Wiederherstellen von früheren Ständen in der Entwicklung
-und das Nachvollziehen von Fehlern im Entwicklungsprozess vereinfacht.\footpartcite[74--75]{duvall}
+Durch das Zentralisieren der Software und der \acrshort{ci}-Tools in einer Versionskontrolle (\acrshort{vcs}), in
+Verbindung mit dem Automatisieren des Build- und Testing-Prozesses, wird das Wiederherstellen von früheren Ständen in
+der Entwicklung und das Nachvollziehen von Fehlern im Entwicklungsprozess vereinfacht.\footpartcite[74--75]{duvall}
 
 \subsubsection{Feedback}
 
@@ -139,14 +149,13 @@ Darüber hinaus fördert das schnelle Feedback die Kommunikation und Zusammenarb
 \footpartcite[2573]{benefits-challenges}\textsuperscript{,}\footpartcite[26--27]{adept}
 
 \subsection{Übersicht über die Shopware-Platform} \label{subsec:02-background-3}
-% TODO: Text verbessern, bisschen länger
 
 Shopware wurde als Online-Shop-Software im Jahr 2000 durch Stefan Hamann ins Leben gerufen\footpartcite{shopware-story}
 und bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des PHP-Frameworks
 \glqq Symfony\grqq.
-Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem \acrshort{cms} \glqq Drupal\grqq,
-dem Shop-System \glqq Magento\grqq\ und einigen weiteren Programmen\footpartcite{symfony-projects} als Grundlage genutzt
-und bildet somit ein erprobtes Fundament für die Shopware-Plattform.
+Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem \acrshort{cms}
+\glqq Drupal\grqq, dem Shop-System \glqq Magento\grqq\ und einigen weiteren Programmen\footpartcite{symfony-projects}
+als Grundlage genutzt und bildet somit ein erprobtes Fundament für die Shopware-Plattform.
 Shopware selbst ist nach der Installation bereits voll funktionsfähig und kann mit einem Backend und optional
 mit einem Frontend oder für das Konsumieren der mitgelieferten \acrshort{api} eingerichtet werden.
 Die Software kann auf verschiedenen Plattformen gehostet werden, darunter Linux-Server und containerisierte Umgebungen.
@@ -154,5 +163,54 @@ Darüber hinaus bietet Shopware als Unternehmen auch eine eigene Hosting-Lösung
 der Software zugeschnitten ist.
 Die Plattform kann sowohl im Einzelbetrieb als auch als Cluster genutzt werden, um eine hohe Verfügbarkeit und
 Skalierbarkeit zu gewährleisten.
+Nachfolgend wird der Aufbau des Symfony-Frameworks dargestellt und die Architektur der darauf basierenden
+Shopware-Platform aufgezeigt.
+
+\subsubsection{Symfony-Framework}
+
+Symfony, entwickelt im Jahr 2005 von Fabien Potencier, ist ein PHP-basiertes Full-Stack-Framework.
+Das Projekt besteht aus verschiedenen Einzelkomponenten, welche unabhängig voneinander verwendet werden können, somit
+ist es sehr flexibel.
+Gleichzeitig bietet Symfony eine Reihe von Konventionen und Best Practises für das Erstellen und Nutzen von Komponenten,
+welche die Entwicklung von Anwendungen erleichtern und beschleunigen.
+Das Framework ist weit verbreitet und stellt eine robuste Grundlage für die Entwicklung umfangreicher Softwareprojekte
+dar.
+Es beinhaltet essenzielle Funktionen, wie Dependency Injection (\acrshort{di}), Profiling, Object-Relational Mapping
+(\acrshort{orm}), Session Handling, Routing, Formularverwaltung und eine Template-Engine.
+Durch den Einsatz des Paket-Managers \glqq Composer\grqq\ können diese Grundfunktionen erweitert und zusätzliche
+Features in ein Projekt importiert werden.
+Symfony bietet eine Reihe von Konsolenbefehlen, die das Erstellen von eigenen Komponenten, die Durchführung von
+Datenbankmigrationen, das Ausführen von Tests und vieles mehr erleichtern.
+Die umfangreiche Dokumentation und die aktive Entwicklercommunity des Frameworks bieten einen hervorragenden Support
+für Entwickler.
+Zudem gewährleistet Symfony eine Langzeitunterstützung für jede Hauptversion mit einem Support-Zeitraum von drei Jahren,
+was die Zuverlässigkeit und Stabilität des Frameworks unterstreicht.\footpartcite[273--278]{symfony-introduction}
+
+\subsubsection{Architektur der Shopware-Platform}
+
+Lorem ipsum\\\\
+Lorem ipsum\\\\
+Lorem ipsum\\\\
+Lorem ipsum\\\\
+Lorem ipsum\\\\
+
+\dirtree{%
+    .1 Storefront.
+    .2 Controller.
+    .2 DependencyInjection.
+    .2 Event.
+    .2 Framework.
+    .2 Migration.
+    .2 Page.
+    .2 Pagelet.
+    .2 Resources.
+    .2 Test.
+    .2 Theme.
+    .2 .gitignore.
+    .2 composer.json.
+    .2 phpunit.xml.dist.
+    .2 README.md.
+    .2 Storefront.php.
+}
 
 \clearpage
