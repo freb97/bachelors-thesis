@@ -96,8 +96,7 @@ Shopware-Platform}
 {%
     \hyperref[cite.\thefield{entrykey}]{%
     \printnames{labelname}%
-    \setunit{,\ }%
-    \printfield{year}%
+    \ (\printfield{year})%
 }%
 }
 {\addsemicolon\space}
@@ -105,19 +104,13 @@ Shopware-Platform}
 
 % Caption cite command
 \newcommand{\captioncite}[3][]{%
-    \ifthenelse{\equal{#3}{}}{
-        \begingroup
-            \fontsize{8pt}{6pt}\selectfont
-            Quelle: \textpartcite{#1}
-        \endgroup
-        \caption{#2}
-    }{
-        \begingroup
-            \fontsize{8pt}{6pt}\selectfont
-            Quelle: #1 \textpartcite{#2}
-        \endgroup
-        \caption{#3}
-    }
+    \ifthenelse{\equal{#3}{}}{%
+        \caption*{\fontsize{8pt}{6pt}\selectfont Quelle: \textpartcite{#1}}%
+        \caption{#2}%
+    }{%
+        \caption*{\fontsize{8pt}{6pt}\selectfont Quelle: #1 \ifthenelse{\equal{#2}{}}{}{\textpartcite{#2}}}%
+        \caption{#3}%
+    }%
 }
 
 % Footnote size and spacing

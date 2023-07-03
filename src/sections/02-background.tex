@@ -67,7 +67,7 @@ aufgezeigt.
 
 \begin{figure}[H]
     \centering
-    \centerline{\includegraphics[width=0.91\textwidth]{images/content/ci-cde-cd}}
+    \includegraphics[width=0.91\textwidth]{images/content/ci-cde-cd}
     \captioncite[Übernommen von]{tools-and-practises}{Zusammenhang zwischen \acrshort{ci}, \acrshort{cde} und \acrshort{cd}}
     \label{fig:ci-cde-cd}
 \end{figure}
@@ -168,9 +168,9 @@ Shopware-Platform aufgezeigt.
 
 \subsubsection{Symfony-Framework}
 
-Symfony, entwickelt im Jahr 2005 von Fabien Potencier, ist ein PHP-basiertes Full-Stack-Framework.
-Das Projekt besteht aus verschiedenen Einzelkomponenten, welche unabhängig voneinander verwendet werden können, somit
-ist es sehr flexibel.
+Symfony ist ein im Jahr 2005 von Fabien Potencier entwickeltes Full-Stack-Framework.
+Das PHP-basierte Projekt besteht aus verschiedenen Einzelkomponenten, welche unabhängig voneinander verwendet werden
+können, somit ist es sehr flexibel.
 Gleichzeitig bietet Symfony eine Reihe von Konventionen und Best Practises für das Erstellen und Nutzen von Komponenten,
 welche die Entwicklung von Anwendungen erleichtern und beschleunigen.
 Das Framework ist weit verbreitet und stellt eine robuste Grundlage für die Entwicklung umfangreicher Softwareprojekte
@@ -188,29 +188,53 @@ was die Zuverlässigkeit und Stabilität des Frameworks unterstreicht.\footpartc
 
 \subsubsection{Architektur der Shopware-Platform}
 
-Lorem ipsum\\\\
-Lorem ipsum\\\\
-Lorem ipsum\\\\
-Lorem ipsum\\\\
-Lorem ipsum\\\\
-
-\dirtree{%
-    .1 Storefront.
-    .2 Controller.
-    .2 DependencyInjection.
-    .2 Event.
-    .2 Framework.
-    .2 Migration.
-    .2 Page.
-    .2 Pagelet.
-    .2 Resources.
-    .2 Test.
-    .2 Theme.
-    .2 .gitignore.
-    .2 composer.json.
-    .2 phpunit.xml.dist.
-    .2 README.md.
-    .2 Storefront.php.
-}
+Shopware 6 bietet eine modulare Architektur.
+Die Plattform besteht aus drei Kernkomponenten, dem Shopware-Core, der Administrations-Oberfläche und der Storefront.
+Der Core bildet hierbei die grundlegenden Shop-Funktionen und Ressourcen, und stellt für diese verschiedene
+Schnittstellen zur Nutzung bereit.
+Die Verwaltung der die Shop-Daten, Produkte und weiterer Betriebsfunktionen wird mit der Administrations-Oberfläche
+vorgenommen.
+Diese bildet eine eigene Komponente und kommuniziert mit dem Shopware-Core über die Admin-\acrshort{api}.
+Letztlich wird das Frontend durch die Shopware-Storefront dargestellt, welche mithilfe von Symfonys Template-Engine
+\glqq Twig\grqq\ und der direkten Anbindung an den Shopware-Core das Aufrufen von Produkten, Authentifizieren von Usern
+und Durchführen von Zahlungen ermöglicht.
+Die Storefront ist eine Komponente, welche optional auch deaktiviert und auf Wunsch durch die
+Nutzung der Store-\acrshort{api} mit einer eigenen Applikation ersetzt werden kann.
+Im Standardumfang liefert die Shopware-Platform alle drei Hauptkomponenten aus.
+Diese stehen als Mono-Repository mit dem Namen \shellinline{shopware/platform} auf GitHub zur Verfügung.
+\footpartcite{shopware-architecture}
+Neben den drei Hauptkomponenten bietet die Shopware-Platform verschiedene Anbindungsmöglichkeiten zur Anpassung des
+Shop-Systems.
+Plugins können direkt an den Core angebunden werden und ermöglichen die Erweiterung der Shopware-Logik, das Templating
+der Storefront oder Anpassungen an der
+\begin{wrapfigure}{r}{0.63\textwidth}
+    \centering
+    \includegraphics[width=0.60\textwidth]{images/content/shopware-architecture}
+    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
+    \label{fig:shopware-architecture}
+\end{wrapfigure}\!\!\!
+Administration.
+Zusätzlich können die Sync-\acrshort{api} und die Sales-Channel-\acrshort{api} für die Anbindung externer Anwendungen
+verwendet werden, wie zum Beispiel Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
+Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
+\\\\
+Für die Entwicklung der \acrshort{ci}-Strategie wird der Fokus auf Shopware-Plugins gesetzt.
+Durch Plugins können der Shopware-Core, die Administrations-Oberfläche und die Storefront angepasst werden, wobei diese
+als abgekapselte Module entwickelt oder als Monolith zusammen mit dem Shopware-Projekt in einem gemeinsamen Repository
+verwaltet werden können.
+Shopwares Plugin-System baut auf dem Bundle-System von Symfony auf, um standardisierte, modulare Erweiterungen der
+Software zu ermöglichen, wobei das Bundle-System Funktionen wie Plugin-Lifecycle-Verwaltung bereitstellt.
+Symfony nutzt teils für eigene Core-Features das Bundle-System, um die einzelnen Teilbereiche des Frameworks modular zu
+gestalten.\footpartcite{shopware-plugins}
+Durch die solide Basis der Symfony-Bundles bieten Shopware-Plugins eine klare Struktur und eine hohe Erweiterbarkeit
+und fördern die Wiederverwendbarkeit von entwickelter Software für das Shop-System.
+Shopware-Plugins folgen einer vorgegebenen Orderstruktur.
+Hierbei wird die Plugin-Logik, zusammen mit Templates und Stylesheets im Ordner \shellinline{src} verwaltet,
+während sich Software-Tests für die eingeführte Logik in einem eigenen Order
+\shellinline{tests} befinden.
+Plugin-Konfigurationen können im Ordner \shellinline{config} angelegt werden.
+Zusätzlich können Bilder und andere öffentliche Ressourcen im \shellinline{public}-Verzeichnis hinterlegt werden.
+Da die in einem Shopware-Projekt eingeführte Logik am relevantesten für die \acrshort{ci}-Strategie ist, werden Tests
+auf die im \shellinline{src}-Order befindlichen Dateien beschränkt.
 
 \clearpage
