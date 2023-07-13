@@ -35,7 +35,7 @@ Shopware-basierte Projekt unterscheiden sich voneinander.
 Ungeachtet von Projekt und Version gibt es jedoch einige Grundvoraussetzungen für das Ausführen von Shopware.
 Die Programmiersprache PHP mit einigen Extensions und der Paketmanager Composer müssen in der ausführenden Umgebung
 installiert sein.
-Zusätzlich wird die Javascript-Runtime \glqq Node\grqq\ mit Paketmanager \acrshort{npm} benötigt, um das Frontend zu
+Zusätzlich wird die Javascript-Runtime\ \glqq Node\grqq\ mit Paketmanager\ \acrshort{npm} benötigt, um das Frontend zu
 bauen.
 Die Software setzt außerdem eine Datenbank für den Betrieb des Shops und das Durchführen von End-to-End-Tests voraus,
 und benötigt einen Webserver um aufgerufen werden zu können.
@@ -47,6 +47,7 @@ eingeführt werden.
 \footpartcite{shopware-requirements}
 In Abbildung\ \ref{fig:shopware-requirements} werden die Abhängigkeiten der Shopware-Platform und die verschiedenen
 Services für den Betrieb der Software aufgezeigt.
+Hierbei werden optionale Services in gestrichelt dargestellt.
 Um ein Projekt installieren und ausführen zu können, oder um Tests auf der Code-Base durchzuführen, wird also eine
 Umgebung vorausgesetzt, in der die benötigten Services und Tools installiert sind.
 
@@ -56,12 +57,12 @@ Um die Konzeption einer \acrshort{ci}-Pipeline durchführen zu können, müssen 
 Tools erfasst und für den Einsatz in Kundenprojekten bewertet werden.
 Dabei spielen verschiedene Aspekte eine Rolle, wie die Kompatibilität mit dem bestehenden Technologie-Stack, die
 Skalierbarkeit und die Benutzerfreundlichkeit.
-Nachfolgend werden verschiedene Kategorien von Tools und Services die für eine \acrshort{ci}-Pipeline genutzt werden
+Nachfolgend werden verschiedene Kategorien von Tools und Services, die für eine \acrshort{ci}-Pipeline genutzt werden
 können, vorgestellt.
 
 \subsubsection{Version Control Systems}
 
-Die Integration von Software wird durch \acrshort{vcs} ermöglicht.
+Die Integration von Software wird durch\ \acrshort{vcs} ermöglicht.
 Änderungen im Code werden hier hinzugefügt und verschiedene Versionsstände zusammengeführt.
 \acrshort{vcs} somit ein integraler Bestandteil von Continuous Integration, Fowler setzt das Führen eines einzelnen
 Source-Repositories voraus, welches die Software, inklusive aller Build- und Testing-Dateien, verwaltet.
@@ -209,7 +210,7 @@ Software-Tests sind ein nützliches Tool für \acrshort{ci}-Pipelines und helfen
 der einzelkomponenten bei einem Software-Release zu minimieren.
 Automatisierte Tests werden eingesetzt, um sicherzustellen, dass mit neuen Features weniger Wechselwirkungen mit vorher
 eingeführter Logik aufkommen und um Fehler im Entwicklungsprozess früher entdecken zu können.
-Das häufige, automatisierte Testing in der \acrshort{ci} kann sich positiv auf die Qualität der entwickelten
+Das häufige, automatisierte Testing in der\ \acrshort{ci} kann sich positiv auf die Qualität der entwickelten
 Software auswirken
 \footpartcite[281]{test-driven-development}\textsuperscript{,\ }\footpartcite[2570]{benefits-challenges}, somit sind
 Software-Tests im Hinblick auf Zielsetzung $Z_2$ der Arbeit relevant.
@@ -438,12 +439,109 @@ verschiedene Branching-Strukturen und Projekt-Ansätze erarbeitet.
 Zuletzt wird der Einsatz von Continuous Delivery und Deployment in der Strategie im Hinblick auf Shopware-Projekte
 bewertet.
 
-\subsubsection{Projekt-Struktur}
+\subsubsection{Projekt-Struktur und -Umgebung}
 
-% Strukturierung des Projekts (Wo liegen CI-Files, wo Projekt-Files, was gibt es noch?)
-% Branching-Strukturen
+Die Verzeichnis-Struktur von Projekten auf der Basis von Shopware 6 ist durch die Software vorgegeben.
+Führt man Shopware zum ersten Mal aus, werden 7 Verzeichnisse angelegt:
+\begin{wrapfigure}{l}{0.26\textwidth}
+    \centering
+    \includegraphics[width=0.244\textwidth]{images/content/shopware-folder-structure}
+    \captioncite[Eigene Darstellung]{}{Verzeichnis-Struktur eines Shopware-Projekts}
+    \label{fig:shopware-folder-structure}
+\end{wrapfigure}
+\begin{folders}
+    \vspace{-0.3cm}
+    \addtolength{\leftmargini}{-0.3cm}
+    \begin{itemize}
+        \item {
+            \shellinline{bin}:
+            Das \shellinline{bin}-Verzeichnis enthält Skripte und andere ausführbare Dateien, die Aktionen in der
+            Shopware-Platform auslösen.
+            So kann zum Beispiel die Administration oder die Storefront neu gebaut, der Cache geleert oder ein neuer
+            Backend-Benutzer angelegt werden.
+        }
 
-Die Verzeichnis-Struktur von Shopware 6 ist
+        \item {
+            \shellinline{config}:
+            Im \shellinline{config}-Verzeichnis, werden Konfigurationsdateien abgelegt, die das Verhalten von
+            Shopware steuern.
+            Hier können zum Beispiel Datenbank-, Cache-, Search-Engine- und Message-Queue-Konfigurationen gespeichert
+            werden.
+        }
+
+        \item {
+            \shellinline{custom}:
+            Benutzerdefinierte Plugins und Themes können im \shellinline{custom}-Verzeichnis angelegt werden.
+            Hierdurch kann die Funktionalität und das Aussehen von Shopware an die spezifischen Anforderungen eines
+            Projekts angepasst werden.
+        }
+
+        \item {
+            \shellinline{files}:
+            Hochgeladene Dateien und Medien, wie zum Beispiel Produktbilder, Downloads und andere Dateien, die über das
+            Backend hochgeladen werden, werden im \shellinline{files}-Verzeichnis gespeichert.
+        }
+
+        \item {
+            \shellinline{public}:
+            Alle öffentlich zugänglichen Dateien der Anwendung, einschließlich statischer Ressourcen wie \acrshort{css},
+            JavaScript, Schriftarten und generierte Bilder und Thumbnails, werden im \shellinline{public}-Verzeichnis
+            abgelegt.
+        }
+    \end{itemize}
+\end{folders}
+
+\clearpage
+
+\begin{itemize}
+    \item {
+        \shellinline{var}:
+        Temporäre Dateien, die während der Ausführung von Shopware generiert werden, wie Cache-Dateien, Log-Dateien und
+        Sitzungsdaten, werden im \shellinline{var}-Verzeichnis abgelegt.
+    }
+
+    \item {
+        \shellinline{vendor}:
+        Das \shellinline{vendor}-Verzeichnis beherbergt alle Abhängigkeiten der Shopware-Instanz und dessen Plugins.
+        Diese Abhängigkeiten werden über den Paketmanager Composer verwaltet.
+    }
+\end{itemize}
+
+In Abbildung\ \ref{fig:shopware-folder-structure} wird eine Übersicht über die Verzeichnis-Struktur eines
+Shopware-Projekts gegeben.
+Um die zu konzipierende Strategie möglichst flexibel zu gestalten, macht es Sinn die Shopware-Installation mit all
+diesen Verzeichnissen in einen eigenen Ordner auszulagern.
+Dies hat zur Folge, dass die Dateien, die zum Ausführen und Testen des Shops benötigt werden, getrennt
+\begin{wrapfigure}{l}{0.3\textwidth}
+    \centering
+    \includegraphics[width=0.25\textwidth]{images/content/shopware-ci-folder-structure}
+    \captioncite[Eigene Darstellung]{}{Geplante Verzeichnis-Struktur der \acrshort{ci}-Strategie}
+    \label{fig:shopware-ci-folder-structure}
+\end{wrapfigure}
+von den Dateien gelagert sind, die den Shop ausmachen.
+Dadurch kann ein beliebiges Shop-Projekt in den \shellinline{shopware}-Ordner gelegt werden, wobei weiterhin die
+Möglichkeit zur Anpassung der ausführenden Umgebung und der Testing-Tools besteht.
+In der \acrshort{ci}-Strategie soll neben dem \shellinline{shopware}-Verzeichnis ein eigenes Composer-Projekt mit
+\shellinline{vendor}-Ordner und verschiedene Verzeichnisse für die Tool-Konfigurationen und Auswertungen und Caches
+der Tests existieren.
+Die restlichen Konfigurations-Dateien für etwaige Tools und Services liegen dabei direkt im Hauptverzeichnis des
+\mbox{Projekts}.
+\\\\
+In Abbildung\ \ref{fig:shopware-ci-folder-structure} kann die geplante Verzeichnis-Struktur für die
+\acrshort{ci}-Strategie eingesehen werden, hierbei werden Ordner in durchgehenden und Dateien mit gestrichelten Linien
+dargestellt.
+Neben diesen Verzeichnissen und Dateien besteht die Struktur des Projekts auch aus einer Umgebung, in der die
+Shopware-Platform ausgeführt, getestet und analysiert werden kann.
+Eine Umgebung muss in diesem Fall in einer \acrshort{ci}-Pipeline ausführbar sein und die Grundbedürfnisse der
+Shopware-Instanz bereitstellen.
+Dies beinhaltet die von Shopware genutzte PHP-Version mit PHP-Erweiterungen, Composer, Node, eine
+Webserver-Software und weitere Voraussetzungen.
+Shopware stellt für diese Anforderung ein Docker-Image bereit, welches für verschiedene Shopware-Versionen
+die unterschiedlichen PHP- und Composer-Versionen und Node, den Apache Webserver und alle anderen Abhängigkeiten
+der Plattform bereithält.
+Docker ist eine Technologie, die das Prinzip der Containerization
+Der Vorteil eines Docker-Images ist, dass diese sowohl in einer \acrshort{ci}-Pipeline, als auch in einer lokalen
+Entwicklungsumgebung zum Ausführen der Software genutzt werden kann.
 
 \subsubsection{Pipelines}
 

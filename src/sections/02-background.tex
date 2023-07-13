@@ -19,7 +19,7 @@ Die Disziplin umfasst Geschäftsstrategie und Planung, sowie Entwicklung und den
 Diese kontinuierliche Integrierung von Software ist sehr kompatibel mit den häufigen iterationen in der agilen
 Softwareentwicklung und wurde unter anderem durch die agile Methodik des Extreme Programming bekannt.
 \footpartcite{fitzgerald}
-Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci}, \acrshort{cde} und \acrshort{cd}
+Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci},\ \acrshort{cde} und \acrshort{cd}
 kurz erläutert.
 
 \subsubsection{Agile Software Development}
@@ -49,18 +49,18 @@ Continuous Delivery (\acrshort{cde}) erweitert das Konzept der Continuous Integr
 Software stetig in einem Zustand ist, der sicher in die Produktionsumgebung ausgerollt werden kann.
 Dies wird durch das Einführen von Integrationstests, die die Funktionalität der vollständigen Software inklusive aller
 Module testen, erreicht.
-Das Ziel von \acrshort{cde} ist es, den Prozess der Softwareauslieferung zu beschleunigen und zuverlässiger zu machen,
+Das Ziel von\ \acrshort{cde} ist es, den Prozess der Softwareauslieferung zu beschleunigen und zuverlässiger zu machen,
 indem menschliche Fehler minimiert und schnelles Feedback über Probleme in der Produktionsumgebung ermöglicht wird.
 \footpartcite{humble}
 
 \subsubsection{Continuous Deployment}
 
 Continuous Deployment (\acrshort{cd}) ist der nächste Schritt nach Continuous Delivery.
-Bei \acrshort{cd} wird jede Änderung, die den automatisierten Testprozess besteht, automatisch in die
+Bei\ \acrshort{cd} wird jede Änderung, die den automatisierten Testprozess besteht, automatisch in die
 Produktionsumgebung eingespielt.\footpartcite[3911]{tools-and-practises}
 Dies bedeutet, dass neue Features und Updates mehrmals täglich an die Endbenutzer ausgeliefert werden können, was eine
 schnelle Reaktion auf Marktbedingungen und Kundenfeedback ermöglicht.
-Es ist jedoch zu beachten, dass \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung
+Es ist jedoch zu beachten, dass\ \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung
 erfordert, um die Anzahl der in der Produktionsumgebung aufkommenden Fehler zu minimieren.
 Der Zusammenhang zwischen Continuous Integration, Delivery und Deployment wird in Abbildung\ \ref{fig:ci-cde-cd}
 aufgezeigt.
@@ -76,27 +76,27 @@ aufgezeigt.
 
 Um die Bedeutung und den Nutzen von Continuous Integration und des Continuous-Software-Engineering für die
 Softwareentwicklung nachvollziehen zu können, ist es hilfreich, einen Blick auf die historische Entwicklung und die
-grundlegenden Prinzipien der \acrshort{ci} zu werfen.
+grundlegenden Prinzipien der\ \acrshort{ci} zu werfen.
 Ein Kernprinzip hinter Continuous Integration wurde bereits im Jahr 1991 von Grady Booch definiert.
 Hierbei werden Software-Releases nicht als ein großes Ereignis betrachtet, sondern regelmäßig durchgeführt, wobei
 die vollständige Software stetig größer wird.\footpartcite{booch}
-Kent Beck popularisierte im Jahr 1998 die Disziplin des \glqq Extreme Programming\grqq, wobei großer Wert auf das frühe
+Kent Beck popularisierte im Jahr 1998 die Disziplin des\ \glqq Extreme Programming\grqq, wobei großer Wert auf das frühe
 und regelmäßige Testen und Integrieren der entwickelten Komponenten einer Software gelegt wird.
 Beck behauptet hierbei, dass ein Feature, für welches es keine automatisierten Tests gibt, auch nicht funktioniert.
 \footpartcite[2--4]{extreme-programming}
 Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Methodiken in dem Artikel
 \glqq Continuous Integration\grqq\ unter dem gleichnamigen Begriff zusammen.
-Fowler beschreibt \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
+Fowler beschreibt\ \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
 wobei Integration als der Build-Prozess, inklusive automatisierter Tests, für die vollständige Software mitsamt der
 erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
-Ein Ziel dieser Vorgehensweise ist die Reduktion der \glqq Cycle Time\grqq, welche die Zeitspanne von der Entwicklung
+Ein Ziel dieser Vorgehensweise ist die Reduktion der\ \glqq Cycle Time\grqq, welche die Zeitspanne von der Entwicklung
 eines Features bis zum Erhalten des Kundenfeedbacks beschreibt.\footpartcite[2580]{benefits-challenges}
 Da die erfolgreiche Implementierung von Continuous Integration auf der Kombination von verschiedenen Methoden zur
 Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlüsselaspekte kurz dargestellt.
 
 \subsubsection{Regelmäßige Integration}
 
-Die namensgebende Methodik der \acrshort{ci} ist das regelmäßige Integrieren von Software und damit Verbunden ist der
+Die namensgebende Methodik der\ \acrshort{ci} ist das regelmäßige Integrieren von Software und damit Verbunden ist der
 Software-Release.
 In der traditionellen Softwareentwicklung wird der Release als ein einmaliges, großes Ereignis betrachtet.
 Als Integration wird der Prozess des Einbindens einer einzeln entwickelten Komponente in die bisher bestehende
@@ -107,13 +107,13 @@ dies als eigene Phase in der Entwicklung einer Applikation galt.
 In einem \acrshort{ci}-gestützten Projekt wird der Prozess des Software-Releases vollständig automatisiert, sodass jedes
 Teammitglied eine entwickelte Komponente schnell Integrieren und einen Software-Build erzeugen kann, was sich positiv
 auf die Cycle Time auswirkt.\footpartcite{fowler}
-In der Regel finden das Bauen und Testen der Software in einer \glqq Pipeline\grqq\ statt, welche die genutzten
+In der Regel finden das Bauen und Testen der Software in einer\ \glqq Pipeline\grqq\ statt, welche die genutzten
 \acrshort{ci}-Tools wie Test-Suites und Static-Code-Analysis ausführt.\footpartcite[2571]{benefits-challenges}
 
 \subsubsection{Automatisierte Tests}
 
 Neben der regelmäßigen Integrierung von Code gelten automatisierte Software-Tests und Quality-Checks als ein wichtiger
-Aspekt von \acrshort{ci}.
+Aspekt von\ \acrshort{ci}.
 Hierbei werden oftmals Unit-Tests verwendet, welche eine einzelne Softwarekomponente auf
 ihre Funktion prüfen, abgekapselt von anderen Komponenten.\footpartcite[280]{test-driven-development}
 Wenn ein Test fehlschlägt, wird in der Regel die Pipeline unterbrochen.
@@ -153,11 +153,11 @@ Darüber hinaus fördert das schnelle Feedback die Kommunikation und Zusammenarb
 Shopware wurde als Online-Shop-Software im Jahr 2000 durch Stefan Hamann ins Leben gerufen\footpartcite{shopware-story}
 und bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des PHP-Frameworks
 \glqq Symfony\grqq.
-Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem \acrshort{cms}
-\glqq Drupal\grqq, dem Shop-System \glqq Magento\grqq\ und einigen weiteren Programmen\footpartcite{symfony-projects}
+Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem\ \acrshort{cms}
+\glqq Drupal\grqq, dem Shop-System\ \glqq Magento\grqq\ und einigen weiteren Programmen\footpartcite{symfony-projects}
 als Grundlage genutzt und bildet somit ein erprobtes Fundament für die Shopware-Plattform.
 Shopware selbst ist nach der Installation bereits voll funktionsfähig und kann mit einem Backend und optional
-mit einem Frontend oder für das Konsumieren der mitgelieferten \acrshort{api} eingerichtet werden.
+mit einem Frontend oder für das Konsumieren der mitgelieferten\ \acrshort{api} eingerichtet werden.
 Die Software kann auf verschiedenen Plattformen gehostet werden, darunter Linux-Server und containerisierte Umgebungen.
 Darüber hinaus bietet Shopware als Unternehmen auch eine eigene Hosting-Lösung an, die speziell auf die Anforderungen
 der Software zugeschnitten ist.
@@ -177,7 +177,7 @@ Das Framework ist weit verbreitet und stellt eine robuste Grundlage für die Ent
 dar.
 Es beinhaltet essenzielle Funktionen, wie Dependency Injection (\acrshort{di}), Profiling, Object-Relational Mapping
 (\acrshort{orm}), Session Handling, Routing, Formularverwaltung und eine Template-Engine.
-Durch den Einsatz des Paket-Managers \glqq Composer\grqq\ können diese Grundfunktionen erweitert und zusätzliche
+Durch den Einsatz des Paket-Managers\ \glqq Composer\grqq\ können diese Grundfunktionen erweitert und zusätzliche
 Features in ein Projekt importiert werden.
 Symfony bietet eine Reihe von Konsolenbefehlen, die das Erstellen von eigenen Komponenten, die Durchführung von
 Datenbankmigrationen, das Ausführen von Tests und vieles mehr erleichtern.
@@ -201,7 +201,7 @@ und Durchführen von Zahlungen ermöglicht.
 Die Storefront ist eine Komponente, welche optional auch deaktiviert und auf Wunsch durch die
 Nutzung der Store-\acrshort{api} mit einer eigenen Applikation ersetzt werden kann.
 Im Standardumfang liefert die Shopware-Platform alle drei Hauptkomponenten aus.
-Diese stehen als Mono-Repository mit dem Namen \shellinline{shopware/platform} auf GitHub zur Verfügung.
+Diese stehen als Mono-Repository mit dem Namen\ \shellinline{shopware/platform} auf GitHub zur Verfügung.
 \footpartcite{shopware-architecture}
 Neben den drei Hauptkomponenten bietet die Shopware-Platform verschiedene Anbindungsmöglichkeiten zur Anpassung des
 Shop-Systems.
@@ -217,6 +217,7 @@ Administration.
 Zusätzlich können die Sync-\acrshort{api} und die Sales-Channel-\acrshort{api} für die Anbindung externer Anwendungen
 verwendet werden, wie zum Beispiel Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
 Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
+Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
 \\\\
 Für die Entwicklung der \acrshort{ci}-Strategie wird der Fokus auf Shopware-Plugins gesetzt.
 Durch Plugins können der Shopware-Core, die Administrations-Oberfläche und die Storefront angepasst werden, wobei diese
@@ -229,10 +230,9 @@ gestalten.\footpartcite{shopware-plugins}
 Durch die solide Basis der Symfony-Bundles bieten Shopware-Plugins eine klare Struktur und eine hohe Erweiterbarkeit
 und fördern die Wiederverwendbarkeit von entwickelter Software für das Shop-System.
 Shopware-Plugins folgen einer vorgegebenen Orderstruktur.
-Hierbei wird die Plugin-Logik, zusammen mit Templates und Stylesheets im Ordner \shellinline{src} verwaltet,
-während sich Software-Tests für die eingeführte Logik in einem eigenen Order
-\shellinline{tests} befinden.
-Plugin-Konfigurationen können im Ordner \shellinline{config} angelegt werden.
+Hierbei wird die Plugin-Logik, zusammen mit Templates und Stylesheets im Ordner\ \shellinline{src} verwaltet,
+während sich Software-Tests für die eingeführte Logik in einem eigenen Ordner\ \shellinline{tests} befinden.
+Plugin-Konfigurationen können im Ordner\ \shellinline{config} angelegt werden.
 Zusätzlich können Bilder und andere öffentliche Ressourcen im \shellinline{public}-Verzeichnis hinterlegt werden.
 Da die in einem Shopware-Projekt eingeführte Logik am relevantesten für die \acrshort{ci}-Strategie ist, werden Tests
 auf die im \shellinline{src}-Order befindlichen Dateien beschränkt.
