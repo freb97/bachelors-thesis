@@ -78,8 +78,9 @@ Shopware-Platform}
 {\usebibmacro{prenote}}
 {%
     \hyperref[cite.\thefield{entrykey}]{%
-        \setunit{\addnbspace}
+        \setunit{\addnbspace}%
         \printtext{Vgl.}%
+        \setunit{\addnbspace}%
         \printnames{labelname}%
         \setunit{\labelnamepunct}%
         \printfield[citetitle]{title}%
@@ -118,6 +119,15 @@ Shopware-Platform}
 \renewcommand{\footnotesize}{\scriptsize}
 \setlength{\footnotesep}{0pt}
 \setlength{\skip\footins}{0.5cm}
+
+% Fix footnote second line indentation
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+    \begin{hangparas}{1.6em}{1}
+        \noindent \makebox[1.2em]{\@makefnmark} #1
+    \end{hangparas}
+}
+\makeatother
 
 % List styling
 \renewcommand{\labelitemii}{$\circ$}

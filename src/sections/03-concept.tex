@@ -433,13 +433,13 @@ gesammelt:
 Im Folgenden wird die Konzeption der \acrshort{ci}-Strategie für Kundenprojekte auf Basis der Shopware-Platform
 durchgeführt.
 Zunächst wird eine generelle Projekt-Struktur für die Strategie definiert, wobei besonderer Wert auf die
-Kompatibilität mit unterschiedlichen Shopware-Projekten gesetzt wird.
+Kompatibilität mit unterschiedlichen Shopware-Projekten in verschiedenen Umgebungen gesetzt wird.
 Anschließend werden, anhand der im vorherigen Abschnitt untersuchten \acrshort{ci}/\acrshort{cd}-Tools, Pipelines für
 verschiedene Branching-Strukturen und Projekt-Ansätze erarbeitet.
 Zuletzt wird der Einsatz von Continuous Delivery und Deployment in der Strategie im Hinblick auf Shopware-Projekte
 bewertet.
 
-\subsubsection{Projekt-Struktur und -Umgebung}
+\subsubsection{Projekt-Struktur und Umgebung}
 
 Die Verzeichnis-Struktur von Projekten auf der Basis von Shopware 6 ist durch die Software vorgegeben.
 Führt man Shopware zum ersten Mal aus, werden 7 Verzeichnisse angelegt:
@@ -449,7 +449,7 @@ Führt man Shopware zum ersten Mal aus, werden 7 Verzeichnisse angelegt:
     \captioncite[Eigene Darstellung]{}{Verzeichnis-Struktur eines Shopware-Projekts}
     \label{fig:shopware-folder-structure}
 \end{wrapfigure}
-\begin{folders}
+\begingroup
     \vspace{-0.3cm}
     \addtolength{\leftmargini}{-0.3cm}
     \begin{itemize}
@@ -489,7 +489,7 @@ Führt man Shopware zum ersten Mal aus, werden 7 Verzeichnisse angelegt:
             abgelegt.
         }
     \end{itemize}
-\end{folders}
+\endgroup
 
 \clearpage
 
@@ -538,10 +538,20 @@ Dies beinhaltet die von Shopware genutzte PHP-Version mit PHP-Erweiterungen, Com
 Webserver-Software und weitere Voraussetzungen.
 Shopware stellt für diese Anforderung ein Docker-Image bereit, welches für verschiedene Shopware-Versionen
 die unterschiedlichen PHP- und Composer-Versionen und Node, den Apache Webserver und alle anderen Abhängigkeiten
-der Plattform bereithält.
-Docker ist eine Technologie, die das Prinzip der Containerization
-Der Vorteil eines Docker-Images ist, dass diese sowohl in einer \acrshort{ci}-Pipeline, als auch in einer lokalen
-Entwicklungsumgebung zum Ausführen der Software genutzt werden kann.
+der Plattform bereithält.\footpartcite{shopware-docker}
+Docker und das darunterliegende Prinzip der Containerization sind Technologien, die Linux-Kernel-Features nutzen, um
+Anwendungen und ihre Abhängigkeiten in einem leichtgewichtigen, eigenständigen und isolierten Paket zu bündeln, das auf
+jeder Plattform ausgeführt werden kann, die Container unterstützt.
+Dies ermöglicht eine hohe Portabilität und Konsistenz über verschiedene Umgebungen hinweg und führt zu einem
+Performance-Zuwachs gegenüber der traditionellen Virtualisierung.
+Ein Docker-Image ist eine Vorlage für einen Docker-Container, der eine laufende Instanz eines Docker-Images ist.
+Ein wesentlicher Vorteil eines Docker-Images besteht darin, dass es sowohl in einer \acrshort{ci}-Pipeline, als auch in
+einer lokalen Entwicklungsumgebung oder in Produktion zum Ausführen der Software genutzt werden kann.
+\footpartcite{docker}
+Container bieten somit ein hohes Maß an Reproduzierbarkeit und Konsistenz über verschiedene Umgebungen hinweg.
+Damit Tests und Analyse-Tools sowohl in einer Pipeline, als auch bei der Entwicklung ausgeführt werden können, wird in
+der Strategie eine Konfiguration für das lokale Ausführen der Shopware-Instanz in Docker-Images hinterlegt.
+\acrshort{ci}-Tools sollten in der Regel lokal Ausführbar sein um nicht in
 
 \subsubsection{Pipelines}
 
