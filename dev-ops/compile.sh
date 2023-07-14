@@ -20,9 +20,10 @@ cp -r ${INPUTDIR}/* ${OUTPUTDIR}/.
 # Compile document
 SECONDS=0
 ERROR=false
-pdflatex -recorder -jobname=mydocument --interaction=batchmode -draftmode -shell-escape ${ENTRYFILE}
-makeglossaries ${ENTRYFILE}
+pdflatex --interaction=batchmode -draftmode -shell-escape ${ENTRYFILE}
 biber --quiet --input-directory=${OUTPUTDIR} --output-directory=${OUTPUTDIR} ${ENTRYFILE}
+makeglossaries ${ENTRYFILE}
+pdflatex --interaction=batchmode -draftmode -shell-escape ${ENTRYFILE}
 pdflatex --interaction=batchmode -shell-escape ${ENTRYFILE}
 
 # Move PDF to build folder if generated successfully

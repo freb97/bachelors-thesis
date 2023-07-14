@@ -548,19 +548,57 @@ Ein Docker-Image ist eine Vorlage für einen Docker-Container, der eine laufende
 Ein wesentlicher Vorteil eines Docker-Images besteht darin, dass es sowohl in einer \acrshort{ci}-Pipeline, als auch in
 einer lokalen Entwicklungsumgebung oder in Produktion zum Ausführen der Software genutzt werden kann.
 \footpartcite{docker}
-Container bieten somit ein hohes Maß an Reproduzierbarkeit und Konsistenz über verschiedene Umgebungen hinweg.
-Damit Tests und Analyse-Tools sowohl in einer Pipeline, als auch bei der Entwicklung ausgeführt werden können, wird in
-der Strategie eine Konfiguration für das lokale Ausführen der Shopware-Instanz in Docker-Images hinterlegt.
-\acrshort{ci}-Tools sollten in der Regel lokal Ausführbar sein um nicht in
+Da die \acrshort{ci}-Strategie auf dem Betreiben von Shopware in einer isolierten und reproduzierbaren Umgebung zum
+Ausführen von Testing- und \acrshort{qa}-Tools fußt, wurde sich für die Nutzung des von Shopware gestellten
+Docker-Images in den Pipelines entschieden.
+Zunächst wird allerdings eine ausführende Umgebung für die \acrshort{ci}-Pipelines benötigt.
+GitLab CI/CD kann zum Verwalten von Pipelines genutzt werden, um auf Änderungen in einem\ \acrshort{vcs} zu reagieren.
+Der erhoffte Vorteil in der Nutzung des Services liegt in der Breite der Unterstützung, da es sich um eine große und
+populäre \acrshort{ci}-Software handelt, und in der Möglichkeit, die Software selbst zu hosten und verschiedene
+\acrshort{vcs} Anzubinden.
+Somit ist die Strategie nicht an eine bestimmte \acrshort{vcs}-Software gebunden und kann ungeachtet der Plattform in
+Projekten integriert werden.
 
 \subsubsection{Pipelines}
 
-% Aufbau der Pipelines | Commit-CI vs. Merge-CI (Mal mit E2E, mal ohne, je nach Build-Time)
-% Auswahl der CI-Tools (GitLab mit Gitlab CI/CD + Unit/Mutation/E2E-Tests + Static analysis)
+Da GitLab CI/CD mit verschiedenen\ \acrshort{vcs} genutzt werden kann, wird sich in der weiteren Konzeption auf die
+Gestaltung anpassbarer Pipelines mit Hinblick auf unterschiedliche Branching-
+\begin{wrapfigure}{r}{0.7\textwidth}
+    \centering
+    \includegraphics[width=0.675\textwidth]{images/content/ci-pipeline-concept}
+    \captioncite[Eigene Darstellung]{}{Visualisierung der konzipierten \acrshort{ci}-Pipeline}
+    \label{fig:ci-pipeline-concept}
+\end{wrapfigure}
+Strukturen verschiedener Shopware-Projekte konzentriert.
+Pipelines reagieren auf Status-Veränderungen in einer \acrshort{vcs}-Software und können somit an verschiedene
+Aktionen geknüpft werden.
+Zunächst soll eine grundlegende Pipeline definiert werden, die bei jedem Push in einen Branch ohne eine definierte
+Deployment-Umgebung läuft.
+Diese Pipeline führt einen Build- und einen Testing-Prozess durch.
+Im Build-Prozess werden die \acrshort{ci}-Tools und die Abhängigkeiten der Shopware-Platform installiert.
+Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Test- und \acrshort{qa}-Tools, inklusive
+lang-andauernder End-to-End-Tests durch Cypress.
+Im späteren Verlauf der Entwicklung soll die Möglichkeit bestehen, diese Tests nur in Branches mit definierter
+Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird.
+Eine grobe Richtlinie für die maximale Dauer eines \acrshort{ci}-Builds ist die Zehn-Minuten-Marke, da viele Entwickler
+auf das erfolgreiche Durchlaufen der Pipeline warten, bevor sie mit der nächsten Aufgabe beginnen.
+\footpartcite[87--88]{duvall}
+In der Regel gibt es in einem Shopware-Projekt der Firma best it bis zu drei Branches, für die eine Umgebung vorgesehen
+ist: \shellinline{development},\ \shellinline{staging} und \shellinline{main}.
+
+% Umgebungen erklären (Development, Staging, Main)
+% Abbildung referenzieren und erklären (im Hinblick auf Umgebungen und gewählte Tools)
+% Eventuell ausgewählte Tools begründen?
+% Übergang zu Continuous Delivery
 
 \subsubsection{Continuous Delivery \& Deployment}
 
-% Continuous Delivery (nicht Continuous Deployment, da Develop-, Staging- und Live und Kunde muss abnahme machen und
-% wegen Sicherheitsanforderungen an E-Commerce-Applikationen, bla bla)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/content/ci-architecture-concept}
+    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Architektur der konzipierten
+        \acrshort{ci}-Strategie}
+    \label{fig:ci-architecture-concept}
+\end{figure}
 
 \clearpage
