@@ -562,43 +562,211 @@ Projekten integriert werden.
 \subsubsection{Pipelines}
 
 Da GitLab CI/CD mit verschiedenen\ \acrshort{vcs} genutzt werden kann, wird sich in der weiteren Konzeption auf die
-Gestaltung anpassbarer Pipelines mit Hinblick auf unterschiedliche Branching-
+Gestaltung anpassbarer Pipelines im Hinblick auf unterschiedliche Branching-Strukturen für verschiedene
+Shopware-Projekte konzentriert.
+Pipelines reagieren auf Status-Veränderungen in einer \acrshort{vcs}-Software und können so an verschiedene
+Aktionen geknüpft werden.
 \begin{wrapfigure}{r}{0.7\textwidth}
     \centering
     \includegraphics[width=0.675\textwidth]{images/content/ci-pipeline-concept}
     \captioncite[Eigene Darstellung]{}{Visualisierung der konzipierten \acrshort{ci}-Pipeline}
     \label{fig:ci-pipeline-concept}
 \end{wrapfigure}
-Strukturen verschiedener Shopware-Projekte konzentriert.
-Pipelines reagieren auf Status-Veränderungen in einer \acrshort{vcs}-Software und können somit an verschiedene
-Aktionen geknüpft werden.
 Zunächst soll eine grundlegende Pipeline definiert werden, die bei jedem Push in einen Branch ohne eine definierte
 Deployment-Umgebung läuft.
 Diese Pipeline führt einen Build- und einen Testing-Prozess durch.
 Im Build-Prozess werden die \acrshort{ci}-Tools und die Abhängigkeiten der Shopware-Platform installiert.
 Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Test- und \acrshort{qa}-Tools, inklusive
-lang-andauernder End-to-End-Tests durch Cypress.
+lang-andauernder Tests durch End-to-End-Testing.
 Im späteren Verlauf der Entwicklung soll die Möglichkeit bestehen, diese Tests nur in Branches mit definierter
 Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird.
-Eine grobe Richtlinie für die maximale Dauer eines \acrshort{ci}-Builds ist die Zehn-Minuten-Marke, da viele Entwickler
+Eine grobe Richtlinie für die maximale Dauer einer Pipeline ist die Zehn-Minuten-Marke, da viele Entwickler
 auf das erfolgreiche Durchlaufen der Pipeline warten, bevor sie mit der nächsten Aufgabe beginnen.
 \footpartcite[87--88]{duvall}
+Eine möglichst kurze Durchlaufzeit von \acrshort{ci}-Pipelines ist somit im Hinblick auf Ziel $Z_1$ der Arbeit für die
+Effizienz von Softwareentwicklungsteams relevant.\\
 In der Regel gibt es in einem Shopware-Projekt der Firma best it bis zu drei Branches, für die eine Umgebung vorgesehen
 ist: \shellinline{development},\ \shellinline{staging} und \shellinline{main}.
+Die Development-Umgebung repräsentiert den Stand des \shellinline{development}-Branches und ist die erste Server-Instanz
+die Entwickler zum Testen eines Features verwenden können.
+Diese Umgebung ist in der Regel stabil, kann aber Ausfälle verkraften, da weder der Endkunde, noch der Auftraggeber
+Zugriff darauf haben.
+Der \shellinline{staging}-Branch stellt die Basis für die Staging-Umgebung bereit.
+Hierbei handelt es sich um eine stabile Umgebung, in die die erfolgreich getesteten Änderungen des
+\shellinline{development}-Branches eingeführt werden, sodass der Auftraggeber des Shops diesen zustimmen kann, bevor
+sie den Endkunden im Produktions-System erreichen.
+Letztlich werden die vom Auftraggeber freigegebenen Änderungen gesammelt vom \shellinline{staging}-Branch in den
+\shellinline{main}-Branch überführt.
+Dieser Branch repräsentiert die Produktions-Umgebung, auf der die Endkunden und eigentlichen Shop-Nutzer Einkäufe
+tätigen können.
+Da zu Anfang eines Projekts oftmals noch keine Staging- und Development-Umgebung existiert, muss die
+\acrshort{ci}-Strategie flexibel sein und an die Branching-Strategien verschiedener Projekten in unterschiedlichen
+Phasen angepasst werden können.
+\\\\
+In Abbildung\ \ref{fig:ci-pipeline-concept} wird eine konzipierte \acrshort{ci}-Pipeline in Beachtung der verschiedenen
+möglichen Umgebungen eines Shopware-Projekts aufgezeigt.
+Hierbei werden verschiedene Arten von Branches in einem\ \acrshort{vcs} dargestellt, welche zunächst die gleiche Aktion
+auslösen, den Build-Prozess.
+Dort werden die \acrshort{ci}-Tools und die Abhängigkeiten von Shopware für die anschließende Nutzung in der
+Testing-Stage installiert.
+Die Testing-Stage wird nach erfolgreichem Durchlaufen der Build-Stage ausgeführt und ist in der Abbildung in zwei
+Teile separiert.
+Im oberen Teil werden die gewählten Testing- und \acrshort{qa}-Tools für JavaScript-Code der Strategie aufgezeigt,
+während der untere Teil die Tools für PHP darstellt.
+Wenn alle Jobs der Testing-Stage erfolgreich durchgelaufen sind, wird, je nach Art des Ausgangs-Branches, ein
+Deployment-Prozess für die jeweilige Umgebung angestoßen.
+Die Deployment-Stage liefert dann den Code des Ausgangs-Branches an die Development-, Staging- oder
+Produktions-Umgebung aus.
+Die für die Pipelines ausgewählten Tools unterteilen sich in folgende Kategorien:
+\\\\
+\noindent
+{\setstretch{0.9}
+    \begin{minipage}[t]{0.5\textwidth}
+        \textbf{PHP:}
 
-% Umgebungen erklären (Development, Staging, Main)
-% Abbildung referenzieren und erklären (im Hinblick auf Umgebungen und gewählte Tools)
-% Eventuell ausgewählte Tools begründen?
-% Übergang zu Continuous Delivery
+        \begin{itemize}
+            \item {
+                \textbf{Unit-Testing:}
+
+                \begin{itemize}
+                    \item { PHPUnit }
+                \end{itemize}
+            }
+
+            \item {
+                \textbf{Mutation-Testing:}
+
+                \begin{itemize}
+                    \item { Infection }
+                \end{itemize}
+            }
+
+            \item {
+                \textbf{Static-Code-Analysis:}
+
+                \begin{itemize}
+                    \item { PHP\_CodeSniffer }
+                    \item { PHP Mess Detector }
+                    \item { PHPStan }
+                    \item { Deptrac }
+                    \item { License-Checker }
+                    \item { Security-Checker }
+                \end{itemize}
+            }
+        \end{itemize}
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\textwidth}
+        \textbf{JavaScript:}
+
+        \begin{itemize}
+            \item {
+                \textbf{Unit-Testing:}
+
+                \begin{itemize}
+                    \item { Jest }
+                \end{itemize}
+            }
+
+            \item {
+                \textbf{End-to-End-Testing:}
+
+                \begin{itemize}
+                    \item { Cypress }
+                \end{itemize}
+            }
+
+            \item {
+                \textbf{Static-Code-Analysis:}
+
+                \begin{itemize}
+                    \item { Eslint }
+                    \item { Danger JS }
+                \end{itemize}
+            }
+        \end{itemize}
+    \end{minipage}
+}
+\clearpage
+
+Die Auswahl der genannten Tools basiert auf verschiedenen Faktoren.
+Bei der Auswahl der Tools für das Unit-Testing wurde auf PHPUnit und Jest zurückgegriffen, da diese weit verbreitet sind
+und eine umfangreiche Dokumentation sowie eine aktive Community bieten.
+Für das Mutation-Testing wurde Infection ausgewählt, da es eine direkte Integration mit PHPUnit bietet.
+Die ausgewählten Tools für die statische Code-Analyse, PHP\_CodeSniffer, PHP Mess Detector, PHPStan, Deptrac,
+License-Checker und Security-Checker für PHP sowie Eslint und Danger JS für JavaScript, helfen dabei, den Code auf
+Einhaltung von Coding-Standards, potenzielle Fehler und Sicherheitsprobleme zu überprüfen.
+Cypress wurde für das End-to-End-Testing ausgewählt, da es eine einfach zu verwendende und leistungsstarke Lösung für
+das Testen von Webanwendungen bietet und bereits eine Schnittstelle zur Anbindung an Shopware existiert.
+Die konzipierte \acrshort{ci}-Pipeline ist flexibel und kann an die spezifischen Anforderungen und die
+Branching-Strategie eines Projekts angepasst werden.
+Die gewählten Tools bilden hierbei eine Grundlage für eine möglichst breite Abdeckung des zu testenden Quellcodes und
+der festgelegten Konventionen des Projekts, sind aber nicht gänzlich vorgeschrieben.
+Die Pipeline soll im weiteren Projektverlauf um weitere Tools ergänzt und angepasst werden können.
+\\\\
+Durch den Einsatz der \acrshort{ci}-Pipeline sollen Entwicklerteams effizienter arbeiten, die Codequalität erhöhen
+und die interne Kommunikation können.
+Wichtig für die Kommunikation ist hierbei, dass die \acrshort{ci}-Tools und Prozesse kontinuierliches Feedback über den
+Stand des Codes gewähren.
+GitLab CI/CD kann zum Versenden von Nachrichten konfiguriert werden, welche bei Abbruch einer Pipeline auf Fehler im
+Quellcode aufmerksam machen.
+Durch die Weboberfläche wird hierbei Feedback zur Art des Fehlers und dessen Position in den zu testenden Dateien
+gegeben.
+Kontinuierliches Feedback bietet also die Möglichkeit, Entwicklern mehr Informationen über den aktuellen Status der
+Software mehrerer Projekte zukommen zu lassen.
+Diese Projektinformationen können dabei aggregieren werden, um mit der Zeit Trends innerhalb eines Projektes feststellen
+zu können.\footpartcite[203--211]{duvall}
+Das kontinuierliche Feedback durch die \acrshort{ci}-Pipeline an die Entwickler des Teams ist somit zum Erreichen des
+Ziels $Z_3$ der Strategie relevant, da es zu einer Steigerung der internen Kommunikation führen kann.
 
 \subsubsection{Continuous Delivery \& Deployment}
+
+Neben der kontinuierlichen Prüfung des Quellcodes in der Testing-Stage und dem Erstellen einer Release-Fähigen
+Software durch den Build-Prozess ist die Deployment-Stage ein weiterer wichtiger Aspekt beim Betreiben einer
+\acrshort{ci}-Strategie.
+Um die automatisiert gebaute und getestete Software auch direkt mit auszuliefern zu können, ist in der Strategie ein
+Deployment-Prozess angedacht.
+Hierbei wird die Software nach erfolgreichem Durchlaufen der Testing-Stage in der jeweils für den Ausgangs-Branch der
+Pipeline definierten Umgebung ausgerollt.
+Da die Kunden der best it GmbH verschiedene Arten von Umgebungen einsetzen, muss die Möglichkeit bestehen, den Prozess
+an die Bedürfnisse unterschiedlicher Projekte anzupassen.
+GitLab CI/CD bietet hierfür teilweise eingebaute Lösungen und Tools und kann außerdem benutzerdefinierte Skripte
+ausführen, womit allerlei Arten von Umgebungen abgedeckt werden können.
+Um traditionelle Linux-Server-Umgebungen als Hosting-Plattform zu unterstützen, soll das PHP-basierte Tool
+\glqq Deployer\grqq\ in die Strategie mit einbezogen werden.
+Hiermit können Aktionen auf verschiedenen Servern durchgeführt werden, wie zum Beispiel das Übertragen der Dateien und
+Verzeichnisse der Software, das Starten und Stoppen von Services oder das Durchführen von Datenbankmigrationen.
+\footpartcite{deployer}
+Das Deployment in Container-Umgebungen wird durch GitLab CI/CD standardmäßig unterstützt.
+GitLab stellt hierfür einen eigenen Kubernetes-Agent bereit, welcher zum automatischen Ausliefern von Docker-Images an
+verteilte Container-Umgebungen genutzt werden kann.\footpartcite{gitlab-agent}
+Das Deployment kann hierbei, ungeachtet der Art der Umgebung, in GitLab manuell ausgeführt oder vollständig
+automatisiert werden.
+Da Änderungen am Produktions-System oftmals vorher durch den Kunden in einem designierten System getestet und
+abgenommen werden müssen, setzt die Strategie primär auf Continuous Delivery, ermöglicht aber optional auch
+Continuous Deployment durch das vollautomatisierte Ausrollen der Software.
+Wichtig ist hierbei, dass das Austauschen der laufenden mit der neuen, auszuliefernden Software so schnell und
+reibungslos wie möglich erfolgt, sodass die Nutzer des Shops keine Beeinträchtigungen beim Einkauf erfahren.
+Außerdem muss bei versehentlichem Ausrollen einer fehlerhaften Version die Möglichkeit bestehen, die veröffentlichte
+Software zu einem vorherigen, stabilen Stand zurückzuführen.\footpartcite[259--261]{humble}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/content/ci-architecture-concept}
     \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Architektur der konzipierten
-        \acrshort{ci}-Strategie}
+    \acrshort{ci}-Strategie}
     \label{fig:ci-architecture-concept}
 \end{figure}
+
+In Abbildung\ \ref{fig:ci-architecture-concept} wird die Architektur der konzipierten \acrshort{ci}-Strategie grob
+visualisiert.
+Die Darstellung zeigt die Struktur der lokalen Entwicklungsumgebung so wie der späteren Deployment-Umgebungen in
+Zusammenhang mit dem\ \acrshort{vcs} und GitLab CI/CD auf.
+Optionale Services und Umgebungen werden in Blau dargestellt, der Lebenszyklus von Integrationen in der Strategie wird
+durch die Pfeile zwischen den Teilbereichen verdeutlicht.
+Die lokale und die Deployment-Umgebungen basieren dabei auf den Hardware-Ressourcen, auf denen jeweils ein
+Betriebssystem (Host OS) installiert ist, welches das Nutzen von Host Libraries ermöglicht.
+Als Host Libraries werden in diesem Fall die installierten Programme und Services auf dem Betriebssystem bezeichnet,
+welche zum Beispiel für das Ausführen des Docker-Daemons und dessen Containern oder für das direkte Ausführen der
+Shopware-Services und dessen Abhängigkeiten genutzt werden.
 
 \clearpage
