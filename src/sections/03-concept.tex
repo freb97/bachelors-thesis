@@ -524,6 +524,8 @@ Möglichkeit zur Anpassung der ausführenden Umgebung und der Testing-Tools best
 In der \acrshort{ci}-Strategie soll neben dem \shellinline{shopware}-Verzeichnis ein eigenes Composer-Projekt mit
 \shellinline{vendor}-Ordner und verschiedene Verzeichnisse für die Tool-Konfigurationen und Auswertungen und Caches
 der Tests existieren.
+JavaScript-Tools und Abhängigkeiten werden über\ \acrshort{npm} verwaltet und befinden sich im
+\shellinline{node_modules}-Verzeichnis.
 Die restlichen Konfigurations-Dateien für etwaige Tools und Services liegen dabei direkt im Hauptverzeichnis des
 \mbox{Projekts}.
 \\\\
@@ -566,9 +568,9 @@ Gestaltung anpassbarer Pipelines im Hinblick auf unterschiedliche Branching-Stru
 Shopware-Projekte konzentriert.
 Pipelines reagieren auf Status-Veränderungen in einer \acrshort{vcs}-Software und können so an verschiedene
 Aktionen geknüpft werden.
-\begin{wrapfigure}{r}{0.7\textwidth}
+\begin{wrapfigure}{r}{0.62\textwidth}
     \centering
-    \includegraphics[width=0.675\textwidth]{images/content/ci-pipeline-concept}
+    \includegraphics[width=0.595\textwidth]{images/content/ci-pipeline-concept}
     \captioncite[Eigene Darstellung]{}{Visualisierung der konzipierten \acrshort{ci}-Pipeline}
     \label{fig:ci-pipeline-concept}
 \end{wrapfigure}
@@ -697,6 +699,7 @@ License-Checker und Security-Checker für PHP sowie Eslint und Danger JS für Ja
 Einhaltung von Coding-Standards, potenzielle Fehler und Sicherheitsprobleme zu überprüfen.
 Cypress wurde für das End-to-End-Testing ausgewählt, da es eine einfach zu verwendende und leistungsstarke Lösung für
 das Testen von Webanwendungen bietet und bereits eine Schnittstelle zur Anbindung an Shopware existiert.
+\footpartcite{shopware-cypress}
 Die konzipierte \acrshort{ci}-Pipeline ist flexibel und kann an die spezifischen Anforderungen und die
 Branching-Strategie eines Projekts angepasst werden.
 Die gewählten Tools bilden hierbei eine Grundlage für eine möglichst breite Abdeckung des zu testenden Quellcodes und
