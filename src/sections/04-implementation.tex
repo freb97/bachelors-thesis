@@ -3,4 +3,44 @@
 
 \section{Entwicklung der CI-Strategie} \label{sec:04-implementation}
 
+Im folgenden wird die konzipierte \acrshort{ci}-Strategie des vorherigen Kapitels praktisch umgesetzt.
+Zunächst wird eine Projektumgebung geschaffen, in der die geplanten \acrshort{ci}-Tools und eine Shopware-Instanz zum
+Testen installiert werden.
+Daraufhin werden die installierten Tools für das Testen des lokal aufgesetzten Shops konfiguriert und angepasst,
+wobei der Code eines eigens dafür angelegten Beispiel-Plugins als Test-Grundlage verwendet wird.
+Anschließend werden verschiedene Deployment-Umgebungen für das Testen des Shops angelegt und für diese Umgebungen
+automatisierte Deployment-Konfigurationen zum Ausliefern durch die zu entwickelnden Pipelines erstellt.
+Zuletzt werden anhand der konfigurierten Tools und dem Beispiel-Shop die eigentlichen Pipelines zum
+automatisierten Bauen, Testen und Ausliefern von Shopware-Projekten erstellt.
+
+\subsection{Aufsetzen der Projektumgebung} \label{subsec:04-implementation-1}
+
+% Installieren von CI-Tools und Shopware, Aufsetzen des VCS
+
+Für das Implementieren der konzipierten Strategie muss zunächst eine lokale Entwicklungsumgebung bestehen, in der ein
+Shopware-Projekt und die geplanten \acrshort{ci}-Tools installiert werden können.
+Hierbei wurde sich für die Nutzung des von Shopware gestellten Docker-Containers entschieden, welcher die
+Abhängigkeiten für das Betreiben der Plattform gesammelt bereitstellt.\footpartcite{shopware-docker}
+Das Ausführen der Shop-Software ohne Docker ist dabei weiterhin möglich, indem dessen Abhängigkeiten direkt auf dem
+Entwicklungssystem installiert werden.
+Zunächst wurde ein Ordner für die Shopware-Installation angelegt und Package-Konfigurationen für Composer und NPM
+erstellt.
+In der Composer-Konfigurations-Datei\ \shellinline{composer.json} werden die Pakete für die PHP-basierten
+\acrshort{ci}-Tools PHPUnit, Infection, \acrshort{phpcs}, \acrshort{phpmd}, PHPStan, Deptrac und License Checker
+verwaltet.
+Die Paket-Abhängigkeiten für die JavaScript-basierten Tools Eslint, Jest, Cypress und Danger JS werden in der
+Konfigurations-Datei\ \shellinline{package.json} hinterlegt.
+
+\subsection{Konfiguration von Testing- und QA-Tools} \label{subsec:04-implementation-2}
+
+% Konfigurieren von Unit-, Mutation- und E2E-Tests + Static Code analysis, etc.
+
+\subsection{Deployments und Umgebungen} \label{subsec:04-implementation-3}
+
+% Hosting von Servern für Shopware-Umgebungen zum Testen aufsetzen und Deployer implementieren
+
+\subsection{Implementierung der Pipelines} \label{subsec:04-implementation-4}
+
+% Pipelines erstellen und konfigurieren
+
 \clearpage
