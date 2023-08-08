@@ -14,10 +14,10 @@ untersuchten Tools.
 
 \subsection{Analyse der Ausgangssituation} \label{subsec:03-concept-1}
 
-Die aktuelle Situation stellt sich wie folgt dar: Es gibt verschiedene Kunden, die mit unterschiedlichen Versionen von
-Shopware arbeiten.
-Diese Kunden sind bei verschiedenen Hosting-Anbietern untergebracht, was zu einer Vielfalt an technischen Umgebungen
-führt, in denen die Software betrieben wird.
+Die aktuelle Situation stellt sich wie folgt dar: In E-Commerce-Unternehmen gibt es in der Regel verschiedene Kunden,
+die mit unterschiedlichen Versionen von Shopware arbeiten.
+Diese Kunden sind oftmals bei verschiedenen Hosting-Anbietern untergebracht, was zu einer Vielfalt an technischen
+Umgebungen führt, in denen die Software betrieben wird.
 Darüber hinaus verwendet jeder Kunde eine individuelle Kombination aus Plugins und Eigenentwicklungen, die auf seine
 spezifischen Bedürfnisse zugeschnitten sind.
 Diese Diversität stellt eine Herausforderung dar, da sie eine Vielzahl von Variablen in die Entwicklung und Wartung der
@@ -62,13 +62,8 @@ können, vorgestellt.
 
 \subsubsection{Version Control Systems}
 
-Die Integration von Software wird durch\ \acrshort{vcs} ermöglicht.
-Änderungen im Code werden hier hinzugefügt und verschiedene Versionsstände zusammengeführt.
-\acrshort{vcs} somit ein integraler Bestandteil von Continuous Integration, Fowler setzt das Führen eines einzelnen
-Source-Repositories voraus, welches die Software, inklusive aller Build- und Testing-Dateien, verwaltet.
-\footpartcite{fowler}
-Um eine vollumfängliche \acrshort{ci}-Strategie erstellen zu können, muss also die Versionskontroll-Software
-inklusive dazugehöriger Services berücksichtigt werden.
+Um eine vollumfängliche \acrshort{ci}-Strategie erstellen zu können, muss die Versionskontroll-Software inklusive
+dazugehöriger Services berücksichtigt werden.
 Für die Konzeption wurden einige Bekannte und erprobte Anbieter von Enterprise-\acrshort{vcs} untersucht:
 
 \begin{itemize}
@@ -78,7 +73,7 @@ Für die Konzeption wurden einige Bekannte und erprobte Anbieter von Enterprise-
         Es bietet alle verteilten Versionskontroll- und Quellcodeverwaltungsfunktionen von Git sowie einige
         eigene Funktionen.
         Es bietet Zugriffskontrolle und mehrere Kollaborationsfunktionen wie Aufgabenverwaltung, Fehlerverfolgung und
-        Feature-Requests für Projekte.
+        Feature-Anfragen für Projekte.
         GitHub bietet sowohl Pläne für private Repositorys als auch kostenlose Konten, die normalerweise verwendet
         werden, um Open-Source-Softwareprojekte zu hosten.
         Der Service bietet außerdem \acrshort{ci}-Tools und Pipeline-Verwaltung an.
@@ -119,12 +114,6 @@ Für die Konzeption wurden einige Bekannte und erprobte Anbieter von Enterprise-
 
 \subsubsection{Pipeline- und Test-Runners}
 
-Um die in einer Versionskontroll-Software eingeführten Code-Änderungen automatisiert bauen, testen und ausliefern zu
-können, wird eine ausführende Umgebung für diese Prozesse benötigt.
-Für diese Problemstellung gibt es Pipelines, welche zum Ausführen von Befehlen und Prozessen zur automatischen
-Integration und dem Testen von Code genutzt werden.\footpartcite[2571]{benefits-challenges}
-Pipelines spielen durch das kontinuierliche Integrieren von entwickeltem Code eine integrale Rolle bei der Reduzierung
-der Cycle Time\footpartcite{fowler} und sind somit wichtig zum Erreichen des Ziels $Z_1$ der Arbeit.
 Große Enterprise-\acrshort{vcs}-Anbieter wie GitHub, GitLab und Bitbucket haben bereits eine Pipeline-Lösung in ihrem
 System integriert und bieten Hardware-Ressourcen zum Ausführen der Pipelines an.
 Neben den eingebauten Pipeline-Services der Enterprise-Anbieter gibt es einige eigenständige Tools, welche Teils selbst
@@ -208,12 +197,6 @@ Shopware-Projekte gewinnen schnell an Umfang, der Aufwand für das manuelle Test
 jedem eingeführten Feature.
 Software-Tests sind ein nützliches Tool für \acrshort{ci}-Pipelines und helfen dabei, das aufwändige manuelle Testen
 der einzelkomponenten bei einem Software-Release zu minimieren.
-Automatisierte Tests werden eingesetzt, um sicherzustellen, dass mit neuen Features weniger Wechselwirkungen mit vorher
-eingeführter Logik aufkommen und um Fehler im Entwicklungsprozess früher entdecken zu können.
-Das häufige, automatisierte Testing in der\ \acrshort{ci} kann sich positiv auf die Qualität der entwickelten
-Software auswirken
-\footpartcite[281]{test-driven-development}\textsuperscript{,\ }\footpartcite[2570]{benefits-challenges}, somit sind
-Software-Tests im Hinblick auf Zielsetzung $Z_2$ der Arbeit relevant.
 Nachfolgend werden verschiedene Arten von Software-Tests beschrieben und Tools für das Einbinden dieser Tests in der
 bestehenden Systemlandschaft untersucht:
 
@@ -331,16 +314,6 @@ bestehenden Systemlandschaft untersucht:
 
 \subsubsection{Static-Code-Analysis-Tools}
 
-Neben automatisiertem Testing ist das statische Analysieren des Codes ein weiterer wichtiger Aspekt für die
-Qualitätskontrolle von Software in einer \acrshort{ci}-Umgebung.
-Wobei Tests nur die Ergebnisse des Ausführens von Komponenten und Funktionen messen, können statische
-Code-Analysis-Tools die Struktur des Codes und die Einhaltung von vorgegebenen Standards bewerten.
-Eine laufende \acrshort{ci}-Pipeline kann so bei der Einführung von Code, welcher nicht dem vorgegebenen Coding-Standard
-entspricht, abgebrochen werden.
-Dies zwingt die Entwickler eines Projekts dazu, eine einheitliche Code-Struktur zu verwenden und kann das Einführen
-von Fehlern verringern.
-Außerdem können Static-Code-Analysis-Tools durch Warnungen dazu beitragen, dass unperformanter Code nicht in die
-Produktions-Umgebung gerät.\footpartcite{static-analysis}
 Da statische Code-Analyse die Qualität der entwickelten Software verbessern können, ist diese hilfreich für das
 Erreichen des Ziels $Z_2$ der Arbeit.
 Im Folgenden werden einige dieser Tools für die in Shopware-Projekten verwendeten Programmiersprachen PHP und JavaScript
@@ -512,9 +485,9 @@ Shopware-Projekts gegeben.
 Um die zu konzipierende Strategie möglichst flexibel zu gestalten, macht es Sinn die Shopware-Installation mit all
 diesen Verzeichnissen in einen eigenen Ordner auszulagern.
 Dies hat zur Folge, dass die Dateien, die zum Ausführen und Testen des Shops benötigt werden, getrennt
-\begin{wrapfigure}{l}{0.3\textwidth}
+\begin{wrapfigure}{l}{0.26\textwidth}
     \centering
-    \includegraphics[width=0.25\textwidth]{images/content/shopware-ci-folder-structure}
+    \includegraphics[width=0.244\textwidth]{images/content/shopware-ci-folder-structure}
     \captioncite[Eigene Darstellung]{}{Geplante Verzeichnis-Struktur der \acrshort{ci}-Strategie}
     \label{fig:shopware-ci-folder-structure}
 \end{wrapfigure}
@@ -550,6 +523,7 @@ Ein Docker-Image ist eine Vorlage für einen Docker-Container, der eine laufende
 Ein wesentlicher Vorteil eines Docker-Images besteht darin, dass es sowohl in einer \acrshort{ci}-Pipeline, als auch in
 einer lokalen Entwicklungsumgebung oder in Produktion zum Ausführen der Software genutzt werden kann.
 \footpartcite{docker}
+
 Da die \acrshort{ci}-Strategie auf dem Betreiben von Shopware in einer isolierten und reproduzierbaren Umgebung zum
 Ausführen von Testing- und \acrshort{qa}-Tools fußt, wurde sich für die Nutzung des von Shopware gestellten
 Docker-Images in den Pipelines entschieden.
@@ -568,15 +542,15 @@ Gestaltung anpassbarer Pipelines im Hinblick auf unterschiedliche Branching-Stru
 Shopware-Projekte konzentriert.
 Pipelines reagieren auf Status-Veränderungen in einer \acrshort{vcs}-Software und können so an verschiedene
 Aktionen geknüpft werden.
-\begin{wrapfigure}{r}{0.62\textwidth}
+\begin{wrapfigure}{r}{0.575\textwidth}
     \centering
-    \includegraphics[width=0.595\textwidth]{images/content/ci-pipeline-concept}
+    \includegraphics[width=0.55\textwidth]{images/content/ci-pipeline-concept}
     \captioncite[Eigene Darstellung]{}{Visualisierung der konzipierten \acrshort{ci}-Pipeline}
     \label{fig:ci-pipeline-concept}
 \end{wrapfigure}
 Zunächst soll eine grundlegende Pipeline definiert werden, die bei jedem Push in einen Branch ohne eine definierte
 Deployment-Umgebung läuft.
-Diese Pipeline führt einen Build- und einen Testing-Prozess durch.
+Diese Pipeline durchläuft eine Build- und eine Testing-Stage.
 Im Build-Prozess werden die \acrshort{ci}-Tools und die Abhängigkeiten der Shopware-Platform installiert.
 Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Test- und \acrshort{qa}-Tools, inklusive
 lang-andauernder Tests durch End-to-End-Testing.
@@ -755,8 +729,7 @@ Software zu einem vorherigen, stabilen Stand zurückzuführen.\footpartcite[259-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/content/ci-architecture-concept}
-    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Architektur der konzipierten
-    \acrshort{ci}-Strategie}
+    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Architektur der konzipierten Strategie}
     \label{fig:ci-architecture-concept}
 \end{figure}
 

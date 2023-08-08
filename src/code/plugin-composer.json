@@ -1,0 +1,25 @@
+{
+  "name": "best-it/example-plugin",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Frederik Bußmann",
+      "email": "frederik.bussmann@bestit.de",
+      "homepage": "https://www.bestit.de",
+      "role": "Developer"
+    }
+  ],
+  "type": "shopware-platform-plugin",
+  "autoload": {
+    "psr-4": {
+      "BestIt\\ExamplePlugin\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "BestIt\\ExamplePlugin\\BestItExamplePlugin",
+    "label": {
+      "de-DE": "Best It Beispiel-Plugin",
+      "en-GB": "Best It Example Plugin"
+    }
+  }
+}

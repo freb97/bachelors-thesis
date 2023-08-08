@@ -5,7 +5,8 @@
 
 Für die Erarbeitung einer geeigneten \acrshort{ci}-Strategie wird zunächst ein Einblick in die Disziplin des
 Continuous-Software-Engineering gegeben.
-Anschließend werden die Begrifflichkeiten und Prinzipien von Continuous Integration definiert.
+Anschließend werden die Begrifflichkeiten und Prinzipien von Continuous Integration definiert und weitere
+relevante Technologien und Bereiche für die Nutzung von\ \acrshort{ci} erläutert.
 Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Shopware-Plattform gegeben.
 
 \subsection{Continuous Software Engineering} \label{subsec:02-background-1}
@@ -89,64 +90,255 @@ Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Met
 Fowler beschreibt\ \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
 wobei Integration als der Build-Prozess, inklusive automatisierter Tests, für die vollständige Software mitsamt der
 erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
-Ein Ziel dieser Vorgehensweise ist die Reduktion der\ \glqq Cycle Time\grqq, welche die Zeitspanne von der Entwicklung
-eines Features bis zum Erhalten des Kundenfeedbacks beschreibt.\footpartcite[2580]{benefits-challenges}
+Ein grundlegendes Ziel dieser Vorgehensweise ist, neben der frühzeitigen Erkennung von Fehlern im Quellcode durch
+automatisierte Tests und\ \acrshort{qa}-Prüfungen, die Reduzierung der\ \glqq Cycle Time\grqq, welche die Zeitspanne von
+der Entwicklung eines Features bis zum Erhalten des Kundenfeedbacks nach dessen Auslieferung beschreibt.
+\footpartcite[2580]{benefits-challenges}
+In 2010 betonen Humble und Farley die Wichtigkeit von\ \acrshort{ci} und behaupten, dass Software ohne Continuous
+Integration als defekt gilt, bis sie als funktionierend nachgewiesen wird, während mit\ \acrshort{ci} Software mit
+jeder erfolgreich integrierten Änderung als funktionierend bewiesen wird.\footpartcite[56]{humble}
+Über Zeit hat sich\ \acrshort{ci} als essenzielle Praktik in der Software-Welt etabliert.
+Im Jahr 2016 zeigte eine Analyse von $34.544$ auf der Plattform GitHub verwalteten Open-Source-Projekten, dass 40\% der
+Projekte\ \acrshort{ci} einsetzen.
+Bei den populärsten 500 analysierten Projekten lag der Anteil bei 70\%.\footpartcite[428--429]{ci-usage}
 Da die erfolgreiche Implementierung von Continuous Integration auf der Kombination von verschiedenen Methoden zur
-Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlüsselaspekte kurz dargestellt.
+Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlüsselaspekte aufgezeigt:
 
-\subsubsection{Regelmäßige Integration}
+\begin{itemize}
+    \item {
+        \textbf{Regelmäßige Integration}\par
+        Die namensgebende Methodik der\ \acrshort{ci} ist das regelmäßige Integrieren von Software und damit Verbunden
+        ist der Software-Release.
+        In der traditionellen Softwareentwicklung wird der Release als ein einmaliges, großes Ereignis betrachtet.
+        Als Integration wird der Prozess des Einbindens einer einzeln entwickelten Komponente in die bisher bestehende
+        Gesamtheit einer Software bezeichnet, wobei der Release das Zusammenfinden aller Komponenten und das Ausführen
+        des Build-Prozesses bis hin zur fertigen, ausführbaren und auslieferbaren Software beschreibt.
+        In der Vergangenheit wurde bei einem Release jede Einzelkomponente der Software manuell integriert und getestet,
+        wobei dies als eigene Phase in der Entwicklung einer Applikation galt.
+        In einem \acrshort{ci}-gestützten Projekt wird der Prozess des Software-Releases vollständig automatisiert,
+        sodass jedes Teammitglied eine entwickelte Komponente schnell Integrieren und einen Software-Build erzeugen
+        kann, was sich positiv auf die Cycle Time auswirkt.
+        Fowler empfiehlt hierbei, dass ein entwickeltes Feature erst nach der vollständigen Integration durch einen
+        erfolgreichen Build als fertig angesehen werden soll.\footpartcite{fowler}
+        In der Regel finden das Bauen und Testen der Software in einer\ \glqq Pipeline\grqq\ statt, welche die genutzten
+        \acrshort{ci}-Tools wie Test-Suites und Static-Code-Analysis ausführt.\footpartcite[2571]{benefits-challenges}
+    }
 
-Die namensgebende Methodik der\ \acrshort{ci} ist das regelmäßige Integrieren von Software und damit Verbunden ist der
-Software-Release.
-In der traditionellen Softwareentwicklung wird der Release als ein einmaliges, großes Ereignis betrachtet.
-Als Integration wird der Prozess des Einbindens einer einzeln entwickelten Komponente in die bisher bestehende
-Gesamtheit einer Software bezeichnet, wobei der Release das Zusammenfinden aller Komponenten und das Ausführen des
-Build-Prozesses bis hin zur fertigen, ausführbaren und auslieferbaren Software beschreibt.
-In der Vergangenheit wurde bei einem Release jede Einzelkomponente der Software manuell integriert und getestet, wobei
-dies als eigene Phase in der Entwicklung einer Applikation galt.
-In einem \acrshort{ci}-gestützten Projekt wird der Prozess des Software-Releases vollständig automatisiert, sodass jedes
-Teammitglied eine entwickelte Komponente schnell Integrieren und einen Software-Build erzeugen kann, was sich positiv
-auf die Cycle Time auswirkt.\footpartcite{fowler}
-In der Regel finden das Bauen und Testen der Software in einer\ \glqq Pipeline\grqq\ statt, welche die genutzten
-\acrshort{ci}-Tools wie Test-Suites und Static-Code-Analysis ausführt.\footpartcite[2571]{benefits-challenges}
+    \item {
+        \textbf{Automatisierte Tests}\par
+        Neben der regelmäßigen Integrierung von Code gelten automatisierte Software-Tests und Quality-Checks als ein
+        wichtiger Aspekt von\ \acrshort{ci}.
+        Hierbei werden oftmals Unit-Tests verwendet, welche eine einzelne Softwarekomponente auf
+        ihre Funktion prüfen, abgekapselt von anderen Komponenten.\footpartcite[280]{test-driven-development}
+        Wenn ein Test fehlschlägt, wird in der Regel die Pipeline unterbroche.
+        Neben den typischerweise schnell durchlaufenden Unit-Tests, die aufgrund ihrer isolierten Natur spezifische
+        Komponenten prüfen, können nach dem Build-Prozess umfassende End-To-End-Tests für die gesamte Software
+        durchgeführt werden.
+        Diese Systemübergreifenden Tests, welche das Zusammenspiel verschiedener Komponenten testen, erhöhen zwar die
+        Dauer des Test-Prozesses, können aber wichtige Einsicht in die Qualität der Software gewähren.
+        \footpartcite{fowler}
+        Tests in einem automatisierten\ \acrshort{ci}-Build können insgesamt dabei helfen, Fehler in eingeführtem
+        Quellcode zu finden.\footpartcite[2572]{benefits-and-challenges}
+        Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, um eine Pipeline bei Unstimmigkeiten in der Syntax
+        des eingeführten Codes abzubrechen.
+        Diese Programme können zusätzliche Qualitätsprüfungen und Coding-Standards in ein Projekt einführen.
+        \footpartcite[338]{static-analysis}
+    }
 
-\subsubsection{Automatisierte Tests}
+    \item {
+        \textbf{Reproduzierbarkeit}\par
+        Ein weiterer zentraler Aspekt von Continuous Integration ist die Reproduzierbarkeit der \acrshort{ci}-Pipeline.
+        In einem \acrshort{ci}-Umfeld werden der Build- und Testing-Prozess vollständig automatisiert und
+        standardisiert, was bedeutet, dass diese unter den gleichen Bedingungen und mit den gleichen Ergebnissen
+        wiederholt werden können.
+        Dies ist von entscheidender Bedeutung, um sicherzustellen, dass die Software in verschiedenen Umgebungen
+        (z.B.\ Entwicklung, Test, Produktion) konsistent funktioniert.
+        Durch das Zentralisieren der Software und der \acrshort{ci}-Tools in einer Versionierungs-Software, in
+        Verbindung mit dem Automatisieren des Build- und Testing-Prozesses, wird das Wiederherstellen von früheren
+        Ständen in der Entwicklung und das Nachvollziehen von Fehlern im Entwicklungsprozess vereinfacht.
+        \footpartcite[74--75]{duvall}
+    }
 
-Neben der regelmäßigen Integrierung von Code gelten automatisierte Software-Tests und Quality-Checks als ein wichtiger
-Aspekt von\ \acrshort{ci}.
-Hierbei werden oftmals Unit-Tests verwendet, welche eine einzelne Softwarekomponente auf
-ihre Funktion prüfen, abgekapselt von anderen Komponenten.\footpartcite[280]{test-driven-development}
-Wenn ein Test fehlschlägt, wird in der Regel die Pipeline unterbrochen.
-Neben den typischerweise schnell durchlaufenden Unit-Tests, die aufgrund ihrer isolierten Natur spezifische Komponenten
-prüfen, können nach dem Build-Prozess umfassende End-To-End-Tests für die gesamte Software durchgeführt werden.
-Diese Systemübergreifenden Tests, welche das Zusammenspiel verschiedener Komponenten testen, erhöhen zwar die Dauer des
-Test-Prozesses, können aber wichtige Einsicht in die Qualität der Software gewähren.\footpartcite{fowler}
-Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, um eine Pipeline bei Unstimmigkeiten in der Syntax des
-eingeführten Codes abzubrechen.\footpartcite[338]{static-analysis}
+    \item {
+        \textbf{Transparenz}\par
+        Transparenz in einem\ \acrshort{ci}-Prozess bedeutet, dass alle Aspekte des Entwicklungsprozesses sichtbar und
+        verständlich sind, sowohl innerhalb des Entwicklungsteams als auch für andere Stakeholder.
+        Sie ermöglicht eine klare Sicht auf den aktuellen Stand des Projekts, einschließlich der Qualität des Codes,
+        der Fortschritte und möglicher Probleme.
+        Durch den Einsatz von\ \acrshort{ci} und der Automatisierung des Build- und Test-Prozesses können Teammitglieder
+        schnell Feedback über den Status von Änderungen an der Codebase erhalten.
+        Wenn ein Problem auftritt, z.B.\ ein Test fehlschlägt oder ein Build abbricht, wird das Team sofort
+        benachrichtigt, sodass das Problem schnell behoben werden kann.
+        Dies reduziert die Zeit und den Aufwand, die benötigt werden, um Fehler zu finden und zu beheben, und verbessert
+        die Qualität der Software.
+        Darüber hinaus fördert das schnelle Feedback die Kommunikation und Zusammenarbeit im Team, da alle Mitglieder
+        ständig über den Status des Projekts informiert sind.
+        \footpartcite[2573]{benefits-challenges}\textsuperscript{,}\footpartcite[26--27]{adept}
+    }
+\end{itemize}
 
-\subsubsection{Reproduzierbarkeit}
+Die vorgestellten\ \acrshort{ci}-Praktiken bauen auf unterschiedlichen Technologien und Konzepten auf, die für das
+Betreiben von Continuous Integration eine Rolle spielen.
+Um die Praktiken der Continuous Integration vollständig zu verstehen und effektiv umzusetzen, ist es
+unerlässlich, die zugrunde liegenden Technologien und Konzepte zu betrachten, die die Basis für die Implementierung von
+\acrshort{ci} in einem Softwareprojekt bilden.
+Dazu gehören Themen wie Version-Control-Systems, Pipelines, Containerization, Software-Testing und
+Static-Code-Analysis.
+Im Folgenden werden einige dieser Themen untersucht, um ein umfassendes Verständnis der Mechanismen und Werkzeuge zu
+vermitteln, die für die erfolgreiche Anwendung von Continuous Integration erforderlich sind.
 
-Ein weiterer zentraler Aspekt von Continuous Integration ist die Reproduzierbarkeit der \acrshort{ci}-Pipeline.
-In einem \acrshort{ci}-Umfeld werden der Build- und Testing-Prozess vollständig automatisiert und standardisiert, was
-bedeutet, dass diese unter den gleichen Bedingungen und mit den gleichen Ergebnissen wiederholt werden können.
-Dies ist von entscheidender Bedeutung, um sicherzustellen, dass die Software in verschiedenen Umgebungen
-(z.B.\ Entwicklung, Test, Produktion) konsistent funktioniert.
-Durch das Zentralisieren der Software und der \acrshort{ci}-Tools in einer Versionskontrolle (\acrshort{vcs}), in
-Verbindung mit dem Automatisieren des Build- und Testing-Prozesses, wird das Wiederherstellen von früheren Ständen in
-der Entwicklung und das Nachvollziehen von Fehlern im Entwicklungsprozess vereinfacht.\footpartcite[74--75]{duvall}
+\subsubsection{Version-Control-Systems}
 
-\subsubsection{Feedback}
+Das Verwalten verschiedener Versionsstände von Software wird durch sogenannte Version-Control-Systems (\acrshort{vcs})
+ermöglicht.
+Es gibt verschiedene Implementierungen von\ \acrshort{vcs}, namentlich unter anderem Git, Mercurial, Subversion und
+weitere.
+Ein\ \acrshort{vcs} speichert den gesamten Quellcode eines Projekts in einem eigenen\ \glqq Repository\grqq.
+\footpartcite[381--385]{duvall}
+Innerhalb desselben Repositories können verschiedene Versions-Historien in sogenannten\ \glqq Branches\grqq\ gespeichert
+werden.
+Der aktuelle Stand eines Branches kann dabei kopiert werden und daran vorgenommene Revisionen können anschließend wieder
+in einen Branch des Repositories integriert werden.
+Versionskontroll-Software ermöglicht es außerdem, verschiedene Versionen in Form von Branches zusammenzuführen.
+Der Prozess des Zusammenführens verschiedener Branches wird hierbei als\ \glqq Merge\grqq\ bezeichnet.
+Die Nutzung eines\ \acrshort{vcs} in welchem verschiedene Branches angelegt werden können, ermöglicht Teammitgliedern
+die gleichzeitige Arbeit an einer einzelnen Codebase ohne sich dabei gegenseitig zu beeinflussen.
+\footpartcite[388--390]{duvall}
+Fowler setzt für die Nutzung von\ \acrshort{ci} das Führen eines Source-Repositories voraus, welches die
+Projekt-Software, inklusive aller dazugehörigen Build- und Testing-Konfigurationen, verwaltet.\footpartcite{fowler}
 
-Schnelles Feedback ist ein weiteres grundlegendes Prinzip von Continuous Integration.
-Durch die Automatisierung des Build- und Test-Prozesses können Entwickler schnell Feedback über den Status ihrer
-Änderungen erhalten.
-Wenn ein Problem auftritt, z.B.\ ein Test fehlschlägt oder ein Build abbricht, wird das Team sofort benachrichtigt,
-sodass das Problem schnell behoben werden kann.
-Dies reduziert die Zeit und den Aufwand, die benötigt werden, um Fehler zu finden und zu beheben, und verbessert die
-Qualität der Software.
-Darüber hinaus fördert das schnelle Feedback die Kommunikation und Zusammenarbeit im Team, da alle Mitglieder ständig
-über den Status des Projekts informiert sind.
-\footpartcite[2573]{benefits-challenges}\textsuperscript{,}\footpartcite[26--27]{adept}
+\subsubsection{Pipelines}
+
+Um die in einer Versionskontroll-Software eingeführten Code-Änderungen automatisiert bauen, testen und ausliefern zu
+können, wird eine ausführende Umgebung für diese Prozesse benötigt.
+In einem\ \acrshort{ci}-Prozess werden hierfür Pipelines eingesetzt, welche zum Ausführen von Befehlen und Prozessen
+zur automatischen Integration und dem Testen von Code genutzt werden.
+\footpartcite[2571]{benefits-challenges}
+Pipelines spielen durch das kontinuierliche Integrieren von entwickeltem Code eine integrale Rolle bei der Reduzierung
+der Cycle Time\footpartcite{fowler} und sind somit wichtig zum Erreichen des Ziels $Z_1$ der Arbeit.
+Eine Pipeline in einem\ \acrshort{ci}-Prozess wird in der Regel bei jeder Änderung am Quellcode des Source-Repositories
+gestartet.\footpartcite[3--4]{duvall}
+
+\subsubsection{Containerization}
+
+Um die zum Bauen, Testen und Ausliefern von Software in einem\ \acrshort{ci}-Projekt benötigten Pipelines nutzen zu
+können, wird eine isolierte und reproduzierbare ausführende Umgebung benötigt.
+In der Vergangenheit wurden für solche isolierten Umgebungen hauptsächlich\ \glqq Virtual
+Machines\grqq\ (\acrshort{vm}s) verwendet.
+\acrshort{vm}s nutzen hierbei einen\ \glqq Hypervisor\grqq, um die Hardware eines physischen Computers emulieren zu
+können, sodass mehrere Betriebssysteminstanzen und die darin verwalteten Applikationen gleichzeitig auf einem einzigen
+System ausführbar sind.\footpartcite[54--55]{docker}
+Containerization ist eine modernere Technologie, die einen Performance-Zuwachs gegenüber \acrshort{vm}s bieten kann.
+\footpartcite{docker-performance}
+Die hierbei genutzten\ \glqq Container\grqq\ sind eigenständige, ausführbare Pakete, die alles enthalten, was für den
+Betrieb einer Anwendung erforderlich ist, einschließlich Code, Laufzeitumgebung, Bibliotheken und Systemtools.
+Während \acrshort{vm}s zur Ausführung einen Hypervisor und vollständige Betriebssysteminstanzen benötigen, teilen sich
+Container die Ressourcen eines einzelnen Betriebssystems und isolieren so die Anwendung von der zugrunde liegenden
+Infrastruktur.\footpartcite[55--57]{docker}
+Containerization erleichtert also das Vereinheitlichen verschiedener Umgebungen in \acrshort{ci}-Projekten, indem es
+Abhängigkeiten und Konfigurationen in einem Container kapselt.\footpartcite[2576]{benefits-challenges}
+Dies bietet Entwicklern und Testern eine erhöhte Effizienz und Flexibilität, da sie sich darauf verlassen können, dass
+die Software in jeder Umgebung identisch funktioniert.
+
+\subsubsection{Software-Testing}
+
+Wenn eine ausführende Umgebung für das Bauen und Testen von Software besteht, können Software-Tests in den
+\acrshort{ci}-Prozess eingeführt werden.
+Durch manuelle und automatisierte Tests kann ein Software-Produkt auf verschiedene Funktionsbereiche überprüft werden.
+Da manuelle Tests einen hohen Zeitaufwand darstellen können, wird Testautomatisierung in der agilen Softwareentwicklung
+als wichtige Aktivität angesehen.
+Besonders bei repetitiven Aufgaben zum Reproduzieren vordefinierter Systemfunktionalitäten wirken automatisierte
+Tests effizienzsteigernd.\footpartcite[440]{agile-testing}
+Sie müssen hierbei nur einmal angelegt werden und können anschließend beliebig oft und ohne weitere Aufwände erneut
+ausgeführt werden.
+In\ \acrshort{ci}-Projekten werden automatisierte Tests oftmals eingesetzt, um Probleme bei der
+Einführung von Features mit vorher entwickelter Logik zu vermeiden und um Fehler im Entwicklungsprozess früher
+entdecken zu können.
+Häufiges, automatisiertes Testing in der\ \acrshort{ci} kann sich positiv auf die Qualität der entwickelten Software
+auswirken.\footpartcite[281]{test-driven-development}\textsuperscript{,\ }\footpartcite[2570]{benefits-challenges}
+\\
+Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorgestellt:
+\footpartcite[23--24]{software-testing}
+
+\begin{itemize}
+    \item {
+        \textbf{Unit-Tests}\par
+        Unit-Tests prüfen das verhalten von einzelnen Programm-Einheiten.
+        Eine Programm-Einheit oder Prozedur stellt eine oder mehrere zusammenhängende Anweisungen in Form von Code dar,
+        welche durch andere Teile der Software namentlich aufgerufen werden können.
+        Durch Unit-Tests werden also die Implementierungsschritte eines Software-Programms einzeln geprüft.
+    }
+
+    \item {
+        \textbf{Module-Tests}\par
+        Ein Modul besteht aus einer Sammlung zusammengehöriger Programm-Einheiten die in einer Datei, einem Paket oder
+        einer Klasse zusammengefasst sind.
+        Module-Tests, auch Component-Tests genannt, zielen darauf ab, diese Module isoliert zu bewerten, im Hinblick auf
+        die Interaktionen zwischen den Einheiten und ihren dazugehörigen Datenstrukturen.
+        In der Praxis können Unit- und Module-Tests zusammengefasst als Prüfung der eigentlichen Implementierung eines
+        Programms betrachtet werden.\footpartcite[441]{agile-testing}
+    }
+
+    \item {
+        \textbf{Integration-Tests}\par
+        Integration-Tests fokussieren sich auf die Integration verschiedener Module einer Software.
+        Sie prüfen das Zusammenspiel von unterschiedlichen Komponenten des Programms und stellen so sicher, dass die
+        Kommunikation zwischen verschiedenen Bereichen der Applikation korrekt verläuft.
+        Integrations-Tests stützen sich dabei auf die Annahme, dass die Module selbst bereits vollständig funktionieren.
+    }
+
+    \item {
+        \textbf{System-Tests}\par
+        Ähnlich wie Integration-Tests, prüfen System-Tests mehrere Komponenten eines einzelnen Systems auf ihre
+        Zusammenarbeit.
+        System-Tests grenzen sich hierbei allerdings durch ihren Bezug auf vorher definierte Produktanforderungen ab.
+        Sie prüfen ob ein Programm in gänze funktioniert, wobei der Erfolg der Tests aus der Erfüllung von
+        vordefinierten, geschäftsseitigen Anforderungen an das Programm besteht.
+        Diese Art von Test wird auch als\ \glqq Functional Test\grqq\ bezeichnet.\footpartcite[441]{agile-testing}
+    }
+
+    \item {
+        \textbf{Acceptance-Tests}\par
+        Acceptance-Tests werden manuell ausgeführt.
+        Sie prüfen, ob die Bedürfnisse des Projekt-Kunden durch die fertiggestellte Software abgedeckt werden.
+        Hierbei werden also Tests aus der Sicht der Kunden oder vom Kunden selbst durchgeführt, welche fehlschlagen
+        wenn dessen Anforderungen an das Programm nicht erfüllt werden.
+    }
+\end{itemize}
+
+Um etwaige Abhängigkeiten die zur Ausführung von Code in einem Test benötigt werden zu umgehen, werden\ \glqq Mocks\grqq
+\ eingesetzt.
+Ein Mock stellt eine Nachahmung der Vorgehensweise einer Abhängigkeit dar, so kann zum Beispiel das Verhalten
+einer Datenbank oder eines anderen System-Moduls simuliert werden, ohne diese als Service im Testing-Prozess zu
+benötigen.\footpartcite[299--300]{software-testing}
+Zur Bewertung der Effektivität und Qualität von erstellten Software-Tests gibt es verschiedene Ansätze, ein
+wichtiger Indikator ist jedoch die Test-Abdeckung.
+Der Anteil von durch Tests abgedeckten Klassen und Funktionen im Kontrast zu der Anzahl an
+ungetesteten Komponenten der Software wird als Abdeckung oder\ \glqq Coverage\grqq\ bezeichnet.
+\footpartcite[132--133]{duvall}
+Neben Test-Coverage können noch weitere Metriken, wie Mutation-Tests zur Bestimmung der Qualität von Tests genutzt
+werden.
+Hierbei wird der zu testende Source-Code verändert, oder mutiert, und dieser abgeänderte Code mit einem
+bestehenden Test-Set geprüft.
+Wenn die mutierte Variante des Codes durch das Test-Set aufgedeckt wurde, indem der Test fehlschlägt, wird
+der mutierte Code, auch Mutant genannt, als eliminiert betrachtet.
+Durch Mutation-Testing können Schwachstellen in Software-Tests gefunden werden und die Qualität der bestehenden
+Tests eines Projekts gemessen werden.
+Die Test-Software erzeugt dazu eine Metrik namens\ \glqq Mutation Adequacy Score\grqq.
+\footpartcite[649--652]{mutation-testing}
+
+\subsubsection{Static-Code-Analysis}
+
+Neben automatisiertem Testing ist das statische Analysieren des Codes ein weiterer wichtiger Aspekt für die
+Qualitätskontrolle von Software in einer \acrshort{ci}-Umgebung.
+Wo Tests nur die Ergebnisse des Ausführens von Komponenten und Funktionen messen, können statische
+Code-Analysis-Tools die Struktur des Codes und die Einhaltung von vorgegebenen Standards bewerten.
+Eine laufende \acrshort{ci}-Pipeline kann so bei der Einführung von Code, welcher nicht dem vorgegebenen Coding-Standard
+entspricht, abgebrochen werden.
+Dies zwingt die Entwickler eines Projekts dazu, eine einheitliche Code-Struktur zu verwenden und kann das Einführen
+von Fehlern verringern.
+Außerdem können Static-Code-Analysis-Tools durch Warnungen verhindern, dass unoptimierter Code in die
+Produktionsumgebung gerät.\footpartcite{static-analysis}
 
 \subsection{Übersicht über die Shopware-Platform} \label{subsec:02-background-3}
 
@@ -158,6 +350,8 @@ Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekt
 als Grundlage genutzt und bildet somit ein erprobtes Fundament für die Shopware-Plattform.
 Shopware selbst ist nach der Installation bereits voll funktionsfähig und kann mit einem Backend und optional
 mit einem Frontend oder für das Konsumieren der mitgelieferten\ \acrshort{api} eingerichtet werden.
+Ein Application Programming Interface (\acrshort{api}) ist hierbei eine Schnittstelle, welche die standardisierte
+Kommunikation zwischen Programmen ermöglicht.
 Die Software kann auf verschiedenen Plattformen gehostet werden, darunter Linux-Server und containerisierte Umgebungen.
 Darüber hinaus bietet Shopware als Unternehmen auch eine eigene Hosting-Lösung an, die speziell auf die Anforderungen
 der Software zugeschnitten ist.
@@ -206,19 +400,17 @@ Diese stehen als Mono-Repository mit dem Namen\ \shellinline{shopware/platform} 
 Neben den drei Hauptkomponenten bietet die Shopware-Platform verschiedene Anbindungsmöglichkeiten zur Anpassung des
 Shop-Systems.
 Plugins können direkt an den Core angebunden werden und ermöglichen die Erweiterung der Shopware-Logik, das Templating
-der Storefront oder Anpassungen an der
-\begin{wrapfigure}{r}{0.63\textwidth}
-    \centering
-    \includegraphics[width=0.60\textwidth]{images/content/shopware-architecture}
-    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
-    \label{fig:shopware-architecture}
-\end{wrapfigure}\!\!\!
-Administration.
+der Storefront oder Anpassungen an der Administration.
 Zusätzlich können die Sync-\acrshort{api} und die Sales-Channel-\acrshort{api} für die Anbindung externer Anwendungen
 verwendet werden, wie zum Beispiel Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
 Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
 Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
-\\\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/content/shopware-architecture}
+    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
+    \label{fig:shopware-architecture}
+\end{figure}
 Für die Entwicklung der \acrshort{ci}-Strategie wird der Fokus auf Shopware-Plugins gesetzt.
 Durch Plugins können der Shopware-Core, die Administrations-Oberfläche und die Storefront angepasst werden, wobei diese
 als abgekapselte Module entwickelt oder als Monolith zusammen mit dem Shopware-Projekt in einem gemeinsamen Repository
@@ -229,12 +421,5 @@ Symfony nutzt teils für eigene Core-Features das Bundle-System, um die einzelne
 gestalten.\footpartcite{shopware-plugins}
 Durch die solide Basis der Symfony-Bundles bieten Shopware-Plugins eine klare Struktur und eine hohe Erweiterbarkeit
 und fördern die Wiederverwendbarkeit von entwickelter Software für das Shop-System.
-Shopware-Plugins folgen einer vorgegebenen Orderstruktur.
-Hierbei wird die Plugin-Logik, zusammen mit Templates und Stylesheets im Ordner\ \shellinline{src} verwaltet,
-während sich Software-Tests für die eingeführte Logik in einem eigenen Ordner\ \shellinline{tests} befinden.
-Plugin-Konfigurationen können im Ordner\ \shellinline{config} angelegt werden.
-Zusätzlich können Bilder und andere öffentliche Ressourcen im \shellinline{public}-Verzeichnis hinterlegt werden.
-Da die in einem Shopware-Projekt eingeführte Logik am relevantesten für die \acrshort{ci}-Strategie ist, werden Tests
-auf die im \shellinline{src}-Order befindlichen Dateien beschränkt.
 
 \clearpage

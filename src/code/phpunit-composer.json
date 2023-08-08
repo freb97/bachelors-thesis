@@ -1,0 +1,5 @@
+"autoload-dev": {
+  "psr-4": {
+    "BestIt\\ExamplePlugin\\Tests\\Unit": "Tests/Unit/"
+  }
+}
