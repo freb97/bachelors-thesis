@@ -5,24 +5,26 @@
 
 Im Rahmen dieser Arbeit werden verschiedene Aspekte betrachtet, um ein Konzept für das Einbinden von
 Continuous Integration (\acrshort{ci}) in Shopware-basierten Projekten zu erarbeiten.
-Shopware ist eine E-Commerce-Plattform und eine der meistgenutzten Online-Shop-Lösungen in
-Deutschland\footpartcite{shopware-usage-chart}, welche es Unternehmen ermöglicht, ihre Präsenz im digitalen Markt
-auszubauen.
-Die Implementierung von CI-Praktiken in solchen Projekten kann den Entwicklungszyklus beschleunigen und die
-Qualität des Endprodukts erhöhen.
-Dies trägt zur Stärkung der Wettbewerbsfähigkeit bei und fördert eine agile und reaktionsschnelle Entwicklungsumgebung.
+Shopware bietet als eine führende E-Commerce-Plattform und eine der bevorzugten Online-Shop-Lösungen in
+Deutschland\footpartcite{shopware-usage-chart} eine solide Grundlage für Unternehmen, um im digitalen Raum
+erfolgreich zu agieren.
+Durch die gezielte Implementierung von CI-Praktiken in solchen Projekten kann der Entwicklungszyklus effizienter
+gestaltet und die Qualität des Endprodukts gesteigert werden.
+Dies unterstützt Unternehmen dabei, ihre Wettbewerbsfähigkeit zu erhöhen und eine agile und reaktionsschnelle
+Entwicklungsumgebung zu etablieren.
 
 \subsection{Motivation} \label{subsec:01-introduction-1}
 
 In der heutigen schnelllebigen digitalen Welt ist die Fähigkeit, qualitativ hochwertige Softwareprodukte schnell auf den
-Markt zu bringen, von entscheidender Bedeutung.
-Die E-Commerce-Branche ist sehr wettbewerbsintensiv und Unternehmen müssen ständig innovieren, um relevant zu
-bleiben.
-Dabei spielt die Effizienz der genutzten Softwareentwicklungsmethoden eine wichtige Rolle.
+Markt zu bringen nicht nur wünschenswert, sondern oft entscheidend für den Geschäftserfolg.
+Die E-Commerce-Branche, geprägt durch ihre intensive Wettbewerbsdynamik, erfordert von Unternehmen eine kontinuierliche
+Anpassung und Innovation, um im Markt bestehen zu können.
+Hierbei nimmt die Effizienz und Effektivität der eingesetzten Softwareentwicklungsmethoden eine zentrale Rolle ein.
 Um eine möglichst reaktionsschnelle und effektive Umgebung für Entwicklerteams in Shopware-basierten Projekten zu
 schaffen, können Methodiken des Continuous-Software-Engineering verwendet werden.
-Die Entwicklung einer robusten, jedoch flexiblen\ \acrshort{ci}-Strategie ist im Hinblick auf sich ständig ändernde
-Technologien und Anforderungen besonders wichtig für die Qualität von Software und wird in Zukunft immer relevanter.
+Die Entwicklung einer robusten, jedoch flexiblen\ \acrshort{ci}-Strategie ist im Hinblick auf sich ständig
+weiterentwickelnder Technologien und variierender Anforderungen besonders wichtig für die Sicherstellung der
+Softwarequalität und wird in Zukunft immer relevanter.
 
 \subsection{Zielsetzung} \label{subsec:01-introduction-2}
 
@@ -30,26 +32,33 @@ Die Entwicklung einer Continuous-Integration-Strategie für auf Shopware basiere
 dieser Arbeit.
 Die Strategie soll dazu beitragen, die Qualität der Software zu verbessern, die Effizienz des Entwicklungsprozesses zu
 steigern und letztendlich die Kundenzufriedenheit zu erhöhen.
-Die nachfolgend definierten Ziele $Z_n$ dienen als Leitfaden für die Entwicklung der CI-Strategie:
+Die nachfolgend definierten Ziele $Z_n$ dienen als Leitfaden für die Konzeption und Entwicklung der
+\acrshort{ci}-Strategie und stellen die geschäftsseitigen Anforderungen von Unternehmen in der E-Commerce-Branche an den
+Entwicklungsprozess mit Shopware dar:
 
 \begin{itemize}
     \item {
-        \textbf{$Z_1$ Höhere Entwicklungsgeschwindigkeit:}\par
-        Die Einführung einer umfangreichen \acrshort{ci}-Strategie soll durch die Automatisierung von Prozessen die
-        Effizienz der Softwareentwicklungsteams verbessern und die Zeit bis zum Produkt-Release senken.
+        \textbf{$Z_1$ Hohe Entwicklungsgeschwindigkeit}\par
+        Die Einführung einer umfangreichen \acrshort{ci}-Strategie soll die Effizienz der Softwareentwicklungsteams
+        verbessern und die Zeit bis zum Produkt-Release senken.
+        Eine hohe Entwicklungsgeschwindigkeit sorgt für eine schnellere Auslieferung neuer Features und Fehlerbehebungen
+        und somit zu einer niedrigeren Wartezeit für Kunden.
     }
 
     \item {
-        \textbf{$Z_2$ Steigerung der Softwarequalität:}\par
-        \acrshort{ci} soll aufgrund automatischer Tests und Analysen dazu beitragen, Fehler frühzeitig im
-        Entwicklungsprozess erkennen und beheben zu können, was die Qualität des Endprodukts verbessert.
+        \textbf{$Z_2$ Niedrige Fehlerrate}\par
+        \acrshort{ci} soll dazu beitragen, Fehler frühzeitig im Entwicklungsprozess erkennen und beheben zu können, was
+        die Qualität des Endprodukts verbessert.
+        Die Stabilität und Qualität der Ausgelieferten Anwendung wirkt sich durch weniger Ausfälle und eine
+        niedrigere Support-Zeit auf die Zufriedenheit von Kunden aus.
     }
 
     \item{
-        \textbf{$Z_3$ Bessere Kommunikation:}\par
+        \textbf{$Z_3$ Kontinuierliche Auslieferung neuer Software}\par
         Die \acrshort{ci}-Strategie und die damit verbundenen Prozesse die sich für Entwicklerteams ergeben, sollen
-        zu einer Steigerung der Transparenz innerhalb des Teams und somit zu einer verbesserten Kollaboration
-        führen.
+        zu einer Anpassbaren Entwicklungsumgebung führen.
+        Diese Umgebung soll durch kontinuierliche Weiterentwicklung an die ständig wechselenden Anforderungen der
+        modernen Softwareentwicklung angepasst werden können, was die Wettbewerbsfähigkeit fördert.
     }
 \end{itemize}
 
@@ -62,54 +71,52 @@ zu können.
 
 \subsection{Struktur der Arbeit} \label{subsec:01-introduction-3}
 
-Die Arbeit ist strukturell in die folgenden fünf Hauptabschnitte unterteilt:
+Im Laufe dieser Arbeit wird eine \acrshort{ci}-Strategie für Shopware-basierte Kundenprojekte konzeptioniert und
+entwickelt.
+Die Arbeit ist in fünf Hauptabschnitte unterteilt, die jeweils unterschiedliche Aspekte des Prozesses abdecken.
 
-\begin{itemize}
-    \item {
-        \textbf{Fachlicher Hintergrund}\par
-        Zunächst wird der fachliche Hintergrund für die Arbeit festgelegt, der Abschnitt umfasst eine Einführung in das
-        Continuous-Software-Engineering und die Prinzipien und Praktiken von Continuous Integration, sowie eine
-        Übersicht über die Shopware-Plattform.
-        Dieser Abschnitt dient dazu, ein grundlegendes Verständnis für die Themen und Technologien zu schaffen, die in
-        der Arbeit behandelt werden.
-    }
+\subsubsection{Fachlicher Hintergrund}
 
-    \item {
-        \textbf{Analyse und Konzept}\par
-        Dieser Abschnitt befasst sich mit der Analyse der aktuellen Situation und der Entwicklung eines Konzepts für die
-        \acrshort{ci}-Strategie.
-        Dies beinhaltet die Identifizierung von Herausforderungen und Anforderungen, die Berücksichtigung von Best
-        Practices und die Ausarbeitung eines Plans für die Implementierung der Strategie.
-        Die Konzeptionierung stützt sich dabei auf die im vorherigen Abschnitt aufgezeigte Fachliteratur.
-    }
+In diesem Abschnitt wird zunächst der theoretische Rahmen für die Arbeit festgelegt.
+Dies umfasst eine Einführung in das Continuous-Software-Engineering und die Prinzipien und Praktiken von
+Continuous Integration, sowie eine Übersicht über die Shopware-Plattform.
+Der Abschnitt dient dazu, ein grundlegendes Verständnis für die Themen und Technologien zu schaffen, die in
+der Arbeit behandelt werden.
 
-    \item{
-        \textbf{Entwicklung der \acrshort{ci}-Strategie}\par
-        In diesem Abschnitt wird die Entwicklung der \acrshort{ci}-Strategie beschrieben.
-        Dies umfasst die Auswahl und Konfiguration der benötigten Tools, die Definition von Prozessen und Workflows und
-        die Implementierung von Automatisierungen und Tests.
-        Der Fokus liegt dabei auf der praktischen Anwendbarkeit des im vorherigen Abschnitt entwickelten Konzepts.
-    }
+\subsubsection{Analyse und Konzept}
 
-    \item{
-        \textbf{Evaluierung}\par
-        Die Auswertung der implementierten \acrshort{ci}-Strategie wird im folgenden Abschnitt behandelt.
-        Dies beinhaltet die Durchführung von Tests und Messungen, um die Wirksamkeit und Effizienz der Strategie zu
-        bewerten.
-        Dabei wird die umgesetzte Strategie im Hinblick auf die im fachlichen Hintergrund aufgezeigten Prinzipien
-        geprüft.
-        Die Ergebnisse dieser Evaluierung werden analysiert und interpretiert, um Rückschlüsse auf den Erfolg der
-        Implementierung zu ziehen.
-    }
+Dieser Abschnitt befasst sich mit der Analyse der aktuellen Situation und der Entwicklung eines Konzepts für die
+\acrshort{ci}-Strategie.
+Dies beinhaltet die Identifizierung von Herausforderungen und Anforderungen, die Berücksichtigung von Best
+Practices und die Ausarbeitung eines Plans für die Implementierung der Strategie.
+Die Konzeptionierung stützt sich dabei auf die im vorherigen Abschnitt aufgezeigte Fachliteratur.
+Der Abschnitt dient als Brücke zwischen Theorie und Praxis und stellt sicher, dass die entwickelte Strategie sowohl
+fundiert als auch anwendbar ist.
 
-    \item{
-        \textbf{Schlussfolgerung und Ausblick}\par
-        Der letzte Abschnitt fasst die Ergebnisse der Arbeit zusammen und es werden Schlussfolgerungen über die
-        \acrshort{ci}-Strategie und dessen Nutzung in Shopware-Projekten gezogen.
-        Darüber hinaus wird ein Ausblick auf mögliche zukünftige Entwicklungen und Verbesserungen gegeben.
-        Dieser Abschnitt dient dazu, die Arbeit abzurunden und einen Ausblick auf weitere Forschungs- und
-        Entwicklungsarbeiten in diesem Bereich zu geben.
-    }
-\end{itemize}
+\subsubsection{Entwicklung der \acrshort{ci}-Strategie}
+
+In diesem Abschnitt wird die Entwicklung der \acrshort{ci}-Strategie als Fallbeispiel beschrieben.
+Dies umfasst die Auswahl und Konfiguration der benötigten Tools, die Definition von Prozessen und Workflows,
+die Implementierung von Automatisierungen und Tests und das automatisierte Ausliefern der Software.
+Der Schwerpunkt liegt hierbei auf der praktischen Umsetzung des zuvor entwickelten Konzepts und dessen Integration in
+reale Shopware-Projekte.
+
+\subsubsection{Evaluierung}
+
+Die Auswertung der implementierten \acrshort{ci}-Strategie wird im folgenden Abschnitt behandelt.
+Dies beinhaltet die Durchführung von Tests und Messungen, um die Wirksamkeit und Effizienz der Strategie zu
+bewerten.
+Dabei wird die umgesetzte Strategie im Hinblick auf die im fachlichen Hintergrund aufgezeigten Prinzipien
+geprüft.
+Die Ergebnisse dieser Evaluierung werden analysiert und interpretiert, um Rückschlüsse auf den Erfolg der
+Strategie zu ziehen.
+
+\subsubsection{Schlussfolgerung und Ausblick}
+
+Der letzte Abschnitt fasst die Ergebnisse der Arbeit zusammen und es werden Schlussfolgerungen über die
+\acrshort{ci}-Strategie und dessen Anwendbarkeit in Shopware-Projekten gezogen.
+Darüber hinaus wird ein Ausblick auf mögliche zukünftige Entwicklungen und Verbesserungen gegeben.
+Dieser Abschnitt dient dazu, die Arbeit abzurunden und einen Ausblick auf weitere Forschungs- und
+Entwicklungsarbeiten in diesem Bereich zu geben.
 
 \clearpage

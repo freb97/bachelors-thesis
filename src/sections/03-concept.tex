@@ -5,744 +5,316 @@
 
 Im folgenden Kapitel werden verschiedene Techniken zur kontinuierlichen Integrierung von Code analysiert und eine
 Konzeption für Shopware-basierte Projekte erarbeitet.
-Zunächst wird die aktuelle Situation untersucht und eine Grundlage für die Einführung von Qualitätsanalyse-Tools und
-automatisiertem Testing gelegt.
-Anschließend werden verschiedene \acrshort{ci}-Tools analysiert und für den Einsatz in der zu konzipierenden Pipeline
-bewertet.
-Zuletzt wird eine Konzeption durchgeführt, diese stützt sich dabei auf die zuvor festgelegte Ausgangssituation und die
-untersuchten Tools.
+Zunächst werden technische Anforderungen an die zu entwickelnde Strategie im Hinblick auf die geschäftsseitigen
+Vorgaben durch die Ziele $Z_n$ der Arbeit definiert.
+Anschließend wird die Ausgangssituation in Shopware-Projekten und dessen Umgebungen und kundenspezifischer Anpassungen
+beleuchtet, wobei der Fokus auf den gemeinsamen Grundvoraussetzungen und der Anpassungsfähigkeit der
+\acrshort{ci}-Strategie an verschiedene Architekturen liegt.
+Zuletzt wird die eigentliche Konzeption der Strategie anhand der zuvor erarbeiteten Methoden und
+Praktiken und den definierten Anforderungen vorgenommen.
 
-\subsection{Analyse der Ausgangssituation} \label{subsec:03-concept-1}
+\subsection{Technische Anforderungen} \label{subsec:03-concept-1}
 
-Die aktuelle Situation stellt sich wie folgt dar: In E-Commerce-Unternehmen gibt es in der Regel verschiedene Kunden,
-die mit unterschiedlichen Versionen von Shopware arbeiten.
-Diese Kunden sind oftmals bei verschiedenen Hosting-Anbietern untergebracht, was zu einer Vielfalt an technischen
+Um ein vollumfängliches Konzept erstellen zu können, müssen einige technische Anforderungen an die Strategie definiert
+werden.
+Diese Anforderungen orientieren sich sowohl an der Zieltechnologie – in diesem Fall Shopware – als auch an den im
+fachlichen Hintergrund erörterten Methoden und Praktiken.
+Da die Strategie das Nutzen von\ \acrshort{ci} in Shopware-Projekten ermöglichen soll, werden nachfolgend
+die technischen Anforderungen an das Konzept im Hinblick auf die Gegebenheiten der Shop-Software aufgezeigt:
+
+\begin{itemize}
+    \item {
+        \textbf{Vollautomatisierter Software-Build}\par
+        Der Prozess des Software-Builds muss durchweg automatisiert stattfinden.
+        Dies umfasst das Installieren der Software aus der Versionskontrolle, dem Herunterladen und Installieren
+        sämtlicher Abhängigkeiten und dem Erzeugen von Build-Dateien aus dem gegebenen Quellcode.
+    }
+
+    \item {
+        \textbf{Automatisierte Software-Tests und Quality-Checks}\par
+        Da Testing einen integralen Bestandteil der\ \acrshort{ci} bildet, muss die zu konzipierende Strategie ein
+        umfassendes Test-Konzept bieten.
+        Dies schließt sowohl Unit- und Module-Tests, als auch programmübergreifende Prüfungen wie Integration- und
+        System-Tests ein.
+        Zudem soll die Qualitätssicherung der zu entwickelnden Software eines Projekts durch statische
+        Code-Analyse-Tools in die \acrshort{ci}-Strategie integriert werden.
+    }
+
+    \item {
+        \textbf{Reproduzierbare\ \acrshort{ci}-Umgebungen}\par
+        Es ist von entscheidender Bedeutung, dass die \acrshort{ci}-Umgebung konsistent und reproduzierbar ist.
+        Dies gewährleistet, dass jeder Build und Test unter identischen Bedingungen durchgeführt wird, unabhängig davon,
+        wann und wo der \acrshort{ci}-Prozess initiiert wird.
+        Die Strategie sollte daher die Verwendung von Containerisierungstechnologien, wie Docker, in Betracht ziehen,
+        um eine einheitliche, isolierte und wiederholbare Umgebung für den Build- und Testprozess zu schaffen.
+        Dies minimiert potenzielle Inkonsistenzen und Fehler, die durch unterschiedliche Umgebungsbedingungen entstehen
+        könnten.
+    }
+
+    \item {
+        \textbf{Hohe Anpassbarkeit und Skalierbarkeit}\par
+        Die \acrshort{ci}-Strategie sollte flexibel genug sein, um sich an veränderte Anforderungen und wachsende
+        Projektgrößen anzupassen.
+        Dies bedeutet, dass sowohl die Infrastruktur als auch die Prozesse skalierbar gestaltet werden müssen, um mit
+        der Evolution des Projekts Schritt zu halten.
+        Die Möglichkeit, neue Tools und Technologien nahtlos zu integrieren, sollte ebenfalls gegeben sein, um die
+        kontinuierliche Anpassung und Optimierung der \acrshort{ci}-Pipeline zu gewährleisten.
+    }
+
+    \item {
+        \textbf{Einheitliche Daten-Verwaltung}\par
+        Um Konsistenz und Nachvollziehbarkeit zu gewährleisten, sollte alles, von Code über Konfigurationen bis hin
+        zu Datenbank-Skripten und Tests, in einem Versionskontrollsystem verwaltet werden.
+        Dies ermöglicht eine klare Historie von Änderungen und erleichtert das Rollback im Falle von Problemen.
+        Ein zentralisiertes\ \acrshort{vcs} stellt sicher, dass alle Teammitglieder stets mit der aktuellsten Version
+        arbeiten und Änderungen nachvollziehbar sind.
+    }
+
+    \item {
+        \textbf{Kontinuierliche Bereitstellung und Deployments}\par
+        Neben dem Build- und Testing-Prozess ist es auch wichtig, dass die \acrshort{ci}-Strategie Mechanismen für die
+        kontinuierliche Bereitstellung und das Deployment der Software bietet.
+        Dies ermöglicht es, Änderungen schnell in die Produktionsumgebung zu übertragen und sicherzustellen, dass die
+        Software stets aktuell und einsatzbereit ist.
+        Automatisierte Deployments sollten daher in den Pipelines mit eingeplant werden, um den Prozess der
+        Softwareauslieferung zu optimieren und zu beschleunigen.
+    }
+
+    \item {
+        \textbf{Hohe System-Verfügbarkeit}\par
+        Die \acrshort{ci}-Infrastruktur sollte so konzipiert sein, dass sie stets verfügbar ist und minimale Ausfallzeiten
+        aufweist. Dies ist entscheidend, um den kontinuierlichen Entwicklungsfluss nicht zu unterbrechen und eine
+        ständige Feedback-Schleife zu gewährleisten.
+        Redundanzen und regelmäßige Backups sollten implementiert werden, um die Systemverfügbarkeit auch bei
+        unerwarteten Problemen zu gewährleisten.
+    }
+\end{itemize}
+
+Diese technischen Anforderungen sollen das Entwickeln einer vollumfänglichen\ \acrshort{ci}-Strategie im Hinblick auf
+die definierten Ziele $Z_n$ der Arbeit ermöglichen.
+
+\subsection{Analyse der Ausgangssituation} \label{subsec:03-concept-2}
+
+Die aktuelle Situation stellt sich wie folgt dar: In E-Commerce-Unternehmen die Shopware-Projekte betreiben, gibt es in
+der Regel verschiedene Kunden, die mit unterschiedlichen Versionen von der Software arbeiten.
+Diese Kunden können bei verschiedenen Hosting-Anbietern untergebracht sein, was zu einer Vielfalt an technischen
 Umgebungen führt, in denen die Software betrieben wird.
-Darüber hinaus verwendet jeder Kunde eine individuelle Kombination aus Plugins und Eigenentwicklungen, die auf seine
-spezifischen Bedürfnisse zugeschnitten sind.
+Darüber hinaus verwenden Kunden meist eine individuelle Kombination aus Plugins und Eigenentwicklungen, die auf dessen
+spezifische Bedürfnisse zugeschnitten sind.
 Diese Diversität stellt eine Herausforderung dar, da sie eine Vielzahl von Variablen in die Entwicklung und Wartung der
 Software einbringt.
 Um eine generalisierte Strategie erstellen zu können, wird sich also zunächst auf die Gemeinsamkeiten von
 Shopware-Projekten konzentriert.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{images/content/shopware-requirements}
-    \captioncite[Eigene Darstellung nach]{shopware-requirements}{Umgebung und Abhängigkeiten der Shopware-Platform}
-    \label{fig:shopware-requirements}
-\end{figure}
 Shopware besteht aus einer Vielzahl von Verzeichnissen und Dateien, jede Version der Software und jedes
 Shopware-basierte Projekt unterscheiden sich voneinander.
 Ungeachtet von Projekt und Version gibt es jedoch einige Grundvoraussetzungen für das Ausführen von Shopware.
-Die Programmiersprache PHP mit einigen Extensions und der Paketmanager Composer müssen in der ausführenden Umgebung
-installiert sein.
-Zusätzlich wird die Javascript-Runtime\ \glqq Node\grqq\ mit Paketmanager\ \acrshort{npm} benötigt, um das Frontend zu
-bauen.
-Die Software setzt außerdem eine Datenbank für den Betrieb des Shops und das Durchführen von End-to-End-Tests voraus,
-und benötigt einen Webserver um aufgerufen werden zu können.
-Im Live-Betrieb unterstützt die Plattform das optionale Anbinden einer Message-Queue und einer Search Engine, um viele
-gleichzeitige Zugriffe von Usern verwalten zu können und das Suchen von Produkten und Herstellern für Shop-Kunden zu
-ermöglichen.
-Zur weiteren Optimierung der Produktions-Umgebung kann zudem ein Cache für Warenkorb-Inhalte und Nutzer-Sessions
-eingeführt werden.
 \footpartcite{shopware-requirements}
-In Abbildung\ \ref{fig:shopware-requirements} werden die Abhängigkeiten der Shopware-Platform und die verschiedenen
-Services für den Betrieb der Software aufgezeigt.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/content/shopware-requirements}
+    \captioncite[Eigene Darstellung nach]{shopware-requirements}{Umgebung und Abhängigkeiten der Shopware-Platform}
+    \label{fig:shopware-requirements}
+\end{figure}
+
+In Abbildung\ \ref{fig:shopware-requirements} werden die grundsätzlichen Abhängigkeiten der Shopware-Platform und die
+verschiedenen Services für den Betrieb der Software aufgezeigt.
 Hierbei werden optionale Services in gestrichelt dargestellt.
-Um ein Projekt installieren und ausführen zu können, oder um Tests auf der Code-Base durchzuführen, wird also eine
+Um ein Projekt installieren und ausführen zu können, oder um Tests auf der Codebase durchzuführen, wird also eine
 Umgebung vorausgesetzt, in der die benötigten Services und Tools installiert sind.
-
-\subsection{Auswertung von CI/CD-Tools} \label{subsec:03-concept-2}
-
-Um die Konzeption einer \acrshort{ci}-Pipeline durchführen zu können, müssen zunächst die zur Umsetzung verfügbaren
-Tools erfasst und für den Einsatz in Kundenprojekten bewertet werden.
-Dabei spielen verschiedene Aspekte eine Rolle, wie die Kompatibilität mit dem bestehenden Technologie-Stack, die
-Skalierbarkeit und die Benutzerfreundlichkeit.
-Nachfolgend werden verschiedene Kategorien von Tools und Services, die für eine \acrshort{ci}-Pipeline genutzt werden
-können, vorgestellt.
-
-\subsubsection{Version Control Systems}
-
-Um eine vollumfängliche \acrshort{ci}-Strategie erstellen zu können, muss die Versionskontroll-Software inklusive
-dazugehöriger Services berücksichtigt werden.
-Für die Konzeption wurden einige Bekannte und erprobte Anbieter von Enterprise-\acrshort{vcs} untersucht:
-
-\begin{itemize}
-    \item{
-        \textbf{GitHub:}\par
-        GitHub ist ein webbasierter Hosting-Service für Versionierung mit Git.
-        Es bietet alle verteilten Versionskontroll- und Quellcodeverwaltungsfunktionen von Git sowie einige
-        eigene Funktionen.
-        Es bietet Zugriffskontrolle und mehrere Kollaborationsfunktionen wie Aufgabenverwaltung, Fehlerverfolgung und
-        Feature-Anfragen für Projekte.
-        GitHub bietet sowohl Pläne für private Repositorys als auch kostenlose Konten, die normalerweise verwendet
-        werden, um Open-Source-Softwareprojekte zu hosten.
-        Der Service bietet außerdem \acrshort{ci}-Tools und Pipeline-Verwaltung an.
-        Als Managed Service kümmert sich GitHub um die Wartung der Infrastruktur.\footpartcite{github}
-    }
-
-    \item{
-        \textbf{GitLab:}\par
-        GitLab ist ein webbasiertes \acrshort{vcs}-Tool, welches einen Git-Repository-Manager bereitstellt.
-        Der Service ist vergleichbar mit GitHub und bietet viele ähnliche Funktionen, wie Issue-Tracking,
-        kontinuierliche Integration und Deployment-Pipelines, sowie eine integrierte Wiki-Funktion für die
-        Dokumentation.
-        Es wird unter einer Open-Source-Lizenz vertrieben und eine Self-Managed-Version ermöglicht es,
-        GitLab auf eigenen Servern zu installieren und zu verwalten.
-        Dies bietet mehr Kontrolle über die Daten und die Möglichkeit, die Plattform an spezifische Bedürfnisse
-        anzupassen.\footpartcite{gitlab}
-    }
-
-    \item{
-        \textbf{Bitbucket:}\par
-        Bitbucket ist ein weiteres webbasiertes Tool zur Verwaltung von \acrshort{vcs}, welches sowohl von
-        kommerziellen als auch von kostenlosen Konten genutzt wird.
-        Es wird von der Firma Atlassian betrieben und ermöglicht das Hosting von Git- und Mercurial-Repositorys.
-        Bitbucket integriert auch mit anderen Atlassian-Produkten wie Jira und Confluence.
-        Es bietet Funktionen wie Pull-Requests für Code-Reviews und Inline-Kommentare.
-        Bitbucket bietet sowohl Managed als auch Self-Hosted-Optionen.\footpartcite{bitbucket}
-    }
-
-    \item{
-        \textbf{SourceForge:}\par
-        SourceForge ist eine Open-Source \acrshort{vcs}-Lösung, welche sowohl Git als auch Mercurial unterstützt.
-        Die Plattform kann sowohl zur Versionskontrolle als auch für das Ausliefern von Software verwendet werden,
-        wobei diese oft für Open-Source-Projekte genutzt wird.
-        SourceForge ist webbasiert und bietet den direkten Download von einer Vielzahl von Software-Projekten an.
-        \footpartcite{sourceforge}
-    }
-\end{itemize}
-
-\subsubsection{Pipeline- und Test-Runners}
-
-Große Enterprise-\acrshort{vcs}-Anbieter wie GitHub, GitLab und Bitbucket haben bereits eine Pipeline-Lösung in ihrem
-System integriert und bieten Hardware-Ressourcen zum Ausführen der Pipelines an.
-Neben den eingebauten Pipeline-Services der Enterprise-Anbieter gibt es einige eigenständige Tools, welche Teils selbst
-gehostet werden müssen.
-Nachfolgend werden einige dieser \acrshort{ci}/\acrshort{cd}-Services im Hinblick auf den Einsatz in der zu
-entwickelnden Strategie untersucht:
-
-\begin{itemize}
-    \item{
-        \textbf{GitHub Actions:}\par
-        GitHub Actions ist die eingebaute \acrshort{ci}/\acrshort{cd}-Lösung von GitHub.
-        Actions können in jedem Repository in einem bestimmten Verzeichnis in Form von Konfigurations-Dateien im
-        \acrshort{yaml}-Format angelegt werden.
-        Durch Actions kann an verschiedenen Stellen im Nutzungszyklus des \acrshort{vcs} angeknüpft werden, um zum
-        Beispiel nach einem Push oder bei Merge-Prozessen verschiedene Aktionen mit dem eingeführten Code durchzuführen.
-        An dieser Stelle können dann je Branch verschiedene Aktionen definiert werden, wie zum Beispiel das Durchführen
-        von Build-Prozessen, Tests und des Software-Deployments.
-        Beim Merging-Prozess von verschiedenen Branches kann so zum Beispiel das erfolgreiche Durchlaufen der Pipeline
-        vorausgesetzt werden, um fehlerhaften oder ungetesteten Code im Ziel-Branch zu vermeiden.
-        Die für das Ausführen der Pipeline benötigten Umgebungsvariablen, Passwörter und andere vertrauliche Daten
-        können dabei in einer von GitHub zur Verfügung gestellten, sicheren Datenbank verwaltet werden.
-        \footpartcite{github-actions}
-    }
-
-    \item{
-        \textbf{GitLab CI/CD:}\par
-        Ähnlich wie GitHub bietet auch GitLab eine eingebaute Pipeline-Lösung für das Ausführen von \acrshort{ci}- und
-        \acrshort{cd}-Prozessen.
-        GitLab CI/CD ist vollständig in GitLab integriert und verwendet eine Konfigurations-Datei innerhalb des
-        Repositories, um die Phasen des \acrshort{ci}/\acrshort{cd}-Prozesses zu definieren.
-        Es bietet eine breite Palette von Funktionen, einschließlich der Parallelisierung von Tests, Pipelines für Merge
-        Requests und das Verwalten von Umgebungsvariablen.
-        GitLab CI/CD kann auf eigenen Servern oder in der Cloud ausgeführt werden, und sowohl für bei GitLab, als auch
-        für extern gehostete Repositorys verwendet werden, was es zu einer flexiblen Lösung macht.
-        \footpartcite{gitlab-ci-cd}
-    }
-
-    \item{
-        \textbf{Bitbucket Pipelines:}\par
-        Bitbucket bietet, ähnlich wie GitHub und GitLab, eine integrierte \acrshort{ci}/\acrshort{cd}-Lösung.
-        Bitbucket Pipelines ermöglicht die Automatisierung von Build-, Test-/\acrshort{qa}- und Deployment-Prozessen und
-        ist dabei direkt an das Repository angebunden.
-        Der Service verwendet ebenfalls eine \acrshort{yaml}-Datei zur Konfiguration der Pipelines und bietet eine
-        Vielzahl von vordefinierten Umgebungen und Integrationen mit anderen Tools.
-        Wie GitLab, unterstützt auch Bitbucket Pipelines das parallele Durchführen von Tests.
-        Pipelines können sowohl innerhalb von Bitbucket, als auch in der selbst-gehosteten Version genutzt werden.
-        \footpartcite{bitbucket-pipelines}
-    }
-
-    \item{
-        \textbf{Jenkins:}\par
-        Jenkins ist ein Open-Source-Tool, das für Continuous Integration entwickelt wurde, aber auch Continuous Delivery
-        unterstützt.
-        Es bietet eine große Anzahl von Plugins und Erweiterungen, die es zu einer flexiblen Lösung für
-        \acrshort{ci}/\acrshort{cd}-Pipelines machen.
-        Jenkins unterstützt das Verteilen von Arbeitslast auf verschiedene Systeme und kann auf einer Vielzahl von
-        Plattformen und Umgebungen ausgeführt werden.
-        Der Service kann durch Plugins angepasst und erweitert werden, um eigene Build-, Testing- und
-        \acrshort{qa}-Tools einführen zu können.
-        Jenkins muss selbst gehostet werden, was eine größere Kontrolle über die Ausführungsumgebung ermöglicht, aber
-        auch einen höheren Wartungsaufwand mit sich bringt.\footpartcite{jenkins}
-    }
-
-    \item{
-        \textbf{Travis CI:}\par
-        Travis CI ist ein Cloud-basierter \acrshort{ci}/\acrshort{cd}-Service, der sich besonders gut für Projekte
-        eignet, die auf GitHub gehostet werden.
-        Es bietet eine einfache Einrichtung und Konfiguration durch eine \acrshort{yaml}-Datei im Repository und
-        unterstützt eine Vielzahl von Programmiersprachen und Tools.
-        Der Service ermöglicht das gleichzeitige Testen in verschiedenen Umgebungen und die Verwaltung von
-        Umgebungsvariablen und Secrets, sowie das Erweitern der Plattform für die Integration externer Applikationen.
-        Travis CI bietet sowohl kostenlose Pläne für Open-Source-Projekte als auch kostenpflichtige Pläne für private
-        Projekte.
-        \footpartcite{travis-ci}
-    }
-\end{itemize}
-
-\subsubsection{Testing-Tools}
-
-Shopware-Projekte gewinnen schnell an Umfang, der Aufwand für das manuelle Testen der einzelnen Entwicklungen steigt mit
-jedem eingeführten Feature.
-Software-Tests sind ein nützliches Tool für \acrshort{ci}-Pipelines und helfen dabei, das aufwändige manuelle Testen
-der einzelkomponenten bei einem Software-Release zu minimieren.
-Nachfolgend werden verschiedene Arten von Software-Tests beschrieben und Tools für das Einbinden dieser Tests in der
-bestehenden Systemlandschaft untersucht:
+Nachfolgend werden die in der Grafik aufgezeigten Abhängigkeiten und Services erläutert:
 
 \begin{itemize}
     \item {
-        \textbf{Unit-Tests:}\par
-        Unit-Tests verifizieren das Verhalten von kleinen Elementen eines Software-Systems, meist einzelner Klassen.
-        Beim Durchführen von Unit-Tests wird das gewünschte Verhalten von Software-Komponenten definiert und
-        diese anschließend ausgeführt um das Ergebnis mit dem zuvor definierten, erwarteten Verhalten zu vergleichen.
-        Diese Tests haben keine äußerlichen Abhängigkeiten wie Datenbanken, da der jeweils getestete Code isoliert
-        vom Rest des Software-Systems getestet wird.
-        Um etwaige Abhängigkeiten die zur Ausführung des Codes benötigt werden zu umgehen, werden Mocks eingesetzt.
-        Ein Mock stellt eine Nachahmung der Vorgehensweise einer Abhängikeit dar, so kann zum Beispiel das Verhalten
-        einer Datenbank simuliert werden, ohne diese als Service im Testing-Prozess zu benötigen.
-        Oftmals wird der Anteil von durch Tests abgedeckten Klassen und Funktionen im Kontrast zu der Anzahl an
-        ungetesteten Komponenten der Software gemessen, dieser Wert wird als Coverage bezeichnet.
-        \footpartcite[132--133]{duvall}
-        Nachfolgend werden Tools für das Auführen von Unit-Tests in Shopware-basierten Projekten untersucht:
+        \textbf{PHP}\par
+        Da Symfony und somit auch Shopware auf der Programmiersprache PHP basieren, muss diese in der ausführenden
+        Umgebung installiert sein.
 
         \begin{itemize}
             \item {
-                \textbf{PHPUnit:}\par
-                PHPUnit ist ein weit verbreitetes Open-Source Unit-Testing-Framework, welches zum Erstellen von
-                Unit-Tests in PHP-basierten Applikationen verwendet wird.
-                Das Framework ermöglicht das Erstellen von Mocks und das Auswerten der Test-Coverage für das zu
-                testende Projekt.
-                \footpartcite{phpunit}
+                \textbf{PHP-Extensions}\par
+                Shopware benötigt für den Betrieb einige PHP-Extensions, zum Beispiel zum Erstellen von Archiven
+                oder dem Lesen von XML-Dateien.
             }
 
             \item {
-                \textbf{Jest:}\par
-                Jest ist ein Javascript Testing-Framework und ermöglicht das Einbringen von Unit-Tests in
-                JavaScript-basierten Applikationen.
-                Ähnlich wie PHPUnit, unterstützt Jest das Erstellen von Mocks und bietet Funktionen zur Coverage an.
-                Das Framework parallelisiert laufende Tests, um eine möglichst hohe Performance zu bieten.
-                \footpartcite{jest}
+                \textbf{Paketmanager\ \glqq Composer\grqq}\par
+                Durch Composer werden sowohl die Abhängigkeiten von Symfony und Shopware, als auch Third-Party-Plugins
+                und eigene Entwicklungen im Projekt verwaltet und zur Nutzung im PHP-Code bereitgestellt.
             }
         \end{itemize}
     }
 
     \item {
-        \textbf{Functional Tests:}\par
-        Funktionstests stellen eine Umgebung dar, in der das Software-System auf Interoperatibiliät der
-        einzelnen Komponenten und Services geprüft wird.
-        Hierbei stehen alle Abhängigkeiten und Services für die Software zur Verfügung, um das Zusammespiel von
-        verschiedenen Komponenten des Systems aus Sicht des Kunden zu testen.
-        Diese Tests erfordern oft ein längeres Test-Setup und eine höhere Laufzeit.
-        \footpartcite[136-138]{duvall}
-        Im Folgenden werden einige Testing-Tools für systemweite Tests untersucht:
+        \textbf{JavaScript}\par
+        JavaScript bei der Nutzung der Shopware-Platform sowohl im Browser, als auch Serverseitig ausgeführt.
 
         \begin{itemize}
             \item {
-                \textbf{Cypress:}\par
-                Cypress ist ein Testing Framework für Webapplikationen.
-                Es ermöglicht das automatisierte Testen von Benutzerinteraktionen innerhalb einer Webapplikation in
-                einem realen Browser.
-                Cypress ist besonders nützlich für das Testen von komplexen Webapplikationen und unterstützt sowohl
-                Unit- als auch Integrations- und End-to-End-Tests.
-                Cypress ermöglicht das Testen des Zusammenspiels des gesamten Projekts und kann zur automatisierung
-                von Testfällen genutzt werden, bei denen normalerweise Nutzer-Interaktion erforderlich ist.
-                \footpartcite{cypress}
+                \textbf{JavaScript-Runtime\ \glqq Node\grqq}\par
+                Zur Serverseitigen Ausführung von JavaScript-Code wird die Node-Runtime als Abhängigkeit vorausgesetzt.
             }
 
             \item {
-                \textbf{Selenium:}\par
-                Selenium ist ein weit verbreitetes Open-Source-Tool für automatisierte Tests.
-                Ähnlich wie Cypress, ermöglicht es das Testen von Webanwendungen in verschiedenen Browsern und auf
-                verschiedenen Plattformen.
-                Selenium unterstützt eine Vielzahl von Programmiersprachen, darunter JavaScript, Java, C\#, Python und
-                Ruby.
-                Es kann als Testing-Tool in einem Web-basierten Projekt oder als automatisierungs-Tool für andere
-                Aufgaben verwendet werden.
-                \footpartcite{selenium}
+                \textbf{Node-Paketmanager\ \glqq\acrshort{npm}\grqq}\par
+                Der Paktemanager\ \acrshort{npm} ist eine weitere Abhängigkeit von Shopware.
+                Dieser verwaltet JavaScript-Pakete, welche zur Ausführung der Software benötigt werden.
             }
         \end{itemize}
     }
 
-    \item {
-        \textbf{Mutation-Tests:}\par
-        Mutation Testing ist eine Testtechnik, bei der die Effektivität eines existierenden Testsets bestimmt werden
-        kann.
-        Hierbei wird der zu testende Source-Code verändert, oder mutiert, und dieser abgeänderte Code mit einem
-        bestehenden Test-Set geprüft.
-        Wenn die mutierte Variante des Codes durch das Test-Set aufgedeckt wurde, indem der Test fehlschlägt, wird
-        der mutierte Code, auch Mutant genannt, als eliminiert betrachtet.
-        Durch Mutation Tests können Schwachstellen in Software-Tests gefunden werden und die Qualität der bestehenden
-        Tests eines Tests gemessen werden.
-        Zur Messung der Effektivität eines Test-Sets wird der \glqq Mutation Adequacy Score\grqq\@ oder
-        \glqq Mutation Score\grqq\ (\acrshort{ms}) genutzt.
-        Schlägt der Test eines mutierten Quellcodes nicht fehl, wirkt sicht das negativ auf den \acrshort{ms} aus:
-        \[MS = \frac{Anzahl\ eliminierter\ Mutanten}{Anzahl\ Mutanten}\]
-        Das Ziel ist hierbei das Abdecken möglichst aller Mutanten durch ein Test-Set $T$, sodass dessen Mutation Score
-        $MS = 1$ entspricht.\footpartcite[649--652]{mutation-testing}
+    \clearpage
 
-        \begin{itemize}
-            \item {
-                \textbf{Infection:}\par
-                Infection ist eine Mutation-Testing-Library für PHP.
-                Sie ändert den Quellcode automatisch und führt dann bestehende Tests erneut aus, um zu sehen, ob diese
-                fehlschlagen.
-                Wenn die Tests bestehen, obwohl der Code mutiert wurde, zeigt Infection diese Stellen im Code an, damit
-                diese verbessert werden können.
-                Infection nutzt einen eigenen \glqq Mutation Score Indicator\grqq\ (\acrshort{msi}), die Formel zur
-                Berechnung des \acrshort{msi} ist wie folgt definiert:
-                \[TotalDefeatedMutants = KilledCount + TimedOutCount + ErrorCount\]
-                \[MSI = \left(\frac{TotalDefeatedMutants}{TotalMutantsCount}\right) * 100\]
-                Neben dem \acrshort{msi} stellt Infection noch weitere Faktoren zum Bestimmen der Effektivität von
-                Test-Sets bereit.
-                Die Library unterstützt die Integration mit PHPUnit, Codeception und weiteren Testing-Tools.
-                \footpartcite{infection}
-            }
-        \end{itemize}
+    \item {
+        \textbf{Webserver}\par
+        Um die Shop-Instanz im Browser aufrufen und\ \acrshort{api}-Anfragen verarbeiten zu können, wird eine
+        Webserver-Software benötigt.
+    }
+
+    \item {
+        \textbf{Datenbank}\par
+        Shopware schreibt zur Nutzung der Software eine Datenbank vor, welche die eigentlichen Shop-Konfigurationen,
+        Produkte, Bestellungen, Kunden und weitere Daten verwaltet.
+    }
+
+    \item {
+        \textbf{Search Engine}\par
+        Um den Besuchern des Online-Shops eine Textsuche für Produkte und Hersteller zu bieten, unterstützt Shopware
+        das optionale Anbinden verschiedener Suchmachinen.
+    }
+
+    \item {
+        \textbf{Cache}\par
+        Zur Optimierung der Shop-Performance kann zudem optional ein Zwischenspeicher, auch\ \glqq Cache\grqq\ genannt,
+        für Warenkorb-Inhalte und aktuelle Nutzer-Sitzungen eingeführt werden.
+    }
+
+    \item {
+        \textbf{Message Queue}\par
+        Um viele gleichzeitige Zugriffe von Usern verwalten zu können, erlaubt Shopware das Anbinden einer Message
+        Queue.
+        Diese ermöglichen das Sammeln von Nutzer-Anfragen, welche dann in Reihe verarbeitet werden können.
     }
 \end{itemize}
 
-\subsubsection{Static-Code-Analysis-Tools}
-
-Da statische Code-Analyse die Qualität der entwickelten Software verbessern können, ist diese hilfreich für das
-Erreichen des Ziels $Z_2$ der Arbeit.
-Im Folgenden werden einige dieser Tools für die in Shopware-Projekten verwendeten Programmiersprachen PHP und JavaScript
-gesammelt:
-
-\begin{itemize}
-    \item {
-        \textbf{ESLint:}\par
-        ESLint ist ein statisches Tool zur Analyse von JavaScript-Code.
-        Das Tool ist sehr anpassbar und kann für das Entwickeln mit verschiedenen Frameworks und Libraries genutzt
-        werden.
-        Viele \acrshort{ide}s unterstützen ESLint und zeigen Analyse-Resultate bereits bei der Entwicklung im Editor
-        an.
-        Das Tool unterstützt außerdem das automatische Beheben von bestimmten Syntax-Fehlern mit einem eingebauten
-        Kommandozeilenbefehl.\footpartcite{eslint}
-    }
-
-    \item {
-        \textbf{Danger:}\par
-        Danger ist ein statisches Analyse-Tool, welches direkt in \acrshort{vcs} angebunden werden kann.
-        Das Tool läuft während des \acrshort{ci}-Prozesses und kann zur automatisierung von Code-Review-Aufgaben
-        genutzt werden.
-        Mit Danger können Warnungen und Fehler in der Pipeline geworfen werden, wenn Pull-Requests (\acrshort{pr}s) zu
-        groß werden, kein Changelog-Eintrag für Änderungen angelegt wurde, Lockfiles nicht up-to-date sind, der PR
-        unzugewiesen ist und vieles mehr.
-        Die offizielle Ausführung der Software umfasst die Programmiersprachen JavaScript, Ruby, Kotlin, Python und
-        Swift, wobei es auch eine unoffizielle PHP-Implementierung gibt.
-        \footpartcite{danger-js}\textsuperscript{,\ }\footpartcite{danger-php}
-    }
-
-    \item {
-        \textbf{PHP\_CodeSniffer:}\par
-        PHP\_CodeSniffer (\acrshort{phpcs}) ist ein Set aus zwei Kommandozeilen-Befehlen für das Analysieren von PHP-
-        und JavaScript-Code und von Cascading Style Sheets (\acrshort{css}) nach einem gegebenen Coding-Standard und für
-        das automatische Korrigieren von Abweichungen dieses Standards.
-        Das Tool kann mit vorgegebenen und eigens erstellten oder angepassten Regelsätzen betrieben werden.
-        \footpartcite{php-codesniffer}
-    }
-
-    \item {
-        \textbf{PHP Mess Detector:}\par
-        PHP Mess Detector (\acrshort{phpmd}) ist eine Software die nach vorgegebenen Problemen und Unstimmigkeiten in
-        PHP-Code sucht.
-        Das Tool kann zum verhindern des Einführens von überflüssigen Variablen und Methoden, unoptimiertem Code und
-        möglichen Fehlern in die Zielumgebung genutzt werden.
-        \acrshort{phpmd} kann ergänzend zu Danger und \acrshort{phpcs} zur statischen Analyse von PHP-Code verwendet
-        werden.\footpartcite{php-mess-detector}
-    }
-
-    \item {
-        \textbf{PHPStan:}\par
-        PHPStan ist ein weiteres \acrshort{qa}-Tool für das statische Analysieren von PHP-Code.
-        Es konzentriert sich auf die Erkennung von Fehlern, die im laufenden Betrieb zu Problemen führen können, wie
-        z.B. Aufrufe von nicht existierenden Methoden, ungenutzte Variablen, usw.
-        PHPStan kann in den Entwicklungsprozess integriert werden, um die Codequalität kontinuierlich zu verbessern.
-        \footpartcite{phpstan}
-    }
-
-    \item {
-        \textbf{Deptrac:}\par
-        Deptrac ist ein statisches Code-Analyse-Tool, das dabei hilft, die Architektur eines PHP-Projekts zu verstehen
-        und zu überprüfen.
-        Es stellt sicher, dass die Abhängigkeiten zwischen den Modulen eines Projekts den definierten Architekturregeln
-        entsprechen.
-        Deptrac kann in den Entwicklungsprozess integriert werden, um die Architektur des Projekts kontinuierlich zu
-        überwachen und zu verbessern.\footpartcite{deptrac}
-    }
-
-    \item {
-        \textbf{License checker:}\par
-        License checker ist ein Tool, das die Lizenzen von Abhängigkeiten in einem Projekt überprüft.
-        Es kann dabei helfen, Lizenzprobleme bei Plugins und Erweiterungen von Drittanbietern zu identifizieren und zu
-        vermeiden.
-        Das Tool ist in PHP geschrieben und konzentriert sich auf das Überprüfen von Composer-Abhängigkeiten.
-        \footpartcite{license-checker}
-    }
-
-    \item {
-        \textbf{Symfony security checker:}\par
-        Der Symfony Security Checker ist ein Befehlszeilentool, das überprüft, ob die in einem Symfony-Projekt
-        verwendeten Abhängigkeiten bekannte Sicherheitslücken aufweisen.
-        Das Tool kann zusammen mit der Symfony-\acrshort{cli} oder als eigenständiges Software installiert werden und
-        hilft dabei, PHP-Projekte kontinuierlich zu überwachen und sicher zu halten.
-        \footpartcite{symfony-security-checker}
-    }
-\end{itemize}
+Durch das Installieren dieser grundlegenden Abhängigkeiten und Services wird das Betreiben von Shopware 6 ermöglicht.
+Da diese sich in zukünftigen Versionen der Software ändern können, sollte bei neuen Projekten immer geprüft werden,
+welche Abhängigkeiten für die gewünschte Shopware-Version vorgegeben sind.
+Alte Projekte sollten außerdem kontinuierlich auf aktuelle Versionen upgedatet und auf die Erfüllung von dessen
+Voraussetzungen geprüft werden.
 
 \subsection{Konzeption der CI-Strategie} \label{subsec:03-concept-3}
 
-Im Folgenden wird die Konzeption der \acrshort{ci}-Strategie für Kundenprojekte auf Basis der Shopware-Platform
+Im Folgenden wird die Konzeption der\ \acrshort{ci}-Strategie für Kundenprojekte auf Basis der Shopware-Platform
 durchgeführt.
-Zunächst wird eine generelle Projekt-Struktur für die Strategie definiert, wobei besonderer Wert auf die
-Kompatibilität mit unterschiedlichen Shopware-Projekten in verschiedenen Umgebungen gesetzt wird.
-Anschließend werden, anhand der im vorherigen Abschnitt untersuchten \acrshort{ci}/\acrshort{cd}-Tools, Pipelines für
-verschiedene Branching-Strukturen und Projekt-Ansätze erarbeitet.
-Zuletzt wird der Einsatz von Continuous Delivery und Deployment in der Strategie im Hinblick auf Shopware-Projekte
-bewertet.
+Hierbei wird zunächst die ausführende Umgebung geplant, sowohl für das lokale Entwickeln mit Shopware als auch für die
+Integration und Ausführung der verschiedenen\ \acrshort{ci}-Tools innerhalb einer Pipeline.
+Anschließend wird die Struktur der angedachten Pipeline aufgestellt, wobei dessen einzelne Aufgaben systematisch in
+eigene Phasen und Jobs unterteilt werden.
 
 \subsubsection{Projekt-Struktur und Umgebung}
 
-Die Verzeichnis-Struktur von Projekten auf der Basis von Shopware 6 ist durch die Software vorgegeben.
-Führt man Shopware zum ersten Mal aus, werden 7 Verzeichnisse angelegt:
-\begin{wrapfigure}{l}{0.26\textwidth}
-    \centering
-    \includegraphics[width=0.244\textwidth]{images/content/shopware-folder-structure}
-    \captioncite[Eigene Darstellung]{}{Verzeichnis-Struktur eines Shopware-Projekts}
-    \label{fig:shopware-folder-structure}
-\end{wrapfigure}
-\begingroup
-    \vspace{-0.3cm}
-    \addtolength{\leftmargini}{-0.3cm}
-    \begin{itemize}
-        \item {
-            \shellinline{bin}:
-            Das \shellinline{bin}-Verzeichnis enthält Skripte und andere ausführbare Dateien, die Aktionen in der
-            Shopware-Platform auslösen.
-            So kann zum Beispiel die Administration oder die Storefront neu gebaut, der Cache geleert oder ein neuer
-            Backend-Benutzer angelegt werden.
-        }
-
-        \item {
-            \shellinline{config}:
-            Im \shellinline{config}-Verzeichnis, werden Konfigurationsdateien abgelegt, die das Verhalten von
-            Shopware steuern.
-            Hier können zum Beispiel Datenbank-, Cache-, Search-Engine- und Message-Queue-Konfigurationen gespeichert
-            werden.
-        }
-
-        \item {
-            \shellinline{custom}:
-            Benutzerdefinierte Plugins und Themes können im \shellinline{custom}-Verzeichnis angelegt werden.
-            Hierdurch kann die Funktionalität und das Aussehen von Shopware an die spezifischen Anforderungen eines
-            Projekts angepasst werden.
-        }
-
-        \item {
-            \shellinline{files}:
-            Hochgeladene Dateien und Medien, wie zum Beispiel Produktbilder, Downloads und andere Dateien, die über das
-            Backend hochgeladen werden, werden im \shellinline{files}-Verzeichnis gespeichert.
-        }
-
-        \item {
-            \shellinline{public}:
-            Alle öffentlich zugänglichen Dateien der Anwendung, einschließlich statischer Ressourcen wie \acrshort{css},
-            JavaScript, Schriftarten und generierte Bilder und Thumbnails, werden im \shellinline{public}-Verzeichnis
-            abgelegt.
-        }
-    \end{itemize}
-\endgroup
-
-\clearpage
-
-\begin{itemize}
-    \item {
-        \shellinline{var}:
-        Temporäre Dateien, die während der Ausführung von Shopware generiert werden, wie Cache-Dateien, Log-Dateien und
-        Sitzungsdaten, werden im \shellinline{var}-Verzeichnis abgelegt.
-    }
-
-    \item {
-        \shellinline{vendor}:
-        Das \shellinline{vendor}-Verzeichnis beherbergt alle Abhängigkeiten der Shopware-Instanz und dessen Plugins.
-        Diese Abhängigkeiten werden über den Paketmanager Composer verwaltet.
-    }
-\end{itemize}
-
-In Abbildung\ \ref{fig:shopware-folder-structure} wird eine Übersicht über die Verzeichnis-Struktur eines
-Shopware-Projekts gegeben.
-Um die zu konzipierende Strategie möglichst flexibel zu gestalten, macht es Sinn die Shopware-Installation mit all
-diesen Verzeichnissen in einen eigenen Ordner auszulagern.
-Dies hat zur Folge, dass die Dateien, die zum Ausführen und Testen des Shops benötigt werden, getrennt
-\begin{wrapfigure}{l}{0.26\textwidth}
-    \centering
-    \includegraphics[width=0.244\textwidth]{images/content/shopware-ci-folder-structure}
-    \captioncite[Eigene Darstellung]{}{Geplante Verzeichnis-Struktur der \acrshort{ci}-Strategie}
-    \label{fig:shopware-ci-folder-structure}
-\end{wrapfigure}
-von den Dateien gelagert sind, die den Shop ausmachen.
-Dadurch kann ein beliebiges Shop-Projekt in den \shellinline{shopware}-Ordner gelegt werden, wobei weiterhin die
-Möglichkeit zur Anpassung der ausführenden Umgebung und der Testing-Tools besteht.
-In der \acrshort{ci}-Strategie soll neben dem \shellinline{shopware}-Verzeichnis ein eigenes Composer-Projekt mit
-\shellinline{vendor}-Ordner und verschiedene Verzeichnisse für die Tool-Konfigurationen und Auswertungen und Caches
-der Tests existieren.
-JavaScript-Tools und Abhängigkeiten werden über\ \acrshort{npm} verwaltet und befinden sich im
-\shellinline{node_modules}-Verzeichnis.
-Die restlichen Konfigurations-Dateien für etwaige Tools und Services liegen dabei direkt im Hauptverzeichnis des
-\mbox{Projekts}.
-\\\\
-In Abbildung\ \ref{fig:shopware-ci-folder-structure} kann die geplante Verzeichnis-Struktur für die
-\acrshort{ci}-Strategie eingesehen werden, hierbei werden Ordner in durchgehenden und Dateien mit gestrichelten Linien
-dargestellt.
-Neben diesen Verzeichnissen und Dateien besteht die Struktur des Projekts auch aus einer Umgebung, in der die
-Shopware-Platform ausgeführt, getestet und analysiert werden kann.
-Eine Umgebung muss in diesem Fall in einer \acrshort{ci}-Pipeline ausführbar sein und die Grundbedürfnisse der
-Shopware-Instanz bereitstellen.
+Die Anforderungen des Projekts setzten eine Umgebung, in der die Shopware-Platform ausgeführt, getestet und analysiert
+werden kann voraus.
+Eine Umgebung muss in diesem Fall sowohl lokal als auch in einer \acrshort{ci}-Pipeline ausführbar sein und die
+Grundbedürfnisse der Shopware-Instanz bereitstellen.
 Dies beinhaltet die von Shopware genutzte PHP-Version mit PHP-Erweiterungen, Composer, Node, eine
 Webserver-Software und weitere Voraussetzungen.
-Shopware stellt für diese Anforderung ein Docker-Image bereit, welches für verschiedene Shopware-Versionen
-die unterschiedlichen PHP- und Composer-Versionen und Node, den Apache Webserver und alle anderen Abhängigkeiten
-der Plattform bereithält.\footpartcite{shopware-docker}
-Docker und das darunterliegende Prinzip der Containerization sind Technologien, die Linux-Kernel-Features nutzen, um
-Anwendungen und ihre Abhängigkeiten in einem leichtgewichtigen, eigenständigen und isolierten Paket zu bündeln, das auf
-jeder Plattform ausgeführt werden kann, die Container unterstützt.
-Dies ermöglicht eine hohe Portabilität und Konsistenz über verschiedene Umgebungen hinweg und führt zu einem
-Performance-Zuwachs gegenüber der traditionellen Virtualisierung.
-Ein Docker-Image ist eine Vorlage für einen Docker-Container, der eine laufende Instanz eines Docker-Images ist.
-Ein wesentlicher Vorteil eines Docker-Images besteht darin, dass es sowohl in einer \acrshort{ci}-Pipeline, als auch in
-einer lokalen Entwicklungsumgebung oder in Produktion zum Ausführen der Software genutzt werden kann.
-\footpartcite{docker}
-
-Da die \acrshort{ci}-Strategie auf dem Betreiben von Shopware in einer isolierten und reproduzierbaren Umgebung zum
-Ausführen von Testing- und \acrshort{qa}-Tools fußt, wurde sich für die Nutzung des von Shopware gestellten
-Docker-Images in den Pipelines entschieden.
-Zunächst wird allerdings eine ausführende Umgebung für die \acrshort{ci}-Pipelines benötigt.
-GitLab CI/CD kann zum Verwalten von Pipelines genutzt werden, um auf Änderungen in einem\ \acrshort{vcs} zu reagieren.
-Der erhoffte Vorteil in der Nutzung des Services liegt in der Breite der Unterstützung, da es sich um eine große und
-populäre \acrshort{ci}-Software handelt, und in der Möglichkeit, die Software selbst zu hosten und verschiedene
-\acrshort{vcs} Anzubinden.
-Somit ist die Strategie nicht an eine bestimmte \acrshort{vcs}-Software gebunden und kann ungeachtet der Plattform in
-Projekten integriert werden.
-
-\subsubsection{Pipelines}
-
-Da GitLab CI/CD mit verschiedenen\ \acrshort{vcs} genutzt werden kann, wird sich in der weiteren Konzeption auf die
-Gestaltung anpassbarer Pipelines im Hinblick auf unterschiedliche Branching-Strukturen für verschiedene
-Shopware-Projekte konzentriert.
-Pipelines reagieren auf Status-Veränderungen in einer \acrshort{vcs}-Software und können so an verschiedene
-Aktionen geknüpft werden.
-\begin{wrapfigure}{r}{0.575\textwidth}
-    \centering
-    \includegraphics[width=0.55\textwidth]{images/content/ci-pipeline-concept}
-    \captioncite[Eigene Darstellung]{}{Visualisierung der konzipierten \acrshort{ci}-Pipeline}
-    \label{fig:ci-pipeline-concept}
-\end{wrapfigure}
-Zunächst soll eine grundlegende Pipeline definiert werden, die bei jedem Push in einen Branch ohne eine definierte
-Deployment-Umgebung läuft.
-Diese Pipeline durchläuft eine Build- und eine Testing-Stage.
-Im Build-Prozess werden die \acrshort{ci}-Tools und die Abhängigkeiten der Shopware-Platform installiert.
-Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Test- und \acrshort{qa}-Tools, inklusive
-lang-andauernder Tests durch End-to-End-Testing.
-Im späteren Verlauf der Entwicklung soll die Möglichkeit bestehen, diese Tests nur in Branches mit definierter
-Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird.
-Eine grobe Richtlinie für die maximale Dauer einer Pipeline ist die Zehn-Minuten-Marke, da viele Entwickler
-auf das erfolgreiche Durchlaufen der Pipeline warten, bevor sie mit der nächsten Aufgabe beginnen.
-\footpartcite[87--88]{duvall}
-Eine möglichst kurze Durchlaufzeit von \acrshort{ci}-Pipelines ist somit im Hinblick auf Ziel $Z_1$ der Arbeit für die
-Effizienz von Softwareentwicklungsteams relevant.\\
-In der Regel gibt es in einem Shopware-Projekt der Firma best it bis zu drei Branches, für die eine Umgebung vorgesehen
-ist: \shellinline{development},\ \shellinline{staging} und \shellinline{main}.
-Die Development-Umgebung repräsentiert den Stand des \shellinline{development}-Branches und ist die erste Server-Instanz
-die Entwickler zum Testen eines Features verwenden können.
-Diese Umgebung ist in der Regel stabil, kann aber Ausfälle verkraften, da weder der Endkunde, noch der Auftraggeber
-Zugriff darauf haben.
-Der \shellinline{staging}-Branch stellt die Basis für die Staging-Umgebung bereit.
-Hierbei handelt es sich um eine stabile Umgebung, in die die erfolgreich getesteten Änderungen des
-\shellinline{development}-Branches eingeführt werden, sodass der Auftraggeber des Shops diesen zustimmen kann, bevor
-sie den Endkunden im Produktions-System erreichen.
-Letztlich werden die vom Auftraggeber freigegebenen Änderungen gesammelt vom \shellinline{staging}-Branch in den
-\shellinline{main}-Branch überführt.
-Dieser Branch repräsentiert die Produktions-Umgebung, auf der die Endkunden und eigentlichen Shop-Nutzer Einkäufe
-tätigen können.
-Da zu Anfang eines Projekts oftmals noch keine Staging- und Development-Umgebung existiert, muss die
-\acrshort{ci}-Strategie flexibel sein und an die Branching-Strategien verschiedener Projekten in unterschiedlichen
-Phasen angepasst werden können.
-\\\\
-In Abbildung\ \ref{fig:ci-pipeline-concept} wird eine konzipierte \acrshort{ci}-Pipeline in Beachtung der verschiedenen
-möglichen Umgebungen eines Shopware-Projekts aufgezeigt.
-Hierbei werden verschiedene Arten von Branches in einem\ \acrshort{vcs} dargestellt, welche zunächst die gleiche Aktion
-auslösen, den Build-Prozess.
-Dort werden die \acrshort{ci}-Tools und die Abhängigkeiten von Shopware für die anschließende Nutzung in der
-Testing-Stage installiert.
-Die Testing-Stage wird nach erfolgreichem Durchlaufen der Build-Stage ausgeführt und ist in der Abbildung in zwei
-Teile separiert.
-Im oberen Teil werden die gewählten Testing- und \acrshort{qa}-Tools für JavaScript-Code der Strategie aufgezeigt,
-während der untere Teil die Tools für PHP darstellt.
-Wenn alle Jobs der Testing-Stage erfolgreich durchgelaufen sind, wird, je nach Art des Ausgangs-Branches, ein
-Deployment-Prozess für die jeweilige Umgebung angestoßen.
-Die Deployment-Stage liefert dann den Code des Ausgangs-Branches an die Development-, Staging- oder
-Produktions-Umgebung aus.
-Die für die Pipelines ausgewählten Tools unterteilen sich in folgende Kategorien:
-\\\\
-\noindent
-{\setstretch{0.9}
-    \begin{minipage}[t]{0.5\textwidth}
-        \textbf{PHP:}
-
-        \begin{itemize}
-            \item {
-                \textbf{Unit-Testing:}
-
-                \begin{itemize}
-                    \item { PHPUnit }
-                \end{itemize}
-            }
-
-            \item {
-                \textbf{Mutation-Testing:}
-
-                \begin{itemize}
-                    \item { Infection }
-                \end{itemize}
-            }
-
-            \item {
-                \textbf{Static-Code-Analysis:}
-
-                \begin{itemize}
-                    \item { PHP\_CodeSniffer }
-                    \item { PHP Mess Detector }
-                    \item { PHPStan }
-                    \item { Deptrac }
-                    \item { License-Checker }
-                    \item { Security-Checker }
-                \end{itemize}
-            }
-        \end{itemize}
-    \end{minipage}%
-    \begin{minipage}[t]{0.5\textwidth}
-        \textbf{JavaScript:}
-
-        \begin{itemize}
-            \item {
-                \textbf{Unit-Testing:}
-
-                \begin{itemize}
-                    \item { Jest }
-                \end{itemize}
-            }
-
-            \item {
-                \textbf{End-to-End-Testing:}
-
-                \begin{itemize}
-                    \item { Cypress }
-                \end{itemize}
-            }
-
-            \item {
-                \textbf{Static-Code-Analysis:}
-
-                \begin{itemize}
-                    \item { Eslint }
-                    \item { Danger JS }
-                \end{itemize}
-            }
-        \end{itemize}
-    \end{minipage}
-}
-\clearpage
-
-Die Auswahl der genannten Tools basiert auf verschiedenen Faktoren.
-Bei der Auswahl der Tools für das Unit-Testing wurde auf PHPUnit und Jest zurückgegriffen, da diese weit verbreitet sind
-und eine umfangreiche Dokumentation sowie eine aktive Community bieten.
-Für das Mutation-Testing wurde Infection ausgewählt, da es eine direkte Integration mit PHPUnit bietet.
-Die ausgewählten Tools für die statische Code-Analyse, PHP\_CodeSniffer, PHP Mess Detector, PHPStan, Deptrac,
-License-Checker und Security-Checker für PHP sowie Eslint und Danger JS für JavaScript, helfen dabei, den Code auf
-Einhaltung von Coding-Standards, potenzielle Fehler und Sicherheitsprobleme zu überprüfen.
-Cypress wurde für das End-to-End-Testing ausgewählt, da es eine einfach zu verwendende und leistungsstarke Lösung für
-das Testen von Webanwendungen bietet und bereits eine Schnittstelle zur Anbindung an Shopware existiert.
-\footpartcite{shopware-cypress}
-Die konzipierte \acrshort{ci}-Pipeline ist flexibel und kann an die spezifischen Anforderungen und die
-Branching-Strategie eines Projekts angepasst werden.
-Die gewählten Tools bilden hierbei eine Grundlage für eine möglichst breite Abdeckung des zu testenden Quellcodes und
-der festgelegten Konventionen des Projekts, sind aber nicht gänzlich vorgeschrieben.
-Die Pipeline soll im weiteren Projektverlauf um weitere Tools ergänzt und angepasst werden können.
-\\\\
-Durch den Einsatz der \acrshort{ci}-Pipeline sollen Entwicklerteams effizienter arbeiten, die Codequalität erhöhen
-und die interne Kommunikation können.
-Wichtig für die Kommunikation ist hierbei, dass die \acrshort{ci}-Tools und Prozesse kontinuierliches Feedback über den
-Stand des Codes gewähren.
-GitLab CI/CD kann zum Versenden von Nachrichten konfiguriert werden, welche bei Abbruch einer Pipeline auf Fehler im
-Quellcode aufmerksam machen.
-Durch die Weboberfläche wird hierbei Feedback zur Art des Fehlers und dessen Position in den zu testenden Dateien
-gegeben.
-Kontinuierliches Feedback bietet also die Möglichkeit, Entwicklern mehr Informationen über den aktuellen Status der
-Software mehrerer Projekte zukommen zu lassen.
-Diese Projektinformationen können dabei aggregieren werden, um mit der Zeit Trends innerhalb eines Projektes feststellen
-zu können.\footpartcite[203--211]{duvall}
-Das kontinuierliche Feedback durch die \acrshort{ci}-Pipeline an die Entwickler des Teams ist somit zum Erreichen des
-Ziels $Z_3$ der Strategie relevant, da es zu einer Steigerung der internen Kommunikation führen kann.
-
-\subsubsection{Continuous Delivery \& Deployment}
-
-Neben der kontinuierlichen Prüfung des Quellcodes in der Testing-Stage und dem Erstellen einer Release-Fähigen
-Software durch den Build-Prozess ist die Deployment-Stage ein weiterer wichtiger Aspekt beim Betreiben einer
-\acrshort{ci}-Strategie.
-Um die automatisiert gebaute und getestete Software auch direkt mit auszuliefern zu können, ist in der Strategie ein
-Deployment-Prozess angedacht.
-Hierbei wird die Software nach erfolgreichem Durchlaufen der Testing-Stage in der jeweils für den Ausgangs-Branch der
-Pipeline definierten Umgebung ausgerollt.
-Da die Kunden der best it GmbH verschiedene Arten von Umgebungen einsetzen, muss die Möglichkeit bestehen, den Prozess
-an die Bedürfnisse unterschiedlicher Projekte anzupassen.
-GitLab CI/CD bietet hierfür teilweise eingebaute Lösungen und Tools und kann außerdem benutzerdefinierte Skripte
-ausführen, womit allerlei Arten von Umgebungen abgedeckt werden können.
-Um traditionelle Linux-Server-Umgebungen als Hosting-Plattform zu unterstützen, soll das PHP-basierte Tool
-\glqq Deployer\grqq\ in die Strategie mit einbezogen werden.
-Hiermit können Aktionen auf verschiedenen Servern durchgeführt werden, wie zum Beispiel das Übertragen der Dateien und
-Verzeichnisse der Software, das Starten und Stoppen von Services oder das Durchführen von Datenbankmigrationen.
-\footpartcite{deployer}
-Das Deployment in Container-Umgebungen wird durch GitLab CI/CD standardmäßig unterstützt.
-GitLab stellt hierfür einen eigenen Kubernetes-Agent bereit, welcher zum automatischen Ausliefern von Docker-Images an
-verteilte Container-Umgebungen genutzt werden kann.\footpartcite{gitlab-agent}
-Das Deployment kann hierbei, ungeachtet der Art der Umgebung, in GitLab manuell ausgeführt oder vollständig
-automatisiert werden.
-Da Änderungen am Produktions-System oftmals vorher durch den Kunden in einem designierten System getestet und
-abgenommen werden müssen, setzt die Strategie primär auf Continuous Delivery, ermöglicht aber optional auch
-Continuous Deployment durch das vollautomatisierte Ausrollen der Software.
-Wichtig ist hierbei, dass das Austauschen der laufenden mit der neuen, auszuliefernden Software so schnell und
-reibungslos wie möglich erfolgt, sodass die Nutzer des Shops keine Beeinträchtigungen beim Einkauf erfahren.
-Außerdem muss bei versehentlichem Ausrollen einer fehlerhaften Version die Möglichkeit bestehen, die veröffentlichte
-Software zu einem vorherigen, stabilen Stand zurückzuführen.\footpartcite[259--261]{humble}
+Da spätere Umgebungen, an welche die Software ausgeliefert werden soll, nicht zwangsläufig unter der
+Kontrolle des Entwicklerteams stehen, wird sich in der Strategie auf die Vereinheitlichung der lokalen
+Entwicklungsumgebung und der Pipeline beschränkt.
+Hierzu empfiehlt sich die Nutzung von Containerization, wobei die Abhängigkeiten zum Ausführen der Shopware-Platform
+und der\ \acrshort{ci}-Tools gebündelt und wiederverwendet werden können.
+Ein lokal entwickeltes Feature kann so nach der Fertigstellung über ein\ \acrshort{vcs} integriert werden, welches dann
+die Pipeline-Orchestration anstößt.
+Die Pipeline soll zur Ausführung der einzelnen Jobs das gegebene Image instanziieren und als ausführende
+Umgebung verwenden, sodass diese möglichst der lokalen Entwicklungsumgebung gleicht.
+Nach dem erfolgreichen Durchlaufen des Software-Builds, Tests und Qualitäts-Checks soll die Software letztlich durch
+einen Deployment-Job innerhalb der Pipeline automatisiert an verschiedene Umgebungen ausgeliefert werden können.
+Hierbei kann es sich um die Produktionsumgebung oder andere Infrastrukturen handeln, wie zum Beispiel einen
+Development-Server zum Testen von Features oder einen Staging-Server für die Abnahme von neuen Änderungen durch
+Projekt-Kunden.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/content/ci-architecture-concept}
-    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Architektur der konzipierten Strategie}
+    \captioncite[Eigene Darstellung nach]{docker}{Geplante Architektur der\ \acrshort{ci}-Strategie}
     \label{fig:ci-architecture-concept}
 \end{figure}
 
-In Abbildung\ \ref{fig:ci-architecture-concept} wird die Architektur der konzipierten \acrshort{ci}-Strategie grob
-visualisiert.
-Die Darstellung zeigt die Struktur der lokalen Entwicklungsumgebung so wie der späteren Deployment-Umgebungen in
-Zusammenhang mit dem\ \acrshort{vcs} und GitLab CI/CD auf.
+Eine Visualisierung der geplanten Architektur für die\ \acrshort{ci}-Strategie kann in
+Abbildung\ \ref{fig:ci-architecture-concept} eingesehen werden.
+Die Darstellung zeigt die Struktur der lokalen Entwicklungsumgebung so wie der späteren möglichen
+Deployment-Umgebungen in Zusammenhang mit dem\ \acrshort{vcs} und des Pipeline-Runners auf.
 Optionale Services und Umgebungen werden in Blau dargestellt, der Lebenszyklus von Integrationen in der Strategie wird
 durch die Pfeile zwischen den Teilbereichen verdeutlicht.
-Die lokale und die Deployment-Umgebungen basieren dabei auf den Hardware-Ressourcen, auf denen jeweils ein
-Betriebssystem (Host OS) installiert ist, welches das Nutzen von Host Libraries ermöglicht.
+Die lokale und die Deployment-Umgebungen basieren dabei auf Hardware-Ressourcen, auf denen jeweils ein
+Betriebssystem (Host\ \acrshort{os}) installiert ist, welches das Nutzen von Host Libraries ermöglicht.
 Als Host Libraries werden in diesem Fall die installierten Programme und Services auf dem Betriebssystem bezeichnet,
 welche zum Beispiel für das Ausführen des Docker-Daemons und dessen Containern oder für das direkte Ausführen der
 Shopware-Services und dessen Abhängigkeiten genutzt werden.
+
+\subsubsection{Aufbau der Pipeline}
+
+Im Mittelpunkt der\ \acrshort{ci}-Strategie steht die Pipeline zum automatischen Bauen, Testen und Ausliefern der
+Software.
+Nachdem die Umgebung für Projekte und der grundsätzliche Ablauf von Integrationen in der Strategie definiert wurde, wird
+nun die eigentliche Pipeline entworfen.
+Da diese Pipeline verschiedene Phasen durchläuft, werden nachfolgend die für die Strategie angedachten Stages und dessen
+Aufbau erläutert.
+
+\begin{itemize}
+    \item {
+        \textbf{Build-Stage}\par
+        Ungeachtet der späteren ausführenden Umgebung muss in einem Shopware-Projekt zur Durchführung weiterer Schritte
+        eine Build-Phase durchlaufen werden.
+        Hierbei werden die Abhängigkeiten der Shopware-Platform selbst, zusammen mit weiteren Paketen wie Testing- und
+        \acrshort{qa}-Tools installiert und somit für die Testing-Phase vorbereitet.
+        Die hierbei stattfindende Integration wird also zunächst durch den Status des Software-Builds geprüft.
+        Ist der Build-Job erfolgreich, wird ein Artifact erzeugt welches, um die Durchlaufzeit der Pipeline insgesamt
+        möglichst gering zu halten, in einem Cache zur weiteren Nutzung zwischengespeichert wird.
+    }
+
+    \item {
+        \textbf{Test-Stage}\par
+        Wenn die Build-Stage erfolgreich durchgelaufen ist und ein Artifact erzeugt wurde, beginnt die Testing-Phase.
+        In der Strategie ist hierbei das parallele Ausführen von Tests und\ \acrshort{qa}-Tools auf der bestehenden
+        Codebase angedacht.
+        Um Tests parallel auszuführen werden mehrere Jobs gestartet, welchen bereits alle installierten Tools
+        und der zu testende Quellcode durch das zwischengespeicherte Artifact des Build-Jobs zur Verfügung stehen.
+        Hierbei sollte eine möglichst große Abdeckung des Codes durch verschiedene Arten von Software-Tests bestehen.
+        Durch Unit-, Module- und Integration-Tests kann an dieser Stelle die Funktionalität der einzelnen
+        Anwendungs-Komponenten überprüft werden, während System-Tests die Korrektheit des Gesamtsystems anhand der
+        Geschäftsanforderungen abdecken.
+        Besondere Anforderungen einzelner Testing-Tools, wie zum Beispiel ein Datenbank-Service innerhalb der Pipeline
+        zum Ausführen von System-Tests, sollten dabei nicht in der Build-Phase, sondern vor der Ausführung des Tools im
+        jeweiligen Job installiert werden.
+        Parallel zu den verschiedenen Test-Arten können in diesem Schritt Tools zur Static-Code-Analysis ausgeführt
+        werden.
+        Die Test-Stage umfasst somit die automatisierte Qualitäts- und Funktionalitäts-Prüfung der Shop-Software in der
+        \acrshort{ci}-Pipeline.
+    }
+
+    \item {
+        \textbf{Deployment-Stage}\par
+        Wenn der Software-Build inklusive aller automatisierten Tests und Qualitäts-Checks erfolgreich durchlaufen,
+        kann eine Deployment-Stage gestartet werden.
+        In der Strategie ist dessen Ausführung für Branches angedacht, bei denen eine Ziel-Umgebung zur Auslieferung
+        des gebauten Artifacts existiert, wie zum Beispiel die Produktionsumgebung.
+        Der hierbei ausgeführte Deployment-Job liefert die relevanten Daten der Shop-Software, exklusive Testing-Tools
+        und\ \acrshort{ci}-Abhängigkeiten, an die definierte Umgebung aus.
+        Hierbei muss beachtet werden, dass die Ausfallzeit der Applikation bei der automatischen Auslieferung so gering
+        wie möglich bleibt, um die technischen Anforderungen der Strategie zu erfüllen.
+    }
+\end{itemize}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/content/pipeline-visualization}
+    \captioncite[Eigene Darstellung]{}{Phasen und Abhängigkeiten der\ \acrshort{ci}-Pipeline}
+    \label{fig:pipeline-visualization}
+\end{figure}
 
 \clearpage

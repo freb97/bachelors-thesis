@@ -75,6 +75,8 @@ aufgezeigt.
 
 \subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-2}
 
+% @TODO: Irgendwo noch DevOps erklären (?)
+
 Um die Bedeutung und den Nutzen von Continuous Integration und des Continuous-Software-Engineering für die
 Softwareentwicklung nachvollziehen zu können, ist es hilfreich, einen Blick auf die historische Entwicklung und die
 grundlegenden Prinzipien der\ \acrshort{ci} zu werfen.
@@ -118,6 +120,8 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         In einem \acrshort{ci}-gestützten Projekt wird der Prozess des Software-Releases vollständig automatisiert,
         sodass jedes Teammitglied eine entwickelte Komponente schnell Integrieren und einen Software-Build erzeugen
         kann, was sich positiv auf die Cycle Time auswirkt.
+        In einem Build-Prozess erzeugte Dateien, welche die fertig gebaute Software ausmachen, werden dabei als\ \glqq
+        Artifact\grqq\ betitelt.\footpartcite[2580]{benefits-challenges}
         Fowler empfiehlt hierbei, dass ein entwickeltes Feature erst nach der vollständigen Integration durch einen
         erfolgreichen Build als fertig angesehen werden soll.\footpartcite{fowler}
         In der Regel finden das Bauen und Testen der Software in einer\ \glqq Pipeline\grqq\ statt, welche die genutzten
@@ -137,7 +141,7 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         Diese Systemübergreifenden Tests, welche das Zusammenspiel verschiedener Komponenten testen, erhöhen zwar die
         Dauer des Test-Prozesses, können aber wichtige Einsicht in die Qualität der Software gewähren.
         \footpartcite{fowler}
-        Tests in einem automatisierten\ \acrshort{ci}-Build können insgesamt dabei helfen, Fehler in eingeführtem
+        Automatisierten Tests in einer\ \acrshort{ci}-Pipeline können insgesamt dabei helfen, Fehler in eingeführtem
         Quellcode zu finden.\footpartcite[2572]{benefits-and-challenges}
         Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, um eine Pipeline bei Unstimmigkeiten in der Syntax
         des eingeführten Codes abzubrechen.
@@ -214,6 +218,10 @@ können, wird eine ausführende Umgebung für diese Prozesse benötigt.
 In einem\ \acrshort{ci}-Prozess werden hierfür Pipelines eingesetzt, welche zum Ausführen von Befehlen und Prozessen
 zur automatischen Integration und dem Testen von Code genutzt werden.
 \footpartcite[2571]{benefits-challenges}
+Sie werden durch sogenannte Pipeline- oder Task-Runner verwaltet und können verschiedene Aufgaben verrichten,
+welche durch das Ausführen von Befehlen innerhalb sogenannter\ \glqq Jobs\grqq\ durchgeführt werden.
+Pipelines können mehrere Jobs starten, teilweise auch parallel, wobei nacheinander laufende Jobs voneinander
+Abhängig sein und Artifacts für nachfolgende Jobs zwischengespeichert werden können.
 Pipelines spielen durch das kontinuierliche Integrieren von entwickeltem Code eine integrale Rolle bei der Reduzierung
 der Cycle Time\footpartcite{fowler} und sind somit wichtig zum Erreichen des Ziels $Z_1$ der Arbeit.
 Eine Pipeline in einem\ \acrshort{ci}-Prozess wird in der Regel bei jeder Änderung am Quellcode des Source-Repositories
@@ -225,20 +233,56 @@ Um die zum Bauen, Testen und Ausliefern von Software in einem\ \acrshort{ci}-Pro
 können, wird eine isolierte und reproduzierbare ausführende Umgebung benötigt.
 In der Vergangenheit wurden für solche isolierten Umgebungen hauptsächlich\ \glqq Virtual
 Machines\grqq\ (\acrshort{vm}s) verwendet.
-\acrshort{vm}s nutzen hierbei einen\ \glqq Hypervisor\grqq, um die Hardware eines physischen Computers emulieren zu
-können, sodass mehrere Betriebssysteminstanzen und die darin verwalteten Applikationen gleichzeitig auf einem einzigen
-System ausführbar sind.\footpartcite[54--55]{docker}
+\acrshort{vm}s nutzen hierbei einen sogenannten\ \glqq Hypervisor\grqq, welcher die Hardware eines physischen Computers
+emulieren kann, sodass mehrere Betriebssysteminstanzen und die darin verwalteten Applikationen gleichzeitig auf einem
+einzigen System ausführbar sind.\footpartcite[54--55]{docker}
 Containerization ist eine modernere Technologie, die einen Performance-Zuwachs gegenüber \acrshort{vm}s bieten kann.
 \footpartcite{docker-performance}
 Die hierbei genutzten\ \glqq Container\grqq\ sind eigenständige, ausführbare Pakete, die alles enthalten, was für den
 Betrieb einer Anwendung erforderlich ist, einschließlich Code, Laufzeitumgebung, Bibliotheken und Systemtools.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/content/vm-architecture}
+        \captionsetup{justification=raggedright,singlelinecheck=false}%
+        \vspace{-0.7cm}%
+        \caption*{(a)}
+    \end{minipage}%
+    \hspace{0.075\textwidth}%
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/content/container-architecture}
+        \captionsetup{justification=raggedright,singlelinecheck=false}%
+        \vspace{-0.7cm}%
+        \caption*{(b)}
+    \end{minipage}
+    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Hypervisor- und Container-Architektur}
+    \label{fig:vm-container-architecture}
+\end{figure}
+
 Während \acrshort{vm}s zur Ausführung einen Hypervisor und vollständige Betriebssysteminstanzen benötigen, teilen sich
 Container die Ressourcen eines einzelnen Betriebssystems und isolieren so die Anwendung von der zugrunde liegenden
-Infrastruktur.\footpartcite[55--57]{docker}
+Infrastruktur.
+Ein Container ist hierbei die laufende Instanz eines Container-Images, welches den Aufbau des Containers inklusive
+Abhängigkeiten und installierter Software speichert.
 Containerization erleichtert also das Vereinheitlichen verschiedener Umgebungen in \acrshort{ci}-Projekten, indem es
 Abhängigkeiten und Konfigurationen in einem Container kapselt.\footpartcite[2576]{benefits-challenges}
 Dies bietet Entwicklern und Testern eine erhöhte Effizienz und Flexibilität, da sie sich darauf verlassen können, dass
 die Software in jeder Umgebung identisch funktioniert.
+In Abbildung\ \ref{fig:vm-container-architecture} werden die Architekturen von Hypervisor und Container
+gegenübergestellt.
+Die Visualisierung zeigt im linken Teil den Aufbau eines Systems, in dem ein Hypervisor zum emulieren von
+Hardware-Ressourcen verwendet wird (a).
+Die Technologie kann hierbei auf einem bereits installierten Host-Betriebssystem (Host\ \acrshort{os}) oder ganz ohne
+\acrshort{os} betrieben werden.
+Einzelne\ \acrshort{vm}s die durch den Hypervisor betrieben werden können, nutzen hierbei jeweils ein eigenes
+Gast-Betriebssystem (Guest\ \acrshort{os}).
+Im Kontrast dazu steht die Container-Architektur, welche das Betreiben eines Host\ \acrshort{os} voraussetzt und
+dessen Ressourcen zur Ausführung isolierter Container-Instanzen verwendet (b).
+Das Ausführen der Container wird dabei durch eine Container-Engine übernommen, im Falle der Docker-Technologie wird
+dies durch einen eigenen Hintergrundprozess (Docker Daemon) ermöglicht.
 
 \subsubsection{Software-Testing}
 
@@ -306,8 +350,15 @@ Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorge
     }
 \end{itemize}
 
-Um etwaige Abhängigkeiten die zur Ausführung von Code in einem Test benötigt werden zu umgehen, werden\ \glqq Mocks\grqq
-\ eingesetzt.
+Durch diese verschiedenen Test-Arten kann ein großer Bereich der zu testenden Software und dessen Codebase abgedeckt
+werden.
+Da bereits erstellte Tests immer wieder verwendet werden können, werden diese oftmals eingesetzt um zu prüfen, ob neu
+eingeführter Code diese bestehenden Tests fehlschlagen lässt.
+Dieser Einsatz von existierenden Tests zur Sicherstellung der Funktionalität des Systems wird Regression-Testing
+genannt und stellt einen wichtigen Aspekt des automatisierten Prüfens von Software in einem\ \acrshort{ci}-Kontext dar.
+\footpartcite[53--54]{duvall}
+Um beim Ausführen von Tests etwaige Abhängigkeiten die zur Ausführung des Codes innerhalb Test benötigt werden zu
+umgehen, werden\ \glqq Mocks\grqq\ eingesetzt.
 Ein Mock stellt eine Nachahmung der Vorgehensweise einer Abhängigkeit dar, so kann zum Beispiel das Verhalten
 einer Datenbank oder eines anderen System-Moduls simuliert werden, ohne diese als Service im Testing-Prozess zu
 benötigen.\footpartcite[299--300]{software-testing}
@@ -323,9 +374,7 @@ bestehenden Test-Set geprüft.
 Wenn die mutierte Variante des Codes durch das Test-Set aufgedeckt wurde, indem der Test fehlschlägt, wird
 der mutierte Code, auch Mutant genannt, als eliminiert betrachtet.
 Durch Mutation-Testing können Schwachstellen in Software-Tests gefunden werden und die Qualität der bestehenden
-Tests eines Projekts gemessen werden.
-Die Test-Software erzeugt dazu eine Metrik namens\ \glqq Mutation Adequacy Score\grqq.
-\footpartcite[649--652]{mutation-testing}
+Tests eines Projekts gemessen werden.\footpartcite[242]{software-testing}
 
 \subsubsection{Static-Code-Analysis}
 
@@ -340,14 +389,27 @@ von Fehlern verringern.
 Außerdem können Static-Code-Analysis-Tools durch Warnungen verhindern, dass unoptimierter Code in die
 Produktionsumgebung gerät.\footpartcite{static-analysis}
 
+\subsubsection{Monitoring}
+
+Monitoring, also das Überwachen von Software und dessen Metriken, ist ein unerlässlicher Bestandteil moderner
+Softwareentwicklungs- und Betriebsprozesse.
+Die Ergebnisse von Tests und statischen Code-Analysen eines\ \acrshort{ci}-Prozesses können zur kontinuierlichen
+Überwachung von Qualitätsmetriken und Code-Standards genutzt werden.\footpartcite[17--18]{duvall}
+Neben der Überwachung von Test- und\ \acrshort{qa}-Ergebnissen können auch weitere Software-Bereiche überwacht werden,
+zum Beispiel durch das Ausführen von Performance- und Lasttests innerhalb der\ \acrshort{ci}-Pipeline.
+\footpartcite[441]{agile-testing}
+Hierbei wird die Geschwindigkeit des Durchführens von Transaktionen oder Aufrufzeiten beim Ausführen
+der Software mit vielen gleichzeitigen Nutzerzugriffen überwacht.
+
 \subsection{Übersicht über die Shopware-Platform} \label{subsec:02-background-3}
 
 Shopware wurde als Online-Shop-Software im Jahr 2000 durch Stefan Hamann ins Leben gerufen\footpartcite{shopware-story}
 und bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des PHP-Frameworks
 \glqq Symfony\grqq.
-Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem\ \acrshort{cms}
-\glqq Drupal\grqq, dem Shop-System\ \glqq Magento\grqq\ und einigen weiteren Programmen\footpartcite{symfony-projects}
-als Grundlage genutzt und bildet somit ein erprobtes Fundament für die Shopware-Plattform.
+Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem Content-Management-System
+(\acrshort{cms})\ \glqq Drupal\grqq, dem Shop-System\ \glqq Magento\grqq\ und einigen weiteren
+Programmen\footpartcite{symfony-projects} als Grundlage genutzt und bildet somit ein erprobtes Fundament für die
+Shopware-Plattform.
 Shopware selbst ist nach der Installation bereits voll funktionsfähig und kann mit einem Backend und optional
 mit einem Frontend oder für das Konsumieren der mitgelieferten\ \acrshort{api} eingerichtet werden.
 Ein Application Programming Interface (\acrshort{api}) ist hierbei eine Schnittstelle, welche die standardisierte
@@ -389,13 +451,15 @@ Schnittstellen zur Nutzung bereit.
 Die Verwaltung der die Shop-Daten, Produkte und weiterer Betriebsfunktionen wird mit der Administrations-Oberfläche
 vorgenommen.
 Diese bildet eine eigene Komponente und kommuniziert mit dem Shopware-Core über die Admin-\acrshort{api}.
+Die Administration bietet neben der Konfiguration des Shops und dessen Daten und Produkten auch eine
+\acrshort{cms}-Funktion und kann beliebigen Content verwalten.
 Letztlich wird das Frontend durch die Shopware-Storefront dargestellt, welche mithilfe von Symfonys Template-Engine
 \glqq Twig\grqq\ und der direkten Anbindung an den Shopware-Core das Aufrufen von Produkten, Authentifizieren von Usern
 und Durchführen von Zahlungen ermöglicht.
 Die Storefront ist eine Komponente, welche optional auch deaktiviert und auf Wunsch durch die
 Nutzung der Store-\acrshort{api} mit einer eigenen Applikation ersetzt werden kann.
 Im Standardumfang liefert die Shopware-Platform alle drei Hauptkomponenten aus.
-Diese stehen als Mono-Repository mit dem Namen\ \shellinline{shopware/platform} auf GitHub zur Verfügung.
+Diese stehen als einzelnes Repository mit dem Namen\ \shellinline{shopware/platform} auf GitHub zur Verfügung.
 \footpartcite{shopware-architecture}
 Neben den drei Hauptkomponenten bietet die Shopware-Platform verschiedene Anbindungsmöglichkeiten zur Anpassung des
 Shop-Systems.
@@ -403,14 +467,16 @@ Plugins können direkt an den Core angebunden werden und ermöglichen die Erweit
 der Storefront oder Anpassungen an der Administration.
 Zusätzlich können die Sync-\acrshort{api} und die Sales-Channel-\acrshort{api} für die Anbindung externer Anwendungen
 verwendet werden, wie zum Beispiel Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
-Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
-Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{images/content/shopware-architecture}
+    \includegraphics[width=0.7\textwidth]{images/content/shopware-architecture}
     \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
     \label{fig:shopware-architecture}
 \end{figure}
+
+Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
+Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
 Für die Entwicklung der \acrshort{ci}-Strategie wird der Fokus auf Shopware-Plugins gesetzt.
 Durch Plugins können der Shopware-Core, die Administrations-Oberfläche und die Storefront angepasst werden, wobei diese
 als abgekapselte Module entwickelt oder als Monolith zusammen mit dem Shopware-Projekt in einem gemeinsamen Repository

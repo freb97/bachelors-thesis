@@ -1,0 +1,85 @@
+<mxfile host="app.diagrams.net" modified="2023-08-16T10:51:01.188Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/115.0" etag="GASkgtwSZBNWej96iIc_" version="21.6.8" type="device">
+  <diagram name="Page-1" id="Igu_BJj3ePW4wTze_0mT">
+    <mxGraphModel dx="795" dy="491" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.003;entryY=0.152;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;endArrow=block;endFill=0;" parent="1" source="WVgN2BpvuZmh8Fgh5VFi-1" target="WVgN2BpvuZmh8Fgh5VFi-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="WVgN2BpvuZmh8Fgh5VFi-1" target="WVgN2BpvuZmh8Fgh5VFi-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-43" value="Creates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="WVgN2BpvuZmh8Fgh5VFi-42" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-1" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-2" value="Build stage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-3" value="Build job" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="80" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="WVgN2BpvuZmh8Fgh5VFi-7" target="WVgN2BpvuZmh8Fgh5VFi-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-41" value="Uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=1;points=[];movable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="WVgN2BpvuZmh8Fgh5VFi-40" vertex="1" connectable="0">
+          <mxGeometry x="0.2037" relative="1" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-7" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="230" y="40" width="250" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-8" value="Test stage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="230" y="40" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-12" value="Unit test jobs" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;" parent="1" vertex="1">
+          <mxGeometry x="250" y="80" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-16" value="System test jobs" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="200" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-17" value="Static code analysis jobs" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="240" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.007;entryY=0.863;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;startArrow=block;startFill=0;dashed=1;" parent="1" source="WVgN2BpvuZmh8Fgh5VFi-21" target="WVgN2BpvuZmh8Fgh5VFi-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="WVgN2BpvuZmh8Fgh5VFi-21" target="WVgN2BpvuZmh8Fgh5VFi-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-38" value="Uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="WVgN2BpvuZmh8Fgh5VFi-37" vertex="1" connectable="0">
+          <mxGeometry x="-0.2444" y="-1" relative="1" as="geometry">
+            <mxPoint x="-1" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-21" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="40" y="240" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-22" value="Deployment stage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="247.5" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-23" value="Deployment job" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="277.5" width="120" height="32.5" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-25" value="Monitoring jobs" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="280" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-33" value="Module test jobs" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;" parent="1" vertex="1">
+          <mxGeometry x="250" y="120" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-34" value="Integration test jobs" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="160" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-35" value="Build Artifact" style="rounded=0;whiteSpace=wrap;html=1;rotation=0;gradientColor=none;shadow=0;glass=0;" parent="1" vertex="1">
+          <mxGeometry x="70" y="170" width="100" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
