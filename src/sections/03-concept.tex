@@ -191,8 +191,8 @@ Nachfolgend werden die in der Grafik aufgezeigten Abhängigkeiten und Services e
 
     \item {
         \textbf{Message Queue}\par
-        Um viele gleichzeitige Zugriffe von Usern verwalten zu können, erlaubt Shopware das Anbinden einer Message
-        Queue.
+        Um viele gleichzeitige Zugriffe von Usern effizient verwalten zu können, erlaubt Shopware das Anbinden einer
+        Message Queue.
         Diese ermöglichen das Sammeln von Nutzer-Anfragen, welche dann in Reihe verarbeitet werden können.
     }
 \end{itemize}
@@ -260,7 +260,7 @@ Im Mittelpunkt der\ \acrshort{ci}-Strategie steht die Pipeline zum automatischen
 Software.
 Nachdem die Umgebung für Projekte und der grundsätzliche Ablauf von Integrationen in der Strategie definiert wurde, wird
 nun die eigentliche Pipeline entworfen.
-Da diese Pipeline verschiedene Phasen durchläuft, werden nachfolgend die für die Strategie angedachten Stages und dessen
+Da diese verschiedene Phasen durchläuft, werden nachfolgend die für die Pipeline angedachten Stages und dessen
 Aufbau erläutert.
 
 \begin{itemize}
@@ -293,6 +293,8 @@ Aufbau erläutert.
         werden.
         Die Test-Stage umfasst somit die automatisierte Qualitäts- und Funktionalitäts-Prüfung der Shop-Software in der
         \acrshort{ci}-Pipeline.
+        Dabei anfallende Metriken und Stati sollen kontinuierlich überwacht werden, wobei auch Monitoring-Tools zur
+        weiteren Prüfung der Applikations-Performance und anderen Qualitäts-Indikatoren eingesetzt werden können.
     }
 
     \item {
@@ -301,14 +303,24 @@ Aufbau erläutert.
         kann eine Deployment-Stage gestartet werden.
         In der Strategie ist dessen Ausführung für Branches angedacht, bei denen eine Ziel-Umgebung zur Auslieferung
         des gebauten Artifacts existiert, wie zum Beispiel die Produktionsumgebung.
-        Der hierbei ausgeführte Deployment-Job liefert die relevanten Daten der Shop-Software, exklusive Testing-Tools
-        und\ \acrshort{ci}-Abhängigkeiten, an die definierte Umgebung aus.
+        Der hierbei ausgeführte Deployment-Job liefert die relevanten Daten der Shop-Software, Testing-Tools
+        und\ \acrshort{ci}-Abhängigkeiten ausgeschlossen, an die definierte Umgebung aus.
         Hierbei muss beachtet werden, dass die Ausfallzeit der Applikation bei der automatischen Auslieferung so gering
         wie möglich bleibt, um die technischen Anforderungen der Strategie zu erfüllen.
     }
 \end{itemize}
 
-
+Eine Zusammenfassung des Aufbaus und der Phasen der Pipeline kann in Abbildung\ \ref{fig:pipeline-visualization}
+eingesehen werden.
+Hierbei werden die einzelnen Phasen in gestrichelt dargestellt, diese enthalten die Arten von Jobs, welche
+in der jeweiligen Phase aufgerufen werden.
+Der Ablauf der Pipeline wird durch gestrichelte Pfeile dargestellt, welche die Reihenfolge der Phasen verdeutlichen.
+Außerdem wird aufgezeigt, dass der Build-Job ein Software-Artifact erzeugt, auf welchem die weiteren Jobs der Test- und
+Deployment-Stage basieren.
+Die in einem Kundenprojekt entwickelte Pipeline soll dieser Struktur folgen, wobei allerdings keine festen Tools
+oder Versionen vorgegeben sind.
+Bei jedem neuen Projekt sollte also vorher eine Analyse der verfügbaren Testing und\ \acrshort{qa}-Tools durchgeführt
+werden, um immer auf dem aktuellsten Stand zu sein.
 
 \begin{figure}[H]
     \centering
@@ -316,5 +328,13 @@ Aufbau erläutert.
     \captioncite[Eigene Darstellung]{}{Phasen und Abhängigkeiten der\ \acrshort{ci}-Pipeline}
     \label{fig:pipeline-visualization}
 \end{figure}
+
+Diese Struktur ist in der Strategie zunächst für die Durchführung der Pipeline bei allen Ausgangs-Branches angedacht.
+Da Jobs allerdings eine lange Durchlaufzeit ($> 10min$) haben können, soll die Möglichkeit bestehen, diese nur unter
+bestimmten Bedingungen auszuführen.
+So können lang-andauernde System-Tests oder Performance-Monitoring zum Beispiel nur bei der Integration in einen Branch
+vorgenommen werden, für den eine Deployment-Umgebung definiert ist.
+Die Strategie soll somit Flexibilität bieten und an die individuellen Bedürfnisse eines Projekts angepasst werden
+können.
 
 \clearpage
