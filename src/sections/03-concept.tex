@@ -266,8 +266,8 @@ Aufbau erläutert.
 \begin{itemize}
     \item {
         \textbf{Build-Stage}\par
-        Ungeachtet der späteren ausführenden Umgebung muss in einem Shopware-Projekt zur Durchführung weiterer Schritte
-        eine Build-Phase durchlaufen werden.
+        Ungeachtet der späteren ausführenden Umgebung muss in der\ \acrshort{ci}-Pipeline eines Shopware-Projekts zur
+        Durchführung weiterer Schritte eine Build-Phase durchlaufen werden.
         Hierbei werden die Abhängigkeiten der Shopware-Platform selbst, zusammen mit weiteren Paketen wie Testing- und
         \acrshort{qa}-Tools installiert und somit für die Testing-Phase vorbereitet.
         Die hierbei stattfindende Integration wird also zunächst durch den Status des Software-Builds geprüft.
@@ -325,15 +325,16 @@ werden, um immer auf dem aktuellsten Stand zu sein.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{images/content/pipeline-visualization}
-    \captioncite[Eigene Darstellung]{}{Phasen und Abhängigkeiten der\ \acrshort{ci}-Pipeline}
+    \captioncite[Eigene Darstellung]{}{Phasen und Abhängigkeiten der konzipierten\ \acrshort{ci}-Pipeline}
     \label{fig:pipeline-visualization}
 \end{figure}
 
 Diese Struktur ist in der Strategie zunächst für die Durchführung der Pipeline bei allen Ausgangs-Branches angedacht.
-Da Jobs allerdings eine lange Durchlaufzeit ($> 10min$) haben können, soll die Möglichkeit bestehen, diese nur unter
+Da Jobs allerdings eine lange Durchlaufzeit haben können, soll die Möglichkeit bestehen, diese nur unter
 bestimmten Bedingungen auszuführen.
-So können lang-andauernde System-Tests oder Performance-Monitoring zum Beispiel nur bei der Integration in einen Branch
-vorgenommen werden, für den eine Deployment-Umgebung definiert ist.
+Um die Durchlaufzeit gering zu halten ($<= 10min$), können lang-andauernde System-Tests oder
+Performance-Monitoring-Jobs nur bei der Integration in einen Branch vorgenommen werden, für den eine Deployment-Umgebung
+definiert ist.
 Die Strategie soll somit Flexibilität bieten und an die individuellen Bedürfnisse eines Projekts angepasst werden
 können.
 

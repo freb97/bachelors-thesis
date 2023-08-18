@@ -193,6 +193,8 @@ vermitteln, die für die erfolgreiche Anwendung von Continuous Integration erfor
 
 \subsubsection{Version-Control-Systems}
 
+% @TODO: Branching-Strategien erklären
+
 Das Verwalten verschiedener Versionsstände von Software wird durch sogenannte Version-Control-Systems (\acrshort{vcs})
 ermöglicht.
 Es gibt verschiedene Implementierungen von\ \acrshort{vcs}, namentlich unter anderem Git, Mercurial, Subversion und
@@ -226,6 +228,10 @@ Pipelines spielen durch das kontinuierliche Integrieren von entwickeltem Code ei
 der Cycle Time\footpartcite{fowler} und sind somit wichtig zum Erreichen des Ziels $Z_1$ der Arbeit.
 Eine Pipeline in einem\ \acrshort{ci}-Prozess wird in der Regel bei jeder Änderung am Quellcode des Source-Repositories
 gestartet.\footpartcite[3--4]{duvall}
+Die Durchlaufzeit einer\ \acrshort{ci}-Pipeline sollte dabei möglichst gering bleiben, da viele Entwickler
+auf das erfolgreiche Durchlaufen der Pipeline warten, bevor sie mit der nächsten Aufgabe beginnen.
+Eine grobe Richtlinie für die maximale Dauer einer Pipeline ist die Zehn-Minuten-Marke.
+\footpartcite[87--88]{duvall}
 
 \subsubsection{Containerization}
 
