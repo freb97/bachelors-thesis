@@ -1,6 +1,20 @@
 %! Author = Frederik Bußmann
 %! Date = 22.06.2023
 
+\makeatletter
+% Fix footnote second line indentation
+\renewcommand{\@makefntext}[1]{%
+    \begin{hangparas}{1.6em}{1}
+        \noindent \makebox[1.2em]{\@makefnmark} #1
+    \end{hangparas}
+}
+
+% Remove list of figures title
+\renewcommand\listoffigures{%
+    \@starttoc{lof}%
+}
+\makeatother
+
 % PDF Info
 \hypersetup{
     pdfinfo={
@@ -122,12 +136,3 @@ Shopware-Platform}
 \renewcommand{\footnotesize}{\scriptsize}
 \setlength{\footnotesep}{0pt}
 \setlength{\skip\footins}{0.5cm}
-
-% Fix footnote second line indentation
-\makeatletter
-\renewcommand{\@makefntext}[1]{%
-    \begin{hangparas}{1.6em}{1}
-        \noindent \makebox[1.2em]{\@makefnmark} #1
-    \end{hangparas}
-}
-\makeatother

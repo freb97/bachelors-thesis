@@ -42,11 +42,13 @@
     \clearpage
 
     % List of figures
+    \markboth{}{ABBILDUNGSVERZEICHNIS}
+    \section*{Abbildungsverzeichnis}
     \listoffigures
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
     \clearpage
 
     % Document content
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
     \pagenumbering{arabic}
     \setcounter{page}{1}
     \input{sections/01-introduction}

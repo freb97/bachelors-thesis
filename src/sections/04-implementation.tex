@@ -3,14 +3,14 @@
 
 \section{Umsetzung der CI-Strategie} \label{sec:04-implementation}
 
-% @TODO: Einleitung überarbeiten
-
 Im Folgenden wird die zuvor konzipierte\ \acrshort{ci}-Strategie in die Praxis umgesetzt und dabei in einer Fallstudie
 exemplarisch auf ein Projekt angewandt.
 Zunächst wird das ausgewählte Projekt vorgestellt, um einen Kontext für die anschließende Implementierung zu schaffen.
 Dabei werden die spezifischen Anforderungen und Besonderheiten des Projekts hervorgehoben.
 Im Anschluss daran wird die praktische Umsetzung der \acrshort{ci}-Strategie beschrieben, wobei sowohl die technischen
 Aspekte als auch die organisatorischen Prozesse berücksichtigt werden.
+Hierbei werden\ \acrshort{ci}-Tools für die Strategie ausgewählt, eine Projekt-Struktur und Pipeline definiert und
+der eigentliche Shop inklusive angedachter Eigenentwicklungen implementiert.
 
 \subsection{Projekthintergrund} \label{subsec:04-implementation-1}
 
@@ -116,7 +116,7 @@ Projekt zu nutzenden Technologien getroffen wurde:\\
     \textbf{PHP Static-Code-Analysis Tools}
     \vspace{-2mm}
     \begin{itemize}
-        \setlength\itemsep{0em}
+        \setlength\itemsep{0.05em}
         \item PHP\_CodeSniffer
         \item PHP Mess Detector
         \item PHPStan
@@ -130,22 +130,24 @@ Projekt zu nutzenden Technologien getroffen wurde:\\
     \textbf{JavaScript Static-Code-Analysis Tools}
     \vspace{-2mm}
     \begin{itemize}
-        \setlength\itemsep{0em}
+        \setlength\itemsep{-0.05em}
         \item Eslint
         \item Danger JS
         \item License Checker
         \item AuditJS
-        \item[]
-        \item[]
+    \end{itemize}
+    \textbf{Deployment Tools}
+    \vspace{-2mm}
+    \begin{itemize}
+        \item Deployer
         \item[]
     \end{itemize}
+    \vspace{-4.5mm}
 \end{minipage}
 
 Eine vollständige Übersicht und Beschreibung der einzelnen Tools kann aus Anhang\ \ref{sec:appendix-1} entnommen werden.
 
 \subsubsection{Aufsetzen der Projekt-Umgebung}
-
-% Aufsetzen der Docker-Umgebung, Installieren von Shopware, VCS check-in, Aufsetzen Dev-, Staging- und Production-Server
 
 Nach dem Festlegen der zu verwendenden Technologien wurde mit der Implementierung des Projekts begonnen, wobei
 zuerst eine Umgebung für die Ausführung von Shopware und der gewählten\ \acrshort{ci}-Tools erstellt wurde.
@@ -171,16 +173,16 @@ Die hierbei verwendete Branching-Strategie nennt sich\ \glqq Git-Flow\grqq.\foot
 
 \subsubsection{Erstellen der Pipeline}
 
-% Anlegen der Pipeline inklusive automatisierter Tests, Static-Analysis, Monitoring, etc.
-
-Zunächst soll eine grundlegende Pipeline definiert werden, die bei jeder Integration in einen Branch, ungeachtet der
-definierten Deployment-Umgebung läuft.
-Diese Pipeline durchläuft eine Build- und eine Testing-Stage.
+Nachdem eine ausführende Umgebung definiert wurde, kann nun die eigentliche Pipeline für das Projekt erstellt werden.
+Diese soll zunächst bei jeder Integration in einen Branch ausgeführt werden und durchläuft dabei eine Build-,
+Testing- und Deployment-Stage.
 Im Build-Prozess werden die \acrshort{ci}-Tools und die Abhängigkeiten der Shopware-Platform installiert.
-Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Test- und \acrshort{qa}-Tools, inklusive
+Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Testing- und \acrshort{qa}-Tools, inklusive
 lang-andauernder Tests durch End-to-End-Testing.
 Im späteren Verlauf der Entwicklung besteht durch Gitlab CI/CD die Möglichkeit, diese Tests nur in Branches mit
-definierter Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird ($> 10min$).
+definierter Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird.
+Abschließend liefern Jobs in der Deployment-Stage den entwickelten Code an die jeweilig für den Branch definierte
+Umgebung aus.
 
 \begin{figure}[H]
     \centering
@@ -189,9 +191,90 @@ definierter Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu
     \label{fig:ci-pipeline-concept}
 \end{figure}
 
+In Abbildung\ \ref{fig:ci-pipeline-concept} wird die für das Projekt erstellte\ \acrshort{ci}-Pipeline vorgestellt.
+Hierbei werden verschiedene Arten von Branches in einem\ \acrshort{vcs} dargestellt, welche zunächst die gleiche Aktion
+auslösen, den Build-Prozess.
+Dort werden die \acrshort{ci}-Tools und die Abhängigkeiten von Shopware für die anschließende Nutzung in der
+Testing-Stage installiert.
+Die Testing-Stage wird nach erfolgreichem Durchlaufen der Build-Stage ausgeführt und ist in der Abbildung in zwei
+Teile separiert.
+Im oberen Teil werden die gewählten Testing- und \acrshort{qa}-Tools für JavaScript-Code der Strategie aufgezeigt,
+während der untere Teil die Tools für PHP darstellt.
+Wenn alle Jobs der Testing-Stage erfolgreich durchgelaufen sind, wird, je nach Art des Ausgangs-Branches, ein
+Deployment-Prozess für die jeweilige Umgebung angestoßen.
+Die Deployment-Stage wird nur für Branches mit definierter Umgebung ausgeführt und liefert dabei den Code des
+Ausgangs-Branches an den Development-, Staging- oder Produktions-Server aus.
+
 \subsubsection{Implementierung der Shop-Funktionen}
 
-% Implementierung der individuellen geplanten Funktionen des Shops anhand der Kunden-Anforderungen
-% Fokus auf Nutzung der CI-Pipeline und der Docker-Umgebung und sowas alles
+Durch die zuvor erstellten Umgebungen und die angelegte Pipeline-Konfiguration können nun die geplanten Funktionen des
+Shops unter der Nutzung der erarbeiteten\ \acrshort{ci}-Praktiken implementiert werden.
+Diese können in drei verschiedene Bereiche eingeteilt werden:
+
+\begin{itemize}
+    \item {
+        \textbf{Entwicklung des Shop-Themes}\par
+        Bei der Entwicklung des Themes für die Shopware-Instanz handelt es sich um viele kleine Anpassungen an dem
+        bestehenden User Interface (\acrshort{ui}) des Standardumfangs.
+        Da\ \acrshort{ui}-Anpassungen aufwändig zu testen sind und die Standard-\acrshort{ui} durch
+        Shopwares eigene Tests abgedeckt ist, wurde das Theme ohne weitere Tests angelegt.
+        Für Anpassungen, welche substantiell die Funktion von\ \acrshort{ui}-Komponenten verändern, können jedoch
+        System-Tests angelegt werden, wobei geprüft wird, ob sich die angepasste\ \acrshort{ui} nach den gegebenen
+        Vorschriften verhält.
+        Dies hat den Vorteil dass Bugs, die durch Updates der Standard-\acrshort{ui} mit bestehenden Anpassungen
+        entstehen, schneller erkannt und gefixed werden können.
+    }
+
+    \item {
+        \textbf{Entwicklung des Plugins zur Anpassung der Produktkacheln}\par
+        Um die angepassten Produktkacheln zu entwickeln, wurde ein eigenes Plugin angedacht, welches bestimmte
+        Produkt-Daten in den Kacheln auf Produkt-Listing-Seiten des Shops anzeigt.
+        Hier wird im Standard-Umfang der Shopware-Platform eine Auswahl an Varianten angeboten, welche durch das
+        Plugin ersetzt werden soll.
+        Statt der Variantenauswahl, soll an dieser Stelle der Preis der günstigsten Variante angezeigt werden.
+        Bei der Integration dieses Plugins konnten verschiedene Bereiche durch den Einsatz der Pipeline auf ihre
+        Richtigkeit geprüft werden.
+        Da die günstigste Artikelvariante zunächst Backend-Seitig bestimmt und dem Frontend zur Verfügung
+        gestellt werden musste, wurde bei der Entwicklung PHP-Code produziert.
+        Für diesen konnten Unit-, Module- und Integration-Tests angelegt und dazugehörige\ \acrshort{ui}-Anpassungen
+        im Frontend durch System-Tests abgedeckt werden.
+        Die generelle Einhaltung gesetzter Code-Standards und weitere Qualitätsmerkmale wurden hierbei durch die
+        gewählten statischen Code-Analyse-Tools überwacht.
+    }
+
+    \item {
+        \textbf{Entwicklung des Plugins für Rezept-Produkte}\par
+        Das Plugin für die Erstellung von Rezepten legt eine eigene Produkt-Art an, welche nicht aktiv im Shop gekauft
+        werden kann und dabei lediglich die hinterlegten Rezept-Informationen anzeigt.
+        Da dieses Feature sowohl Backend- als auch Frontent-Anpassungen benötigt, konnte der entwickelte PHP- und
+        JavaScript-Code ebenfalls durch Unit-, Module- und Integration-Tests abdeckt werden.
+        Die frontend-seitigen Erweiterungen bestimmter Produkt-Kacheln im Listing und der Produkt-Detail-Seite, welche
+        nun Rezepte statt Produkten anzeigen, wurden dabei auch durch System-Tests abgedeckt.
+        Vorteilhaft bei dieser Art der automatisierten Prüfung der erstellten Features ist, dass mit neuen
+        Entwicklungen eingeführte Wechselwirkungen und Fehler schneller entdeckt werden können.
+        So wurde zum Beispiel durch Regression- und System-Tests verhindert, dass das Anpassen der Produktkacheln
+        durch beide erstellten Plugins zu unentdeckten Problemen nach der Integrationsphase führt.
+    }
+\end{itemize}
+
+% @TODO: Text verbessern
+
+Der für die Anpassungen entwickelte PHP- und JavaScript-Code konnte hierbei durch Unit-, Module- und Integration-Tests
+der Tools\ \shellinline{PHPUnit} und\ \shellinline{Jest} abgedeckt werden.
+Erstellte Unit-Tests in PHP wurden durch das \shellinline{Infection}-Framework mit Mutation-Tests kontinuierlich
+evaluiert.
+System-Tests konnten mit dem JavaScript-basierten Tool\ \shellinline{Cypress} erstellt und durchgeführt werden.
+Durch\ \shellinline{Deptrac} konnte die Architektur der erstellten PHP-Klassen und Module geprüft werden.
+Die Einhaltung gesetzter Coding-Standards und weitere Qualitätsmetriken konnten durch die Nutzung von
+\shellinline{PHPCS}, \shellinline{PHPMD} und \shellinline{PHPStan} für PHP-Code und von \shellinline{Eslint} für
+JavaScript-Code erhoben werden.
+\shellinline{AuditJS} und der PHP\ \shellinline{Security Checker} konnten installierte Pakete automatisch auf
+Sicherheitslücken überprüfen.
+Um die Lizenzen der im Projekt installierten Pakete für das Projekt zu überwachen, wurden\ \shellinline{License Checker}
+eingesetzt, welche die Lizenzen der von Composer und\ \acrshort{npm} installierten Pakete beobachten.
+Außerdem wurde\ \shellinline{Danger JS} zur steigerung der Transparenz des\ \acrshort{ci}-Prozesses eingesetzt, welches
+den Status der einzelnen Jobs einer durchgelaufenen Pipeline in Form eines Kommentars im\ \acrshort{vcs} hinterlegt.
+Letztlich wurden die Deployments für die jeweiligen Umgebungen durch das PHP-basierte Tool\ \shellinline{Deployer}
+durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.
 
 \clearpage

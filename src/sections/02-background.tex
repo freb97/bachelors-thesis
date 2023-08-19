@@ -63,6 +63,7 @@ Dies bedeutet, dass neue Features und Updates mehrmals täglich an die Endbenutz
 schnelle Reaktion auf Marktbedingungen und Kundenfeedback ermöglicht.
 Es ist jedoch zu beachten, dass\ \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung
 erfordert, um die Anzahl der in der Produktionsumgebung aufkommenden Fehler zu minimieren.
+Der Begriff\ \glqq Deployment\grqq\ wird außerdem als Synonym für das Ausliefern von Code an eine Umgebung verwendet.
 Der Zusammenhang zwischen Continuous Integration, Delivery und Deployment wird in Abbildung\ \ref{fig:ci-cde-cd}
 aufgezeigt.
 
@@ -74,8 +75,6 @@ aufgezeigt.
 \end{figure}
 
 \subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-2}
-
-% @TODO: Irgendwo noch DevOps erklären (?)
 
 Um die Bedeutung und den Nutzen von Continuous Integration und des Continuous-Software-Engineering für die
 Softwareentwicklung nachvollziehen zu können, ist es hilfreich, einen Blick auf die historische Entwicklung und die
@@ -142,7 +141,7 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         Dauer des Test-Prozesses, können aber wichtige Einsicht in die Qualität der Software gewähren.
         \footpartcite{fowler}
         Automatisierten Tests in einer\ \acrshort{ci}-Pipeline können insgesamt dabei helfen, Fehler in eingeführtem
-        Quellcode zu finden.\footpartcite[2572]{benefits-and-challenges}
+        Quellcode zu finden.\footpartcite[2572]{benefits-challenges}
         Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, um eine Pipeline bei Unstimmigkeiten in der Syntax
         des eingeführten Codes abzubrechen.
         Diese Programme können zusätzliche Qualitätsprüfungen und Coding-Standards in ein Projekt einführen.
@@ -193,8 +192,6 @@ vermitteln, die für die erfolgreiche Anwendung von Continuous Integration erfor
 
 \subsubsection{Version-Control-Systems}
 
-% @TODO: Branching-Strategien erklären
-
 Das Verwalten verschiedener Versionsstände von Software wird durch sogenannte Version-Control-Systems (\acrshort{vcs})
 ermöglicht.
 Es gibt verschiedene Implementierungen von\ \acrshort{vcs}, namentlich unter anderem Git, Mercurial, Subversion und
@@ -207,6 +204,9 @@ Der aktuelle Stand eines Branches kann dabei kopiert werden und daran vorgenomme
 in einen Branch des Repositories integriert werden.
 Versionskontroll-Software ermöglicht es außerdem, verschiedene Versionen in Form von Branches zusammenzuführen.
 Der Prozess des Zusammenführens verschiedener Branches wird hierbei als\ \glqq Merge\grqq\ bezeichnet.
+Die Strukturierung von Branches kann anhand gewisser Vorgaben in Form einer Branching-Strategie definiert werden, wobei
+Branches für gewisse Aufgaben innerhalb des Projekts einer Namenskonvention folgen und Regeln für Merges
+vorgeschrieben werden.
 Die Nutzung eines\ \acrshort{vcs} in welchem verschiedene Branches angelegt werden können, ermöglicht Teammitgliedern
 die gleichzeitige Arbeit an einer einzelnen Codebase ohne sich dabei gegenseitig zu beeinflussen.
 \footpartcite[388--390]{duvall}
@@ -242,14 +242,10 @@ Machines\grqq\ (\acrshort{vm}s) verwendet.
 \acrshort{vm}s nutzen hierbei einen sogenannten\ \glqq Hypervisor\grqq, welcher die Hardware eines physischen Computers
 emulieren kann, sodass mehrere Betriebssysteminstanzen und die darin verwalteten Applikationen gleichzeitig auf einem
 einzigen System ausführbar sind.\footpartcite[54--55]{docker}
-Containerization ist eine modernere Technologie, die einen Performance-Zuwachs gegenüber \acrshort{vm}s bieten kann.
-\footpartcite{docker-performance}
-Die hierbei genutzten\ \glqq Container\grqq\ sind eigenständige, ausführbare Pakete, die alles enthalten, was für den
-Betrieb einer Anwendung erforderlich ist, einschließlich Code, Laufzeitumgebung, Bibliotheken und Systemtools.
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.4\textwidth}
+    \begin{minipage}{0.37\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/content/vm-architecture}
         \captionsetup{justification=raggedright,singlelinecheck=false}%
@@ -257,7 +253,7 @@ Betrieb einer Anwendung erforderlich ist, einschließlich Code, Laufzeitumgebung
         \caption*{(a)}
     \end{minipage}%
     \hspace{0.075\textwidth}%
-    \begin{minipage}{0.4\textwidth}
+    \begin{minipage}{0.37\textwidth}
         \centering
         \includegraphics[width=\linewidth]{images/content/container-architecture}
         \captionsetup{justification=raggedright,singlelinecheck=false}%
@@ -268,6 +264,10 @@ Betrieb einer Anwendung erforderlich ist, einschließlich Code, Laufzeitumgebung
     \label{fig:vm-container-architecture}
 \end{figure}
 
+Containerization ist eine modernere Technologie, die einen Performance-Zuwachs gegenüber \acrshort{vm}s bieten kann.
+\footpartcite{docker-performance}
+Die hierbei genutzten\ \glqq Container\grqq\ sind eigenständige, ausführbare Pakete, die alles enthalten, was für den
+Betrieb einer Anwendung erforderlich ist, einschließlich Code, Laufzeitumgebung, Bibliotheken und Systemtools.
 Während \acrshort{vm}s zur Ausführung einen Hypervisor und vollständige Betriebssysteminstanzen benötigen, teilen sich
 Container die Ressourcen eines einzelnen Betriebssystems und isolieren so die Anwendung von der zugrunde liegenden
 Infrastruktur.
@@ -437,8 +437,8 @@ Gleichzeitig bietet Symfony eine Reihe von Konventionen und Best Practises für 
 welche die Entwicklung von Anwendungen erleichtern und beschleunigen.
 Das Framework ist weit verbreitet und stellt eine robuste Grundlage für die Entwicklung umfangreicher Softwareprojekte
 dar.
-Es beinhaltet essenzielle Funktionen, wie Dependency Injection (\acrshort{di}), Profiling, Object-Relational Mapping
-(\acrshort{orm}), Session Handling, Routing, Formularverwaltung und eine Template-Engine.
+Es beinhaltet essenzielle Funktionen, wie Abhängigkeiten-Verwaltung, Performance-Reviews, Datenverwaltung,
+Handling von Nutzer-Sessions, Routing, Formularverwaltung und eine Template-Engine.
 Durch den Einsatz des Paket-Managers\ \glqq Composer\grqq\ können diese Grundfunktionen erweitert und zusätzliche
 Features in ein Projekt importiert werden.
 Symfony bietet eine Reihe von Konsolenbefehlen, die das Erstellen von eigenen Komponenten, die Durchführung von
@@ -454,6 +454,12 @@ Shopware 6 bietet eine modulare Architektur.
 Die Plattform besteht aus drei Kernkomponenten, dem Shopware-Core, der Administrations-Oberfläche und der Storefront.
 Der Core bildet hierbei die grundlegenden Shop-Funktionen und Ressourcen, und stellt für diese verschiedene
 Schnittstellen zur Nutzung bereit.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/content/shopware-architecture}
+    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
+    \label{fig:shopware-architecture}
+\end{figure}
 Die Verwaltung der die Shop-Daten, Produkte und weiterer Betriebsfunktionen wird mit der Administrations-Oberfläche
 vorgenommen.
 Diese bildet eine eigene Komponente und kommuniziert mit dem Shopware-Core über die Admin-\acrshort{api}.
@@ -473,14 +479,7 @@ Plugins können direkt an den Core angebunden werden und ermöglichen die Erweit
 der Storefront oder Anpassungen an der Administration.
 Zusätzlich können die Sync-\acrshort{api} und die Sales-Channel-\acrshort{api} für die Anbindung externer Anwendungen
 verwendet werden, wie zum Beispiel Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{images/content/shopware-architecture}
-    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
-    \label{fig:shopware-architecture}
-\end{figure}
-
+\\\\
 Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
 Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
 Für die Entwicklung der \acrshort{ci}-Strategie wird der Fokus auf Shopware-Plugins gesetzt.
