@@ -14,18 +14,16 @@ der eigentliche Shop inklusive angedachter Eigenentwicklungen implementiert.
 
 \subsection{Projekthintergrund} \label{subsec:04-implementation-1}
 
-% @TODO: Text verbessern
-
 Bei dem Shopware-Projekt, in welchem die\ \acrshort{ci}-Strategie implementiert werden soll, handelt es sich um einen
 Anbieter von Kochutensilien.
-Der Shop soll dabei auf der Basis von Shopware 6 neu entwickelt werden und das zuvor erstellte Konzept in der Praxis
-einsetzen.
-Ziel ist es, durch die Integration der untersuchten \acrshort{ci}-Praktiken eine robuste, skalierbare und effiziente
-Entwicklungsumgebung zu schaffen, die den Anforderungen moderner Online-Shops gerecht wird.
-Dabei wird das zuvor ausgearbeitete \acrshort{ci}-Konzept als Leitfaden für die Entwicklung und Optimierung des Shops
-herangezogen.
-Hierzu wird zunächst eine Shopware-Instanz aufgesetzt, welche anschließend über den Standardumfang der Software um ein
-eigenes Theme und einige Plugins zur Anpassung verschiedener Bereiche des Shops ergänzt wird.
+Der Shop soll dabei auf der Basis von Shopware 6 neu entwickelt werden und das zuvor erstellte\ \acrshort{ci}-Konzept
+in der Praxis einsetzen.
+Das Ziel ist hierbei, durch die Integration der untersuchten \acrshort{ci}-Praktiken eine robuste, skalierbare und
+effiziente Entwicklungsumgebung zu schaffen, die den Anforderungen moderner Online-Shops gerecht wird.
+Dabei wird das zuvor ausgearbeitete \acrshort{ci}-Konzept als Leitfaden für die Entwicklung, Optimierung und
+kontinuierliche Qualitätssicherung des Shops herangezogen.
+Hierzu wird zunächst eine Shopware-Instanz aufgesetzt, welche anschließend über den Standardumfang der Software hinaus
+um ein eigenes Theme und einige Plugins zur Anpassung verschiedener Bereiche des Shops ergänzt wird.
 Die für den Shop angedachten Eigenentwicklungen umfassen folgende Plugins:
 
 \begin{itemize}
@@ -42,8 +40,15 @@ Die für den Shop angedachten Eigenentwicklungen umfassen folgende Plugins:
     }
 \end{itemize}
 
-Einige weitere benötigte Features des Shops, wie eine Filialsuche und Social-Media-Feeds werden dabei über
-Drittanbieter-Plugins gelöst, um Entwicklungszeit einzusparen.
+Als Produkt-Listing-Seiten werden Seiten der Shopware-Instanz bezeichnet, welche die Produkte einer bestimmten
+Kategorie oder Gruppierung gesammelt in einer Liste anzeigen.
+Produkte werden auf diesen Seiten im Standardumfang der Software als rechteckige Kacheln angezeigt, welche
+verschiedene Informationen anzeigen, wie zum Beispiel eine Auswahl an Varianten des Artikels.
+Durch das Klicken auf eine der Kacheln wird auf die jeweilige Produkt-Detail-Seite verwiesen.
+Diese Seiten zeigen die Detail-Ansicht der Produkte auf und bieten weitere Informationen und Varianten- und
+Kaufoptionen.
+Für einige weitere benötigte Features des Shops, wie eine Filialsuche und Social-Media-Feeds, wurde der Einsatz von
+Drittanbieter-Plugins eingeplant, um Entwicklungszeit einzusparen.
 
 \subsection{Implementierung des Konzepts} \label{subsec:04-implementation-2}
 
@@ -54,7 +59,7 @@ woraufhin Technologien für die Nutzung innerhalb des Projekts ausgewählt werde
 Anschließend wird die Projekt-Umgebung für die Nutzung von\ \acrshort{ci} aufgesetzt und das Shopware-Projekt
 installiert und vorbereitet.
 Daraufhin wird die Pipeline für das erstellte Projekt angelegt.
-Hierbei werden die Phasen und Jobs angelegt und\ \acrshort{ci}-Tools konfiguriert, um automatisierte Tests und Analysen
+Hierbei werden die Phasen und Jobs erstellt und\ \acrshort{ci}-Tools konfiguriert, um automatisierte Tests und Analysen
 durchführen zu können.
 Nachdem das Projekt initialisiert wurde und die Pipeline funktionsfähig ist, wird die Implementierung der eigentlichen
 Shop-Funktionen erläutert, wobei der Fokus auf die kontinuierliche Prüfung der Features durch die Pipeline gerichtet
@@ -62,11 +67,9 @@ ist.
 
 \subsubsection{Auswahl von\ \acrshort{ci}-Tools}
 
-% @TODO: Text verlängern, verbessern
-
 Bevor mit der Implementierung des Projekts begonnen werden konnte, musste zunächst analysiert werden, welche Tools
 innerhalb des Projekts eingesetzt werden können.
-Hierfür wurde eine Analyse der vorhandenen\ \acrshort{ci}-Tools durchgeführt, anhand dessen eine Auswahl an für das
+Hierfür wurde eine Analyse verschiedener\ \acrshort{ci}-Tools durchgeführt, wobei eine Auswahl an für das
 Projekt zu nutzenden Technologien getroffen wurde:\\
 
 \hspace{0.025\textwidth}%
@@ -159,7 +162,7 @@ Diese wurde, um in der\ \acrshort{ci}-Pipeline wiederverwendet werden zu können
 instanziiert.
 Nach der Shopware-Installation wurden Grundkonfigurationen vorgenommen und erste manuelle Tests durchgeführt, um
 sicherzustellen, dass die Instanz funktional ist.
-\\\\ % @TODO: Branching-Strategie erklären
+\\\\
 Nachdem die lokale Entwicklungsumgebung erstellt wurde, konnte mit der Vorbereitung für die Umgebung der Pipelines
 begonnen werden.
 Hierzu wurde das gesamte Projekt in GitLab hinterlegt und ein Branching-Modell eingeführt, um sicherzustellen, dass
@@ -169,7 +172,17 @@ Neben dem\ \shellinline{main}-Branch, welcher als Deployment-Ziel die Produktion
 ein Development-Branch (\shellinline{development}) und -Server angelegt und eine Staging-Umgebung aufgesetzt.
 Der Staging-Server ist dabei ein variables Deployment-Ziel, für welches die Auslieferung von
 \shellinline{release}-Branches vorgesehen ist.
-Die hierbei verwendete Branching-Strategie nennt sich\ \glqq Git-Flow\grqq.\footpartcite{git-flow}
+Die hierbei verwendete Branching-Strategie nennt sich\ \glqq Git-Flow\grqq.
+Diese führt Namenskonventionen und verschiedene Arten von Branches ein, wobei neue Features und Anpassungen zunächst in
+\shellinline{feature}-Branches entwickelt werden.
+Anschließend werden diese in den\ \shellinline{development}-Branch gemerged, wo die Änderungen gesammelt werden.
+Die gesammelten Features können daraufhin in einen\ \shellinline{release}-Branch überführt werden, in welchem keine
+substantiellen Änderungen sondern nur noch Fehlerbehebungen vorgenommen werden.
+\shellinline{release}-Branches können zuletzt in den\ \shellinline{main}-Branch integriert werden.
+Dieser stellt den Haupt-Versionsstand des Software-Projekts dar und speichert die aktuell ausgelieferte Version der
+Software.
+Neben diesen vier Arten von Branches gibt es noch die Möglichkeit,\ \shellinline{hoftix}-Branches für Fehlerbehebungen,
+welche am Haupt-Versionsstand vorgenommen werden müssen.\footpartcite{git-flow}
 
 \subsubsection{Erstellen der Pipeline}
 
@@ -183,14 +196,7 @@ Im späteren Verlauf der Entwicklung besteht durch Gitlab CI/CD die Möglichkeit
 definierter Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird.
 Abschließend liefern Jobs in der Deployment-Stage den entwickelten Code an die jeweilig für den Branch definierte
 Umgebung aus.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{images/content/ci-pipeline-concept}
-    \captioncite[Eigene Darstellung]{}{Visualisierung der implementierten\ \acrshort{ci}-Pipeline}
-    \label{fig:ci-pipeline-concept}
-\end{figure}
-
+\\\\
 In Abbildung\ \ref{fig:ci-pipeline-concept} wird die für das Projekt erstellte\ \acrshort{ci}-Pipeline vorgestellt.
 Hierbei werden verschiedene Arten von Branches in einem\ \acrshort{vcs} dargestellt, welche zunächst die gleiche Aktion
 auslösen, den Build-Prozess.
@@ -205,11 +211,18 @@ Deployment-Prozess für die jeweilige Umgebung angestoßen.
 Die Deployment-Stage wird nur für Branches mit definierter Umgebung ausgeführt und liefert dabei den Code des
 Ausgangs-Branches an den Development-, Staging- oder Produktions-Server aus.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.69420\textwidth]{images/content/ci-pipeline-concept}
+    \captioncite[Eigene Darstellung]{}{Visualisierung der implementierten\ \acrshort{ci}-Pipeline}
+    \label{fig:ci-pipeline-concept}
+\end{figure}
+
 \subsubsection{Implementierung der Shop-Funktionen}
 
-Durch die zuvor erstellten Umgebungen und die angelegte Pipeline-Konfiguration können nun die geplanten Funktionen des
+Durch die zuvor erstellten Umgebungen und die angelegte Pipeline-Konfiguration konnten nun die geplanten Funktionen des
 Shops unter der Nutzung der erarbeiteten\ \acrshort{ci}-Praktiken implementiert werden.
-Diese können in drei verschiedene Bereiche eingeteilt werden:
+Diese können grob in drei verschiedene Bereiche eingeteilt werden:
 
 \begin{itemize}
     \item {
@@ -246,7 +259,7 @@ Diese können in drei verschiedene Bereiche eingeteilt werden:
         \textbf{Entwicklung des Plugins für Rezept-Produkte}\par
         Das Plugin für die Erstellung von Rezepten legt eine eigene Produkt-Art an, welche nicht aktiv im Shop gekauft
         werden kann und dabei lediglich die hinterlegten Rezept-Informationen anzeigt.
-        Da dieses Feature sowohl Backend- als auch Frontent-Anpassungen benötigt, konnte der entwickelte PHP- und
+        Da dieses Feature sowohl Backend- als auch Frontend-Anpassungen benötigt, konnte der entwickelte PHP- und
         JavaScript-Code ebenfalls durch Unit-, Module- und Integration-Tests abdeckt werden.
         Die frontend-seitigen Erweiterungen bestimmter Produkt-Kacheln im Listing und der Produkt-Detail-Seite, welche
         nun Rezepte statt Produkten anzeigen, wurden dabei auch durch System-Tests abgedeckt.
@@ -257,10 +270,9 @@ Diese können in drei verschiedene Bereiche eingeteilt werden:
     }
 \end{itemize}
 
-% @TODO: Text verbessern
-
-Der für die Anpassungen entwickelte PHP- und JavaScript-Code konnte hierbei durch Unit-, Module- und Integration-Tests
-der Tools\ \shellinline{PHPUnit} und\ \shellinline{Jest} abgedeckt werden.
+Bei der Entwicklung der Anpassungen wurden verschiedene\ \acrshort{ci}-Praktiken und Tools eingesetzt.
+Der für die Anpassungen entwickelte PHP- und JavaScript-Code konnte hierbei durch automatisierte Unit-, Module- und
+Integration-Tests der Tools\ \shellinline{PHPUnit} und\ \shellinline{Jest} abgedeckt werden.
 Erstellte Unit-Tests in PHP wurden durch das \shellinline{Infection}-Framework mit Mutation-Tests kontinuierlich
 evaluiert.
 System-Tests konnten mit dem JavaScript-basierten Tool\ \shellinline{Cypress} erstellt und durchgeführt werden.
@@ -275,6 +287,16 @@ eingesetzt, welche die Lizenzen der von Composer und\ \acrshort{npm} installiert
 Außerdem wurde\ \shellinline{Danger JS} zur steigerung der Transparenz des\ \acrshort{ci}-Prozesses eingesetzt, welches
 den Status der einzelnen Jobs einer durchgelaufenen Pipeline in Form eines Kommentars im\ \acrshort{vcs} hinterlegt.
 Letztlich wurden die Deployments für die jeweiligen Umgebungen durch das PHP-basierte Tool\ \shellinline{Deployer}
-durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.
+durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.\\
+Drittanbieter-Plugins und Shop-Konfigurationen wurden hierbei nicht weiter getestet, da es sich nicht um
+Eigenentwicklungen handelt und diese durch die jeweiligen Hersteller oder die Shopware-Platform selbst geprüft werden.
+Außerdem wurden im Verlauf des Projekts neben den automatisierten Tests durch die\ \acrshort{ci}-Pipeline auch
+manuelle Tests durch Entwickler, Projektleiter und den Kunden durchgeführt, um die System-Funktionalität
+sicherzustellen.
+Darüber hinaus wurde durch die Verwendung einer flexiblen Pipeline die Möglichkeit eingeräumt, das Projekt durch
+Performance- und Last-Tests zu überwachen oder weitere Tools und Services zum Testen der Applikation anzubinden.
+Dank des parallelen Ausführens der Test-Jobs konnte die Durchlaufzeit der Pipeline minimiert werden, wobei die
+Strategie auch die Möglichkeit bietet Jobs konditionell auszuführen, sollte deren Dauer die gesetzte Zehn-Minuten-Marke
+übersteigen.
 
 \clearpage
