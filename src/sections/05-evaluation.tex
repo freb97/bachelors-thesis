@@ -3,15 +3,50 @@
 
 \section{Evaluierung} \label{sec:05-evaluation}
 
-% @TODO: Einleitung weiter schreiben
-
 Nach der detaillierten Darstellung und Implementierung der \acrshort{ci}-Strategie im vorherigen Abschnitt, folgt nun
-die kritische Evaluierung der entwickelten Lösung.
-In diesem Kapitel wird die Effektivität und Effizienz der umgesetzten \acrshort{ci}-Strategie im Kontext des
-Shopware-Projekts untersucht.
+die kritische Evaluierung des Konzepts anhand der entwickelten Fallstudie.
+In diesem Kapitel wird die Effektivität und Anwendbarkeit der umgesetzten \acrshort{ci}-Strategie im Kontext des
+erstellten Shopware-Projekts untersucht.
+Dabei wird nicht nur die technische Umsetzung in den Blick genommen, sondern auch die praktischen Auswirkungen der
+Strategie auf den Entwicklungsprozess und das Endprodukt.
+Das Ziel ist hierbei, Stärken und Schwächen der gewählten Ansätze zu identifizieren und Handlungsempfehlungen für
+zukünftige Projekte abzuleiten.
 
-\subsection{Bla} \label{subsec:05-evaluation-1}
+\subsection{Erkenntnisse und Auswirkungen der Strategie} \label{subsec:05-evaluation-1}
 
-...
+Die Umsetzung der \acrshort{ci}-Strategie in der durchgeführten Fallstudie hat gezeigt, dass das
+primäre Ziel, eine qualitativ hochwertige Online-Shop-Lösung zu entwickeln, durch das Konzept erfüllt werden konnte.
+Ein wesentlicher Grund dieser hohen Qualität war dabei die Implementierung umfangreicher automatisierter Tests.
+Diese Tests konnten in der Fallstudie gewährleisten, dass ein Großteil der Softwarefehler und Probleme bereits vor der
+Auslieferung an den Endnutzer identifiziert und behoben werden.
+Hinderlich in der Nutzung der definierten\ \acrshort{ci}-Praktiken war hierbei das Implementieren komplexer
+Test-Vorgänge und aufwändiger System-Tests, was allerdings auch zu einer erhöhten Test-Abdeckung führte.
+Diese konnten im Verlauf des Projekts viele Fehler frühzeitig identifizieren und die Qualität der
+entwickelten Software so wie die Interoperabilität verschiedener Komponenten überwachen.
+Die vollständige Automatisierung der Pipeline verkürzte die Cycle Time, wodurch Änderungen insgesamt schneller an
+den Projekt-Kunden ausgeliefert werden konnten.
+Dieser beschleunigte Auslieferungsprozess ermöglicht es der Anwendung außerdem, sich schnell an neue Vorschriften und
+Kundenanforderungen anzupassen.
+Ein weiterer Vorteil der \acrshort{ci}-Strategie ergab sich durch den automatisierten Release-Prozess.
+Ein störungsfreies und schnelles Deployment konnte verhindern, dass Kunden während der Nutzung der Software
+Beeinträchtigungen erfahren.
+Dies ist insbesondere im E-Commerce-Kontext von Bedeutung, da jede Unterbrechung oder Verzögerung zu einem monetären
+Verlust führen kann.
+\\\\
+Die \acrshort{ci}-Strategie unterstütze durch den Einsatz von Containerization eine hohe Reproduzierbarkeit und
+Konsistenz über verschiedene Umgebungen hinweg.
+Hierdurch konnte sichergestellt werden, dass die in den Tests verwendete Anwendung nahezu identisch mit der später
+ausgelieferten Produktions-Anwendung sind.
+Darüber hinaus ermöglichte die Container-Technologie schnelle und zuverlässige Deployments, wodurch die
+Cycle Time weiter reduziert werden konnte.
+Die Transparenz der Strategie konnte durch die Nutzung von Tools zur kontinuierlichen Messung von Test-Ergebnissen
+weiter gesteigert werden, da Entwickler so einen direkten Zugriff auf Pipeline-Ergebnisse und damit den Status der
+erstellten Software erhielten.
+Die Umsetzung der Strategie hat außerdem aufgezeigt, dass diese eine hohe Flexibilität aufweist und an die Bedürfnisse
+eines individuellen Shopware-Projekts angepasst werden kann.
+Zusammenfassend bestätigen die Ergebnisse die anfänglichen Hypothesen und zeigen die Vorteile der
+\acrshort{ci}-Strategie sowohl aus wirtschaftlicher als auch aus technischer Sicht auf.
+Insgesamt konnten die definierten geschäftsseitigen Ziele $Z_n$ der Arbeit durch den Einsatz der entwickelten Strategie
+erreicht werden.
 
 \clearpage

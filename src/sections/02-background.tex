@@ -244,28 +244,6 @@ Machines\grqq\ (\acrshort{vm}s) verwendet.
 \acrshort{vm}s nutzen hierbei einen sogenannten\ \glqq Hypervisor\grqq, welcher die Hardware eines physischen Computers
 emulieren kann, sodass mehrere Betriebssysteminstanzen und die darin verwalteten Applikationen gleichzeitig auf einem
 einzigen System ausführbar sind.\footpartcite[54--55]{docker}
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.37\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/content/vm-architecture}
-        \captionsetup{justification=raggedright,singlelinecheck=false}%
-        \vspace{-0.7cm}%
-        \caption*{(a)}
-    \end{minipage}%
-    \hspace{0.075\textwidth}%
-    \begin{minipage}{0.37\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/content/container-architecture}
-        \captionsetup{justification=raggedright,singlelinecheck=false}%
-        \vspace{-0.7cm}%
-        \caption*{(b)}
-    \end{minipage}
-    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Hypervisor- und Container-Architektur}
-    \label{fig:vm-container-architecture}
-\end{figure}
-
 Containerization ist eine modernere Technologie, die einen Performance-Zuwachs gegenüber \acrshort{vm}s bieten kann.
 \footpartcite{docker-performance}
 Die hierbei genutzten\ \glqq Container\grqq\ sind eigenständige, ausführbare Pakete, die alles enthalten, was für den
@@ -279,6 +257,28 @@ Containerization erleichtert also das Vereinheitlichen verschiedener Umgebungen 
 Abhängigkeiten und Konfigurationen in einem Container kapselt.\footpartcite[2576]{benefits-challenges}
 Dies bietet Entwicklern und Testern eine erhöhte Effizienz und Flexibilität, da sie sich darauf verlassen können, dass
 die Software in jeder Umgebung identisch funktioniert.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/content/vm-architecture}
+        \captionsetup{justification=raggedright,singlelinecheck=false}%
+        \vspace{-0.7cm}%
+        \caption*{(a)}
+    \end{minipage}%
+    \hspace{0.075\textwidth}%
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/content/container-architecture}
+        \captionsetup{justification=raggedright,singlelinecheck=false}%
+        \vspace{-0.7cm}%
+        \caption*{(b)}
+    \end{minipage}
+    \captioncite[Eigene Darstellung nach]{docker}{Visualisierung der Hypervisor- und Container-Architektur}
+    \label{fig:vm-container-architecture}
+\end{figure}
+
 In Abbildung\ \ref{fig:vm-container-architecture} werden die Architekturen von Hypervisor und Container
 gegenübergestellt.
 Die Visualisierung zeigt im linken Teil den Aufbau eines Systems, in dem ein Hypervisor zum emulieren von
