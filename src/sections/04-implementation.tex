@@ -218,6 +218,9 @@ Ausgangs-Branches an den Development-, Staging- oder Produktions-Server aus.
     \label{fig:ci-pipeline-concept}
 \end{figure}
 
+Die eigentliche Darstellung durchgeführter Pipelines des Projekts in GitLab CI/CD kann aus Anhang\ \ref{sec:appendix-2}
+entnommen werden.
+
 \subsubsection{Implementierung der Shop-Funktionen}
 
 Durch die zuvor erstellten Umgebungen und die angelegte Pipeline-Konfiguration konnten nun die geplanten Funktionen des
@@ -287,7 +290,8 @@ eingesetzt, welche die Lizenzen der von Composer und\ \acrshort{npm} installiert
 Außerdem wurde\ \shellinline{Danger JS} zur steigerung der Transparenz des\ \acrshort{ci}-Prozesses eingesetzt, welches
 den Status der einzelnen Jobs einer durchgelaufenen Pipeline in Form eines Kommentars im\ \acrshort{vcs} hinterlegt.
 Letztlich wurden die Deployments für die jeweiligen Umgebungen durch das PHP-basierte Tool\ \shellinline{Deployer}
-durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.\\
+durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.
+\\\\
 Drittanbieter-Plugins und Shop-Konfigurationen wurden hierbei nicht weiter getestet, da es sich nicht um
 Eigenentwicklungen handelt und diese durch die jeweiligen Hersteller oder die Shopware-Platform selbst geprüft werden.
 Außerdem wurden im Verlauf des Projekts neben den automatisierten Tests durch die\ \acrshort{ci}-Pipeline auch

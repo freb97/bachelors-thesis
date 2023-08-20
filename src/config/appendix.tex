@@ -190,3 +190,56 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         \footpartcite{shopware-deployer}
     }
 \end{itemize}
+
+\clearpage
+
+\section{Anhang II: Darstellung ausgeführter Pipelines} \label{sec:appendix-2}
+
+Der für die Umsetzung der Fallstudie gewählte Pipeline-Runner GitLab CI/CD bietet eine Übersicht aller
+Pipeline-Instanzen, die im Verlauf des Projekts durchgeführt wurden.
+Neben dem Titel und der Art des Ausgangs-Branches der Pipeline wird hierbei auch der Status der Pipeline aufgezeigt:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/content/pipeline-overview}
+    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Darstellung ausgeführter Pipelines durch GitLab CI/CD}
+    \label{fig:pipeline-overview}
+\end{figure}
+
+Abbildung\ \ref{fig:pipeline-overview} stellt einen Ausschnitt der Pipeline-Übersicht dar.
+Es werden zwei verschiedene Pipelines angezeigt, wobei eine erfolgreich durchgeführt und die andere
+aufgrund von Fehlern in einem der Jobs abgebrochen wurde.
+Die abgebrochene Pipeline wird dabei durch ein rotes X mit dem Schriftzug\ \glqq failed\grqq\ markiert, während die
+erfolgreich durchgelaufene Pipeline einen grünen Haken und das Wort\ \glqq passed\grqq\ ausgibt.
+\\\\
+Navigiert man in der Pipeline-Auflistung von GitLab CI/CD zu der Detail-Ansicht einer der gezeigten Pipelines, werden
+dessen Phasen und Jobs dargestellt.
+Die hierbei angezeigten Jobs können entweder als erfolgreich oder fehlerhaft markiert werden:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/content/job-status}
+    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Status-Anzeige von Jobs}
+    \label{fig:job-status}
+\end{figure}
+
+In Abbildung\ \ref{fig:job-status} werden verschiedene Jobs aufgezeigt, welche jeweils einen unterschiedlichen Status
+berichten.
+Während der Job für das statische Code-Analyse-Tool Eslint erfolgreich durchgelaufen ist, wurde der Job zur
+Durchführung von System-Tests durch Cypress abgebrochen.
+Der erfolgreiche Job wird hierbei mit einem grünen Haken markiert, während der abgebrochene Job mit einem roten X
+gekennzeichnet wurde.
+\\\\
+Neben den Job-Informationen werden in der Pipeline-Detail-Ansicht noch weitere Metriken, wie die Anzahl der in den Jobs
+durchgeführten Tests oder die Dauer der gesamten Pipeline ausgegeben.
+Eine Übersicht aller Jobs einer ausgewählten Pipeline wird in Abbildung\ \ref{fig:job-overview} angezeigt.
+Bestimmte Jobs können in der Ansicht manuell ausgeführt werden, wie zum Beispiel der Deployment-Job für die
+Development-Umgebung, welcher sich in der Abbildung unter dem\ \glqq Deploy\grqq-Schriftzug befindet.
+Dieser kann von den Entwicklern durch einen Button auf der Oberfläche gestartet werden.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/content/job-overview}
+    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Überblick der Jobs einer Pipeline}
+    \label{fig:job-overview}
+\end{figure}
