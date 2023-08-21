@@ -191,6 +191,21 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
     }
 \end{itemize}
 
+Die Durchführung der einzelnen Tools innerhalb der Pipeline wurde dabei von GitLab CI/CD übernommen.
+Die jeweilig für die Tools ausgeführten Jobs können dabei eigene Artifacts erzeugen, welche zum Sammeln von
+Test-Ergebnissen oder zum Persistieren von\ \acrshort{ci}-Builds genutzt werden können.
+Darüber hinaus können Regeln für die Ausführung der Jobs definiert werden, sodass diese je nach Branch konditionell
+ausgeführt werden.
+Nachfolgend wird die Konfiguration des Jobs\ \glqq shopware-php-unit-tests\grqq\ zur Ausführung des
+Tools PHPUnit aufgezeigt:
+
+\yamlfile{code/tool-execution.yml}
+
+Die Job-Konfiguration wurde im YAML-Format im Repository hinterlegt und erweitert hierbei eine eigens erstellte
+Konfiguration für das statische Testen von Shopware ohne angebundene Datenbank.
+Im Rahmen der Fallstudie wurden für die Pipeline neben den einzelnen Job-Konfigurationen zur Ausführung von Tools
+auch eigene Stages und Ausführungsregeln für Branches definiert.
+
 \clearpage
 
 \section{Anhang II: Darstellung ausgeführter Pipelines} \label{sec:appendix-2}

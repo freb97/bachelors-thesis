@@ -1,0 +1,13 @@
+shopware-php-unit-tests:
+  stage: test
+  extends: .test-shopware-static
+  script:
+    - vendor/bin/phpunit --log-junit=reports/phpunit_report.xml
+  rules:
+    - !reference [ .rules, run-always ]
+  artifacts:
+    when: always
+    paths:
+      - test-results/
+    reports:
+      junit: reports/phpunit_report.xml
