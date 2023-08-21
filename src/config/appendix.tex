@@ -202,14 +202,14 @@ Neben dem Titel und der Art des Ausgangs-Branches der Pipeline wird hierbei auch
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/content/pipeline-overview}
-    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Darstellung ausgeführter Pipelines durch GitLab CI/CD}
+    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Übersicht ausgeführter Pipelines in GitLab CI/CD}
     \label{fig:pipeline-overview}
 \end{figure}
 
 Abbildung\ \ref{fig:pipeline-overview} stellt einen Ausschnitt der Pipeline-Übersicht dar.
 Es werden zwei verschiedene Pipelines angezeigt, wobei eine erfolgreich durchgeführt und die andere
 aufgrund von Fehlern in einem der Jobs abgebrochen wurde.
-Die abgebrochene Pipeline wird dabei durch ein rotes X mit dem Schriftzug\ \glqq failed\grqq\ markiert, während die
+Die fehlgeschlagene Pipeline wird dabei durch ein rotes X mit dem Schriftzug\ \glqq failed\grqq\ markiert, während die
 erfolgreich durchgelaufene Pipeline einen grünen Haken und das Wort\ \glqq passed\grqq\ ausgibt.
 \\\\
 Navigiert man in der Pipeline-Auflistung von GitLab CI/CD zu der Detail-Ansicht einer der gezeigten Pipelines, werden
@@ -219,7 +219,7 @@ Die hierbei angezeigten Jobs können entweder als erfolgreich oder fehlerhaft ma
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{images/content/job-status}
-    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Status-Anzeige von Jobs}
+    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Status-Anzeige der Jobs einer Pipeline}
     \label{fig:job-status}
 \end{figure}
 
@@ -233,13 +233,16 @@ gekennzeichnet wurde.
 Neben den Job-Informationen werden in der Pipeline-Detail-Ansicht noch weitere Metriken, wie die Anzahl der in den Jobs
 durchgeführten Tests oder die Dauer der gesamten Pipeline ausgegeben.
 Eine Übersicht aller Jobs einer ausgewählten Pipeline wird in Abbildung\ \ref{fig:job-overview} angezeigt.
-Bestimmte Jobs können in der Ansicht manuell ausgeführt werden, wie zum Beispiel der Deployment-Job für die
-Development-Umgebung, welcher sich in der Abbildung unter dem\ \glqq Deploy\grqq-Schriftzug befindet.
-Dieser kann von den Entwicklern durch einen Button auf der Oberfläche gestartet werden.
+Diese implementiert die in Kapitel\ \ref{subsec:04-implementation-2} ausgewählten Tools der \acrshort{ci}-Strategie,
+welche nach dem erfolgreichen Build-Job in der Testing-Phase der Pipeline stattfinden.
+Jobs können in dieser Detail-Ansicht wiederholt und manche manuell angestoßen werden, wie zum Beispiel der
+Deployment-Job für die Development-Umgebung, welcher in der Deployment-Phase der Pipeline ausführbar ist.
+Dieser kann von den Entwicklern auf der Web-Oberfläche gestartet werden, um die gebaute und getestete Integration an die
+hinterlegte Umgebung auszuliefern.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/content/job-overview}
-    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Überblick der Jobs einer Pipeline}
+    \captioncite[\hyperlink{cite.gitlab}{GitLab B.V.}]{}{Detail-Ansicht einer durchgeführten Pipeline}
     \label{fig:job-overview}
 \end{figure}
