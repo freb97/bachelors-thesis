@@ -3,27 +3,27 @@
 
 \section{Fachlicher Hintergrund} \label{sec:02-background}
 
-Für die Erarbeitung einer geeigneten \acrshort{ci}-Strategie wird zunächst ein Einblick in die Disziplin des
+Für die Erarbeitung einer geeigneten\ \acrshort{ci}-Strategie wird zunächst ein Einblick in die Disziplin des
 Continuous-Software-Engineering gegeben.
-Anschließend werden die Begrifflichkeiten und Prinzipien von Continuous Integration definiert und weitere
+Anschließend werden die Begrifflichkeiten und Prinzipien von\ \acrlong{ci} definiert und weitere
 relevante Technologien und Bereiche für die Nutzung von\ \acrshort{ci} erläutert.
 Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Shopware-Plattform gegeben.
 
-\subsection{Continuous Software Engineering} \label{subsec:02-background-1}
+\subsection{Continuous-Software-Engineering} \label{subsec:02-background-1}
 
-Continuous-Software-Engineering fasst die Prinzipien der Continuous Integration (\acrshort{ci}),
-Continuous Delivery (\acrshort{cde}), und Continuous Deployment (\acrshort{cd}) zusammen.
+Continuous-Software-Engineering fasst die Prinzipien der\ \acrfull{ci},
+\ \acrfull{cde}, und\ \acrfull{cd} zusammen.
 Shahin et al.\ definieren den Begriff als einen Bereich der Softwareentwicklung, bei dem es um die Entwicklung,
 Auslieferung und das schnelle Feedback von Software und Kunde geht.
-Die Disziplin umfasst Geschäftsstrategie und Planung, sowie Entwicklung und den Betrieb der Software.
+Die Disziplin umfasst Geschäftsstrategie und Planung, sowie die Entwicklung und den Betrieb der Software.
 \footpartcite[3910--3911]{tools-and-practises}
 Diese kontinuierliche Integrierung von Software ist sehr kompatibel mit den häufigen iterationen in der agilen
-Softwareentwicklung und wurde unter anderem durch die agile Methodik des Extreme Programming bekannt.
+Softwareentwicklung und wurde unter anderem durch die agile Methodik des Extreme Programming? bekannt.
 \footpartcite{fitzgerald}
-Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci},\ \acrshort{cde} und \acrshort{cd}
+Nachfolgend werden die Bereiche der \hyperref[subsubsec:02-background-1-agil]{agilen Softwareentwicklung} und der\ \acrshort{ci},\ \acrshort{cde} und\ \acrshort{cd}
 kurz erläutert.
 
-\subsubsection{Agile Software Development}
+\subsubsection{Agile Software Development} \label{subsubsec:02-background-1-agil}
 
 Agile Softwareentwicklung ist ein Ansatz zur Softwareentwicklung, der auf Flexibilität und Kundeninteraktion setzt.
 Im Gegensatz zu traditionellen, plangetriebenen Methoden, die die Anforderungen und Lösungen am Anfang des Projekts
@@ -35,18 +35,18 @@ Offenheit für sich ändernde Anforderungen und enge Zusammenarbeit zwischen Tea
 Gren und Lenberg fassen Agile als die Reaktionsfähigkeit im Hinblick auf sich ständig ändernde Anforderungen
 und Umgebungen zusammen.\footpartcite{agile}
 
-\subsubsection{Continuous Integration}
+\subsubsection{\acrlong{ci}}
 
-Continuous Integration (\acrshort{ci}) ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen
+\acrfull{ci} ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen
 regelmäßig, oft mehrmals täglich, in ein gemeinsames Repository integrieren.
 Jede dieser Integrationen wird dann von einem automatisierten Build-System überprüft, um sicherzustellen, dass die
 Änderungen mit der bestehenden Codebase kompatibel sind und keine Fehler verursachen.
 Dieser Prozess ermöglicht es Teams, Probleme frühzeitig zu erkennen und zu beheben, was die Qualität der Software
 verbessert und die Zeit bis zur Auslieferung der Software reduziert.\footpartcite{fowler}
 
-\subsubsection{Continuous Delivery}
+\subsubsection{\acrlong{cde}}
 
-Continuous Delivery (\acrshort{cde}) erweitert das Konzept der Continuous Integration, indem es sicherstellt, dass die
+\acrfull{cde} erweitert das Konzept der\ \acrlong{ci}, indem es sicherstellt, dass die
 Software stetig in einem Zustand ist, der sicher in die Produktionsumgebung ausgerollt werden kann.
 Dies wird durch das Einführen von Integrationstests, die die Funktionalität der vollständigen Software inklusive aller
 Module testen, erreicht.
@@ -54,9 +54,9 @@ Das Ziel von\ \acrshort{cde} ist es, den Prozess der Softwareauslieferung zu bes
 indem menschliche Fehler minimiert und schnelles Feedback über Probleme in der Produktionsumgebung ermöglicht wird.
 \footpartcite{humble}
 
-\subsubsection{Continuous Deployment}
+\subsubsection{\acrlong{cd}}
 
-Continuous Deployment (\acrshort{cd}) ist der nächste Schritt nach Continuous Delivery.
+\acrfull{cd} ist der nächste Schritt nach Continuous Delivery.
 Bei\ \acrshort{cd} wird jede Änderung, die den automatisierten Testprozess besteht, automatisch in die
 Produktionsumgebung eingespielt.\footpartcite[3911]{tools-and-practises}
 Dies bedeutet, dass neue Features und Updates mehrmals täglich an die Endbenutzer ausgeliefert werden können, was eine
@@ -64,7 +64,7 @@ schnelle Reaktion auf Marktbedingungen und Kundenfeedback ermöglicht.
 Es ist jedoch zu beachten, dass\ \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung
 erfordert, um die Anzahl der in der Produktionsumgebung aufkommenden Fehler zu minimieren.
 Der Begriff\ \glqq Deployment\grqq\ wird außerdem als Synonym für das Ausliefern von Code an eine Umgebung verwendet.
-Der Zusammenhang zwischen Continuous Integration, Delivery und Deployment wird in Abbildung\ \ref{fig:ci-cde-cd}
+Der Zusammenhang zwischen\ \acrlong{ci},\ \acrlong{cde} und\ \acrlong{cd} wird in Abbildung\ \ref{fig:ci-cde-cd}
 aufgezeigt.
 
 \begin{figure}[H]
@@ -74,12 +74,12 @@ aufgezeigt.
     \label{fig:ci-cde-cd}
 \end{figure}
 
-\subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-2}
+\subsection{Begrifflichkeiten und Prinzipien von\ \acrlong{ci}} \label{subsec:02-background-2}
 
-Um die Bedeutung und den Nutzen von Continuous Integration und des Continuous-Software-Engineering für die
+Um die Bedeutung und den Nutzen von\ \acrlong{ci} und des Continuous-Software-Engineering für die
 Softwareentwicklung nachvollziehen zu können, ist es hilfreich, einen Blick auf die historische Entwicklung und die
 grundlegenden Prinzipien der\ \acrshort{ci} zu werfen.
-Ein Kernprinzip hinter Continuous Integration wurde bereits im Jahr 1991 von Grady Booch definiert.
+Ein Kernprinzip hinter\ \acrlong{ci} wurde bereits im Jahr 1991 von Grady Booch definiert.
 Hierbei werden Software-Releases nicht als ein großes Ereignis betrachtet, sondern regelmäßig durchgeführt, wobei
 die vollständige Software stetig größer wird.\footpartcite{booch}
 Kent Beck popularisierte im Jahr 1998 die Disziplin des\ \glqq Extreme Programming\grqq, wobei großer Wert auf das frühe
@@ -87,22 +87,22 @@ und regelmäßige Testen und Integrieren der entwickelten Komponenten einer Soft
 Beck behauptet hierbei, dass ein Feature, für welches es keine automatisierten Tests gibt, auch nicht funktioniert.
 \footpartcite[2--4]{extreme-programming}
 Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Methodiken in dem Artikel
-\glqq Continuous Integration\grqq\ unter dem gleichnamigen Begriff zusammen.
-Fowler beschreibt\ \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
+\glqq\acrlong{ci}\grqq\ unter dem gleichnamigen Begriff zusammen.
+Fowler beschreibt\ \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig integrieren,
 wobei Integration als der Build-Prozess, inklusive automatisierter Tests, für die vollständige Software mitsamt der
 erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
 Ein grundlegendes Ziel dieser Vorgehensweise ist, neben der frühzeitigen Erkennung von Fehlern im Quellcode durch
 automatisierte Tests und\ \acrshort{qa}-Prüfungen, die Reduzierung der\ \glqq Cycle Time\grqq, welche die Zeitspanne von
 der Entwicklung eines Features bis zum Erhalten des Kundenfeedbacks nach dessen Auslieferung beschreibt.
 \footpartcite[2580]{benefits-challenges}
-In 2010 betonen Humble und Farley die Wichtigkeit von\ \acrshort{ci} und behaupten, dass Software ohne Continuous
-Integration als defekt gilt, bis sie als funktionierend nachgewiesen wird, während mit\ \acrshort{ci} Software mit
+In 2010 betonen Humble und Farley die Wichtigkeit von\ \acrshort{ci} und behaupten, dass Software ohne\ \acrlong{ci}
+als defekt gilt, bis sie als funktionierend nachgewiesen wird, während mit\ \acrshort{ci} Software mit
 jeder erfolgreich integrierten Änderung als funktionierend bewiesen wird.\footpartcite[56]{humble}
 Über Zeit hat sich\ \acrshort{ci} als essenzielle Praktik in der Software-Welt etabliert.
 Im Jahr 2016 zeigte eine Analyse von $34.544$ auf der Plattform GitHub verwalteten Open-Source-Projekten, dass 40\% der
 Projekte\ \acrshort{ci} einsetzen.
 Bei den populärsten 500 analysierten Projekten lag der Anteil bei 70\%.\footpartcite[428--429]{ci-usage}
-Da die erfolgreiche Implementierung von Continuous Integration auf der Kombination von verschiedenen Methoden zur
+Da die erfolgreiche Implementierung von\ \acrlong{ci} auf der Kombination von verschiedenen Methoden zur
 Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlüsselaspekte aufgezeigt:
 
 \begin{itemize}
