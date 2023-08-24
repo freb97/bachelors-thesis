@@ -54,7 +54,7 @@ Drittanbieter-Plugins eingeplant, um Entwicklungszeit einzusparen.
 
 Nachfolgend wird das als Fallstudie vorgesehene Shopware-Projekt anhand der untersuchten\ \acrshort{ci}-Praktiken
 implementiert.
-Zunächst wird gemäß des Konzepts eine Analyse der zur Verfügung stehenden\ \acrshort{ci}-Tools durchgeführt,
+Zunächst wird gemäß dem Konzept eine Analyse der zur Verfügung stehenden\ \acrshort{ci}-Tools durchgeführt,
 woraufhin Technologien für die Nutzung innerhalb des Projekts ausgewählt werden.
 Anschließend wird die Projekt-Umgebung für die Nutzung von\ \acrshort{ci} aufgesetzt und das Shopware-Projekt
 installiert und vorbereitet.
@@ -178,7 +178,7 @@ Diese führt Namenskonventionen und verschiedene Arten von Branches ein, wobei n
 \shellinline{feature}-Branches entwickelt werden.
 Anschließend werden diese in den\ \shellinline{development}-Branch gemerged, wo die Änderungen gesammelt werden.
 Die gesammelten Features können daraufhin in einen\ \shellinline{release}-Branch überführt werden, in welchem keine
-substantiellen Änderungen sondern nur noch Fehlerbehebungen vorgenommen werden.
+substantiellen Änderungen, sondern nur noch Fehlerbehebungen vorgenommen werden.
 \shellinline{release}-Branches können zuletzt in den\ \shellinline{main}-Branch integriert werden.
 Dieser stellt den Haupt-Versionsstand des Software-Projekts dar und speichert die aktuell ausgelieferte Version der
 Software.
@@ -195,7 +195,7 @@ Der Testing-Prozess umfasst zunächst alle für die Strategie ausgewählten Test
 lang-andauernder Tests durch End-to-End-Testing.
 Im späteren Verlauf der Entwicklung besteht durch Gitlab CI/CD die Möglichkeit, diese Tests nur in Branches mit
 definierter Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu groß wird.
-Abschließend liefern Jobs in der Deployment-Stage den entwickelten Code an die jeweilig für den Branch definierte
+Abschließend liefern Jobs in der Deployment-Stage den entwickelten Code an die jeweilige für den Branch definierte
 Umgebung aus.
 \\\\
 In Abbildung\ \ref{fig:ci-pipeline-concept} wird die für das Projekt erstellte\ \acrshort{ci}-Pipeline vorgestellt.
@@ -295,7 +295,7 @@ durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert 
 \\\\
 Drittanbieter-Plugins und Shop-Konfigurationen wurden hierbei nicht weiter getestet, da es sich nicht um
 Eigenentwicklungen handelt und diese durch die jeweiligen Hersteller oder die Shopware-Platform selbst geprüft werden.
-Außerdem wurden im Verlauf des Projekts neben den automatisierten Tests durch die\ \acrshort{ci}-Pipeline auch
+Des Weiteren wurden im Verlauf des Projekts neben den automatisierten Tests durch die\ \acrshort{ci}-Pipeline auch
 manuelle Tests von Entwicklern, Projektleitern und den Kunden durchgeführt, um die System-Funktionalität
 sicherzustellen.
 Darüber hinaus wurde durch die Verwendung einer flexiblen Pipeline die Möglichkeit eingeräumt, das Projekt durch
