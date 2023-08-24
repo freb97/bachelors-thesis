@@ -5,21 +5,20 @@
 
 Für die Erarbeitung einer geeigneten \acrshort{ci}-Strategie wird zunächst ein Einblick in die Disziplin des
 Continuous-Software-Engineering gegeben.
-Anschließend werden die Begrifflichkeiten und Prinzipien von Continuous Integration definiert und weitere
+Anschließend werden die Begrifflichkeiten und Prinzipien von \acrlong{ci} definiert und weitere
 relevante Technologien und Bereiche für die Nutzung von\ \acrshort{ci} erläutert.
-Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Shopware-Plattform gegeben.
+Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Shopware-Platform gegeben.
 
-\subsection{Continuous Software Engineering} \label{subsec:02-background-1}
+\subsection{Continuous-Software-Engineering} \label{subsec:02-background-1}
 
-Continuous-Software-Engineering fasst die Prinzipien der Continuous Integration (\acrshort{ci}),
-Continuous Delivery (\acrshort{cde}), und Continuous Deployment (\acrshort{cd}) zusammen.
+Continuous-Software-Engineering fasst die Prinzipien der \acrfull{ci}, \acrfull{cde}, und \acrfull{cd} zusammen.
 Shahin et al.\ definieren den Begriff als einen Bereich der Softwareentwicklung, bei dem es um die Entwicklung,
 Auslieferung und das schnelle Feedback von Software und Kunde geht.
 Die Disziplin umfasst Geschäftsstrategie und Planung, sowie Entwicklung und den Betrieb der Software.
 \footpartcite[3910--3911]{tools-and-practises}
 Diese kontinuierliche Integrierung von Software ist sehr kompatibel mit den häufigen iterationen in der agilen
 Softwareentwicklung und wurde unter anderem durch die agile Methodik des Extreme Programming bekannt.
-\footpartcite{fitzgerald}
+\footpartcite[181]{fitzgerald}
 Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci},\ \acrshort{cde} und \acrshort{cd}
 kurz erläutert.
 
@@ -37,8 +36,8 @@ und Umgebungen zusammen.\footpartcite{agile}
 
 \subsubsection{Continuous Integration}
 
-Continuous Integration (\acrshort{ci}) ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen
-regelmäßig, oft mehrmals täglich, in ein gemeinsames Repository integrieren.
+\acrfull{ci} ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen
+regelmäßig, oft mehrmals täglich, in eine gemeinsam geführte Hauptversion der Software integrieren.
 Jede dieser Integrationen wird dann von einem automatisierten Build-System überprüft, um sicherzustellen, dass die
 Änderungen mit der bestehenden Codebase kompatibel sind und keine Fehler verursachen.
 Dieser Prozess ermöglicht es Teams, Probleme frühzeitig zu erkennen und zu beheben, was die Qualität der Software
@@ -46,7 +45,7 @@ verbessert und die Zeit bis zur Auslieferung der Software reduziert.\footpartcit
 
 \subsubsection{Continuous Delivery}
 
-Continuous Delivery (\acrshort{cde}) erweitert das Konzept der Continuous Integration, indem es sicherstellt, dass die
+\acrfull{cde} erweitert das Konzept der \acrlong{ci}, indem es sicherstellt, dass die
 Software stetig in einem Zustand ist, der sicher in die Produktionsumgebung ausgerollt werden kann.
 Dies wird durch das Einführen von Integrationstests, die die Funktionalität der vollständigen Software inklusive aller
 Module testen, erreicht.
@@ -56,7 +55,7 @@ indem menschliche Fehler minimiert und schnelles Feedback über Probleme in der 
 
 \subsubsection{Continuous Deployment}
 
-Continuous Deployment (\acrshort{cd}) ist der nächste Schritt nach Continuous Delivery.
+\acrfull{cd} ist der nächste Schritt nach \acrlong{cde}.
 Bei\ \acrshort{cd} wird jede Änderung, die den automatisierten Testprozess besteht, automatisch in die
 Produktionsumgebung eingespielt.\footpartcite[3911]{tools-and-practises}
 Dies bedeutet, dass neue Features und Updates mehrmals täglich an die Endbenutzer ausgeliefert werden können, was eine
@@ -64,7 +63,7 @@ schnelle Reaktion auf Marktbedingungen und Kundenfeedback ermöglicht.
 Es ist jedoch zu beachten, dass\ \acrshort{cd} eine hohe Reife der Entwicklungsprozesse und Testautomatisierung
 erfordert, um die Anzahl der in der Produktionsumgebung aufkommenden Fehler zu minimieren.
 Der Begriff\ \glqq Deployment\grqq\ wird außerdem als Synonym für das Ausliefern von Code an eine Umgebung verwendet.
-Der Zusammenhang zwischen Continuous Integration, Delivery und Deployment wird in Abbildung\ \ref{fig:ci-cde-cd}
+Der Zusammenhang zwischen \acrlong{ci}, Delivery und Deployment wird in Abbildung\ \ref{fig:ci-cde-cd}
 aufgezeigt.
 
 \begin{figure}[H]
@@ -76,10 +75,10 @@ aufgezeigt.
 
 \subsection{Begrifflichkeiten und Prinzipien von Continuous Integration} \label{subsec:02-background-2}
 
-Um die Bedeutung und den Nutzen von Continuous Integration und des Continuous-Software-Engineering für die
+Um die Bedeutung und den Nutzen von \acrlong{ci} und des Continuous-Software-Engineering für die
 Softwareentwicklung nachvollziehen zu können, ist es hilfreich, einen Blick auf die historische Entwicklung und die
 grundlegenden Prinzipien der\ \acrshort{ci} zu werfen.
-Ein Kernprinzip hinter Continuous Integration wurde bereits im Jahr 1991 von Grady Booch definiert.
+Ein Kernprinzip hinter \acrlong{ci} wurde bereits im Jahr 1991 von Grady Booch definiert.
 Hierbei werden Software-Releases nicht als ein großes Ereignis betrachtet, sondern regelmäßig durchgeführt, wobei
 die vollständige Software stetig größer wird.\footpartcite{booch}
 Kent Beck popularisierte im Jahr 1998 die Disziplin des\ \glqq Extreme Programming\grqq, wobei großer Wert auf das frühe
@@ -87,12 +86,12 @@ und regelmäßige Testen und Integrieren der entwickelten Komponenten einer Soft
 Beck behauptet hierbei, dass ein Feature, für welches es keine automatisierten Tests gibt, auch nicht funktioniert.
 \footpartcite[2--4]{extreme-programming}
 Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Methodiken in dem Artikel
-\glqq Continuous Integration\grqq\ unter dem gleichnamigen Begriff zusammen.
+\glqq \acrlong{ci}\grqq\ unter dem gleichnamigen Begriff zusammen.
 Fowler beschreibt\ \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
 wobei Integration als der Build-Prozess, inklusive automatisierter Tests, für die vollständige Software mitsamt der
 erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
 Ein grundlegendes Ziel dieser Vorgehensweise ist, neben der frühzeitigen Erkennung von Fehlern im Quellcode durch
-automatisierte Tests und\ \acrshort{qa}-Prüfungen, die Reduzierung der\ \glqq Cycle Time\grqq, welche die Zeitspanne von
+automatisierte Tests und \acrshort{qa}-Prüfungen, die Reduzierung der\ \glqq Cycle Time\grqq, welche die Zeitspanne von
 der Entwicklung eines Features bis zum Erhalten des Kundenfeedbacks nach dessen Auslieferung beschreibt.
 \footpartcite[2580]{benefits-challenges}
 In 2010 betonen Humble und Farley die Wichtigkeit von\ \acrshort{ci} und behaupten, dass Software ohne Continuous
@@ -101,8 +100,8 @@ jeder erfolgreich integrierten Änderung als funktionierend bewiesen wird.\footp
 Über Zeit hat sich\ \acrshort{ci} als essenzielle Praktik in der Software-Welt etabliert.
 Im Jahr 2016 zeigte eine Analyse von $34.544$ auf der Plattform GitHub verwalteten Open-Source-Projekten, dass 40\% der
 Projekte\ \acrshort{ci} einsetzen.
-Bei den populärsten 500 analysierten Projekten lag der Anteil bei 70\%.\footpartcite[428--429]{ci-usage}
-Da die erfolgreiche Implementierung von Continuous Integration auf der Kombination von verschiedenen Methoden zur
+Bei den populärsten 500 analysierten Projekten lag dieser Anteil bei 70\%.\footpartcite[428--429]{ci-usage}
+Da die erfolgreiche Implementierung von \acrlong{ci} auf der Kombination von verschiedenen Methoden zur
 Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlüsselaspekte aufgezeigt:
 
 \begin{itemize}
@@ -117,14 +116,15 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         In der Vergangenheit wurde bei einem Release jede Einzelkomponente der Software manuell integriert und getestet,
         wobei dies als eigene Phase in der Entwicklung einer Applikation galt.
         In einem \acrshort{ci}-gestützten Projekt wird der Prozess des Software-Releases vollständig automatisiert,
-        sodass jedes Teammitglied eine entwickelte Komponente schnell Integrieren und einen Software-Build erzeugen
+        sodass jedes Teammitglied eine entwickelte Komponente schnell integrieren und einen Software-Build erzeugen
         kann, was sich positiv auf die Cycle Time auswirkt.
         In einem Build-Prozess erzeugte Dateien, welche die fertig gebaute Software ausmachen, werden dabei als\ \glqq
         Artifact\grqq\ betitelt.\footpartcite[2580]{benefits-challenges}
         Fowler empfiehlt hierbei, dass ein entwickeltes Feature erst nach der vollständigen Integration durch einen
         erfolgreichen Build als fertig angesehen werden soll.\footpartcite{fowler}
         In der Regel finden das Bauen und Testen der Software in einer\ \glqq Pipeline\grqq\ statt, welche die genutzten
-        \acrshort{ci}-Tools wie Test-Suites und Static-Code-Analysis ausführt.\footpartcite[2571]{benefits-challenges}
+        \acrshort{ci}-Tools wie Test-Suites und weitere Analyse-Software ausführt.
+        \footpartcite[2571]{benefits-challenges}
     }
 
     \item {
@@ -137,20 +137,20 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         Neben den typischerweise schnell durchlaufenden Unit-Tests, die aufgrund ihrer isolierten Natur spezifische
         Komponenten prüfen, können nach dem Build-Prozess umfassende End-To-End-Tests für die gesamte Software
         durchgeführt werden.
-        Diese Systemübergreifenden Tests, welche das Zusammenspiel verschiedener Komponenten testen, erhöhen zwar die
+        Diese systemübergreifenden Tests, welche das Zusammenspiel verschiedener Komponenten testen, erhöhen zwar die
         Dauer des Test-Prozesses, können aber wichtige Einsicht in die Qualität der Software gewähren.
         \footpartcite{fowler}
         Automatisierten Tests in einer\ \acrshort{ci}-Pipeline können insgesamt dabei helfen, Fehler in eingeführtem
         Quellcode zu finden.\footpartcite[2572]{benefits-challenges}
-        Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, um eine Pipeline bei Unstimmigkeiten in der Syntax
-        des eingeführten Codes abzubrechen.
+        Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, welche den Code eines Projekts anhand gegebener
+        Regeln prüfen können um gegebenenfalls die Pipeline abzubrechen.
         Diese Programme können zusätzliche Qualitätsprüfungen und Coding-Standards in ein Projekt einführen.
         \footpartcite[338]{static-analysis}
     }
 
     \item {
         \textbf{Reproduzierbarkeit}\par
-        Ein weiterer zentraler Aspekt von Continuous Integration ist die Reproduzierbarkeit der \acrshort{ci}-Pipeline.
+        Ein weiterer zentraler Aspekt von \acrlong{ci} ist die Reproduzierbarkeit der \acrshort{ci}-Pipeline.
         In einem \acrshort{ci}-Umfeld werden der Build- und Testing-Prozess vollständig automatisiert und
         standardisiert, was bedeutet, dass diese unter den gleichen Bedingungen und mit den gleichen Ergebnissen
         wiederholt werden können.
@@ -181,14 +181,14 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
 \end{itemize}
 
 Die vorgestellten\ \acrshort{ci}-Praktiken bauen auf unterschiedlichen Technologien und Konzepten auf, die für das
-Betreiben von Continuous Integration eine Rolle spielen.
-Um die Praktiken der Continuous Integration vollständig zu verstehen und effektiv umzusetzen, ist es
+Betreiben von \acrlong{ci} eine Rolle spielen.
+Um die Praktiken der \acrlong{ci} vollständig zu verstehen und effektiv umzusetzen, ist es
 unerlässlich, die zugrunde liegenden Technologien und Konzepte zu betrachten, die die Basis für die Implementierung von
 \acrshort{ci} in einem Softwareprojekt bilden.
 Dazu gehören Themen wie Version-Control-Systems, Pipelines, Containerization, Software-Testing und
 Static-Code-Analysis.
 Im Folgenden werden einige dieser Themen untersucht, um ein umfassendes Verständnis der Mechanismen und Werkzeuge zu
-vermitteln, die für die erfolgreiche Anwendung von Continuous Integration erforderlich sind.
+vermitteln, die für die erfolgreiche Anwendung von \acrlong{ci} erforderlich sind.
 
 \subsubsection{Version-Control-Systems}
 
@@ -315,7 +315,7 @@ Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorge
 \begin{itemize}
     \item {
         \textbf{Unit-Tests}\par
-        Unit-Tests prüfen das verhalten von einzelnen Programm-Einheiten.
+        Unit-Tests prüfen das Verhalten von einzelnen Programm-Einheiten.
         Eine Programm-Einheit oder Prozedur stellt eine oder mehrere zusammenhängende Anweisungen in Form von Code dar,
         welche durch andere Teile der Software namentlich aufgerufen werden können.
         Durch Unit-Tests werden also die Implementierungsschritte eines Software-Programms einzeln geprüft.
@@ -412,21 +412,25 @@ der Software mit vielen gleichzeitigen Nutzerzugriffen überwacht.
 \subsection{Übersicht über die Shopware-Platform} \label{subsec:02-background-3}
 
 Shopware wurde als Online-Shop-Software im Jahr 2000 durch Stefan Hamann ins Leben gerufen\footpartcite{shopware-story}
-und bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des PHP-Frameworks
-\glqq Symfony\grqq.
+und hat sich über Zeit zu einer umfangreichen Lösung für den digitalen Handel entwickelt.
+Neben E-Commerce-Systemen wie Spryker, Commercetools oder Shopify hat sich Shopware durch seine Flexibilität und
+Anpassbarkeit in der Branche einen Namen gemacht.
+Die Software bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des
+PHP-Frameworks\ \glqq Symfony\grqq.
 Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem Content-Management-System
 (\acrshort{cms})\ \glqq Drupal\grqq, dem Shop-System\ \glqq Magento\grqq\ und einigen weiteren
 Programmen\footpartcite{symfony-projects} als Grundlage genutzt und bildet somit ein erprobtes Fundament für die
-Shopware-Plattform.
+Shopware-Platform.
 Shopware selbst ist nach der Installation bereits voll funktionsfähig und kann mit einem Backend und optional
 mit einem Frontend oder für das Konsumieren der mitgelieferten\ \acrshort{api} eingerichtet werden.
-Ein Application Programming Interface (\acrshort{api}) ist hierbei eine Schnittstelle, welche die standardisierte
+Ein \acrfull{api} ist hierbei eine Schnittstelle, welche die standardisierte
 Kommunikation zwischen Programmen ermöglicht.
 Die Software kann auf verschiedenen Plattformen gehostet werden, darunter Linux-Server und containerisierte Umgebungen.
 Darüber hinaus bietet Shopware als Unternehmen auch eine eigene Hosting-Lösung an, die speziell auf die Anforderungen
 der Software zugeschnitten ist.
-Die Plattform kann sowohl im Einzelbetrieb als auch als Cluster genutzt werden, um eine hohe Verfügbarkeit und
-Skalierbarkeit zu gewährleisten.
+Die Plattform kann sowohl im Einzelbetrieb als auch als Cluster genutzt werden, wobei mehrere, oftmals geografisch
+verteilte Instanzen der Software gleichzeitig betrieben werden um eine hohe Verfügbarkeit und Skalierbarkeit zu
+gewährleisten.\footpartcite{shopware-cluster}
 Nachfolgend wird der Aufbau des Symfony-Frameworks dargestellt und die Architektur der darauf basierenden
 Shopware-Platform aufgezeigt.
 
@@ -462,7 +466,7 @@ Schnittstellen zur Nutzung bereit.
     \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
     \label{fig:shopware-architecture}
 \end{figure}
-Die Verwaltung der die Shop-Daten, Produkte und weiterer Betriebsfunktionen wird mit der Administrations-Oberfläche
+Die Verwaltung der Shop-Daten, Produkte und weiterer Betriebsfunktionen wird mit der Administrations-Oberfläche
 vorgenommen.
 Diese bildet eine eigene Komponente und kommuniziert mit dem Shopware-Core über die Admin-\acrshort{api}.
 Die Administration bietet neben der Konfiguration des Shops und dessen Daten und Produkten auch eine
@@ -479,8 +483,8 @@ Neben den drei Hauptkomponenten bietet die Shopware-Platform verschiedene Anbind
 Shop-Systems.
 Plugins können direkt an den Core angebunden werden und ermöglichen die Erweiterung der Shopware-Logik, das Templating
 der Storefront oder Anpassungen an der Administration.
-Zusätzlich können die Sync-\acrshort{api} und die Sales-Channel-\acrshort{api} für die Anbindung externer Anwendungen
-verwendet werden, wie zum Beispiel Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
+Zusätzlich kann die Sync-\acrshort{api} für die Anbindung externer Anwendungen verwendet werden, wie zum Beispiel
+Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
 \\\\
 Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
 Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
