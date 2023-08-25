@@ -67,10 +67,9 @@ ist.
 
 \subsubsection{Auswahl von\ \acrshort{ci}-Tools}
 
-Bevor mit der Implementierung des Projekts begonnen werden konnte, musste zunächst analysiert werden, welche Tools
-innerhalb des Projekts eingesetzt werden können.
-Hierfür wurde eine Analyse verschiedener\ \acrshort{ci}-Tools durchgeführt, wobei eine Auswahl an für das
-Projekt zu nutzenden Technologien getroffen wurde:\\
+Bevor mit der Implementierung des Projekts begonnen werden konnte, musste zunächst eine Auswahl an Tools getroffen
+werden, die zur Umsetzung der \acrshort{ci}-Strategie eingesetzt werden können.
+Hierfür wurden populäre Tools aus verschiedenen Bereichen, die in dem Projekt abgedeckt werden sollen, herangezogen:\\
 
 \hspace{0.025\textwidth}%
 \begin{minipage}{0.5\textwidth}
@@ -168,20 +167,20 @@ lokalen Umgebung das Tool\ \glqq Docker-Compose\grqq\ verwendet.
 Dieses Tool eignet sich besonders für Multi-Container Docker-Applikationen, da in der Konfiguration hinterlegte
 Container mit je einem Konsolenbefehl initialisiert, gestartet, gestoppt oder entfernt werden können.
 \footpartcite{docker-compose}
-Hierfür wurde eine Konfigurationsdatei im YAML-Format angelegt, welches häufig zur Konfiguration von Programm-Daten
+Hierfür wurde eine Konfigurationsdatei im YAML-Format angelegt, welches zur Konfiguration von Programm-Daten
 genutzt wird:
 
 \yamlfile{code/docker-compose.yml}
 
-Die aufgezeigte Konfigurationsdatei definiert zwei Container:\ \glqq shop\grqq\ und\ \glqq database\grqq.
-Diese sind über ein angegebenes Netzwerk\ \glqq web\grqq\ miteinander verbunden und haben jeweils offene Ports zur
+Die aufgezeigte Konfigurationsdatei definiert zwei Container: \shellinline{shop} und \shellinline{database}.
+Diese sind über ein angegebenes Netzwerk \shellinline{web} miteinander verbunden und haben jeweils offene Ports zur
 Kommunikation hinterlegt.
-Außerdem wurde ein Docker-Volume für das Persistieren der lokalen Datenbank angelegt, welches sich um dessen
-Datenverwaltung kümmert.
+Außerdem wurde das Docker-Volume \shellinline{database_volume} für das Persistieren der lokalen Datenbank angelegt,
+welches sich um dessen Datenverwaltung kümmert.
 Der Shop-Container nutzt dabei auch eine Volume-Anweisung in der Konfigurationsdatei, um die Projekt-Dateien und
 Verzeichnisse in die Image-Instanz zu laden.
-Darüber hinaus wurde für die Datenbank eine Konfigurationsdatei für Umgebungsvariablen angegeben, in der
-die Zugangsdaten für Datenbank-Nutzer hinterlegt werden können.
+Darüber hinaus wurde für die Datenbank die zuvor angelegte Konfigurationsdatei \shellinline{.env} angegeben, in der
+Umgebungsvariablen in Form von Tabellen-Konfiguration und Nutzerzugangsdaten hinterlegt werden konnten.
 \\\\
 Nachdem die lokale Entwicklungsumgebung erstellt wurde, konnte mit der Vorbereitung für die Umgebung der Pipelines
 begonnen werden.

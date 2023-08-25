@@ -226,7 +226,7 @@ Die Anforderungen des Projekts setzten eine Umgebung, in der die Shopware-Platfo
 werden kann, voraus.
 Eine Umgebung muss in diesem Fall sowohl lokal als auch in einer \acrshort{ci}-Pipeline ausführbar sein und die
 Grundbedürfnisse der Shopware-Instanz bereitstellen.
-Dies beinhaltet die von Shopware genutzte PHP-Version mit PHP-Erweiterungen, Composer, Node, eine
+Dies beinhaltet die von Shopware genutzte PHP-Version inklusive benötigter PHP-Erweiterungen sowie Composer, Node, eine
 Webserver-Software und weitere Voraussetzungen.
 Da spätere Umgebungen, an welche die Software ausgeliefert werden soll, nicht zwangsläufig unter der
 Kontrolle des Entwicklerteams stehen, wird sich in der Strategie auf die Vereinheitlichung der lokalen
@@ -276,10 +276,10 @@ Aufbau erläutert.
         \textbf{Build-Stage}\par
         Ungeachtet der späteren ausführenden Umgebung muss in der\ \acrshort{ci}-Pipeline eines Shopware-Projekts zur
         Durchführung weiterer Schritte eine Build-Phase durchlaufen werden.
-        Hierbei werden die Abhängigkeiten der Shopware-Platform selbst, zusammen mit weiteren Paketen wie Testing- und
+        Hierbei werden die Abhängigkeiten der Shopware-Platform selbst zusammen mit weiteren Paketen wie Testing- und
         \acrshort{qa}-Tools installiert und somit für die Testing-Phase vorbereitet.
         Die hierbei stattfindende Integration wird also zunächst durch den Status des Software-Builds geprüft.
-        Ist der Build-Job erfolgreich, wird ein Artifact erzeugt welches, um die Durchlaufzeit der Pipeline insgesamt
+        Ist der Build-Job erfolgreich, wird ein Artifact erzeugt, welches, um die Durchlaufzeit der Pipeline insgesamt
         möglichst gering zu halten, in einem Cache zur weiteren Nutzung zwischengespeichert wird.
     }
 
@@ -288,31 +288,31 @@ Aufbau erläutert.
         Wenn die Build-Stage erfolgreich durchgelaufen ist und ein Artifact erzeugt wurde, beginnt die Testing-Phase.
         In der Strategie ist hierbei das parallele Ausführen von Tests und\ \acrshort{qa}-Tools auf der bestehenden
         Codebase angedacht.
-        Um Tests parallel auszuführen werden mehrere Jobs gestartet, welchen bereits alle installierten Tools
+        Um Tests parallel auszuführen, werden mehrere Jobs gestartet, welchen bereits alle installierten Tools
         und der zu testende Quellcode durch das zwischengespeicherte Artifact des Build-Jobs zur Verfügung stehen.
         Hierbei sollte eine möglichst große Abdeckung des Codes durch verschiedene Arten von Software-Tests bestehen.
         Durch Unit-, Module- und Integration-Tests kann an dieser Stelle die Funktionalität der einzelnen
-        Anwendungs-Komponenten überprüft werden, während System-Tests die Korrektheit des Gesamtsystems anhand der
+        Anwendungskomponenten überprüft werden, während System-Tests die Korrektheit des Gesamtsystems anhand der
         Geschäftsanforderungen abdecken.
         Besondere Anforderungen einzelner Testing-Tools, wie zum Beispiel ein Datenbank-Service innerhalb der Pipeline
         zum Ausführen von System-Tests, sollten dabei nicht in der Build-Phase, sondern vor der Ausführung des Tools im
         jeweiligen Job installiert werden.
         Parallel zu den verschiedenen Test-Arten können in diesem Schritt Tools zur Static-Code-Analysis ausgeführt
         werden.
-        Die Testing-Stage umfasst somit die automatisierte Qualitäts- und Funktionalitäts-Prüfung der Shop-Software in
+        Die Testing-Stage umfasst somit die automatisierte Qualitäts- und Funktionalitätsprüfung der Shop-Software in
         der\ \acrshort{ci}-Pipeline.
-        Dabei anfallende Metriken und Stati sollen kontinuierlich überwacht werden, wobei auch Monitoring-Tools zur
-        weiteren Prüfung der Applikations-Performance und anderen Qualitäts-Indikatoren eingesetzt werden können.
+        Dabei anfallende Metriken und Status sollen kontinuierlich überwacht werden, wobei auch Monitoring-Tools zur
+        weiteren Prüfung der Applikationsperformance und anderen Qualitätsindikatoren eingesetzt werden können.
     }
 
     \item {
         \textbf{Deployment-Stage}\par
-        Wenn der Software-Build inklusive aller automatisierten Tests und Qualitäts-Checks erfolgreich durchlaufen,
+        Wenn der Software-Build inklusive aller automatisierten Tests und Qualitätschecks erfolgreich durchlaufen,
         kann eine Deployment-Stage gestartet werden.
         In der Strategie ist dessen Ausführung für Branches angedacht, bei denen eine Ziel-Umgebung zur Auslieferung
         des gebauten Artifacts existiert, wie zum Beispiel die Produktionsumgebung.
         Der hierbei ausgeführte Deployment-Job liefert die relevanten Daten der Shop-Software, Testing-Tools
-        und\ \acrshort{ci}-Abhängigkeiten ausgeschlossen, an die definierte Umgebung aus.
+        und\ \acrshort{ci}-Abhängigkeiten ausgeschlossen an die definierte Umgebung aus.
         Hierbei muss beachtet werden, dass die Ausfallzeit der Applikation bei der automatischen Auslieferung so gering
         wie möglich bleibt, um die technischen Anforderungen der Strategie zu erfüllen.
     }

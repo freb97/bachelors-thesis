@@ -1,5 +1,6 @@
 build-shopware-project:
   stage: build
+  image: shopware/development:8.2-composer-2
   script:
     # Install shopware
     - cd "$PROJECT_ROOT"
