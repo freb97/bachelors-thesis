@@ -1,0 +1,10 @@
+deploy-shopware-production:
+  stage: deploy
+  dependencies:
+    - build-shopware-project
+  script:
+    # Deploy to production
+    - vendor/bin/dep deploy_production
+  only:
+    - main
+  when: manual

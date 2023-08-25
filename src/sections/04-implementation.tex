@@ -163,6 +163,25 @@ Diese wurde, um in der\ \acrshort{ci}-Pipeline wiederverwendet werden zu können
 instanziiert.
 Nach der Shopware-Installation wurden Grundkonfigurationen vorgenommen und erste manuelle Tests durchgeführt, um
 sicherzustellen, dass die Instanz funktional ist.
+Um die verschiedenen lokalen Container-Konfigurationen zentralisiert verwalten zu können, wurde beim Aufsetzen der
+lokalen Umgebung das Tool\ \glqq Docker-Compose\grqq\ verwendet.
+Dieses Tool eignet sich besonders für Multi-Container Docker-Applikationen, da in der Konfiguration hinterlegte
+Container mit je einem Konsolenbefehl initialisiert, gestartet, gestoppt oder entfernt werden können.
+\footpartcite{docker-compose}
+Hierfür wurde eine Konfigurationsdatei im YAML-Format angelegt, welches häufig zur Konfiguration von Programm-Daten
+genutzt wird:
+
+\yamlfile{code/docker-compose.yml}
+
+Die aufgezeigte Konfigurationsdatei definiert zwei Container:\ \glqq shop\grqq\ und\ \glqq database\grqq.
+Diese sind über ein angegebenes Netzwerk\ \glqq web\grqq\ miteinander verbunden und haben jeweils offene Ports zur
+Kommunikation hinterlegt.
+Außerdem wurde ein Docker-Volume für das Persistieren der lokalen Datenbank angelegt, welches sich um dessen
+Datenverwaltung kümmert.
+Der Shop-Container nutzt dabei auch eine Volume-Anweisung in der Konfigurationsdatei, um die Projekt-Dateien und
+Verzeichnisse in die Image-Instanz zu laden.
+Darüber hinaus wurde für die Datenbank eine Konfigurationsdatei für Umgebungsvariablen angegeben, in der
+die Zugangsdaten für Datenbank-Nutzer hinterlegt werden können.
 \\\\
 Nachdem die lokale Entwicklungsumgebung erstellt wurde, konnte mit der Vorbereitung für die Umgebung der Pipelines
 begonnen werden.
@@ -187,7 +206,7 @@ welche am Haupt-Versionsstand vorgenommen werden müssen.\footpartcite{git-flow}
 
 \subsubsection{Erstellen der Pipeline}
 
-Nachdem eine ausführende Umgebung definiert wurde, kann nun die eigentliche Pipeline für das Projekt erstellt werden.
+Nachdem eine ausführende Umgebung definiert wurde, konnte die eigentliche Pipeline für das Projekt erstellt werden.
 Diese soll zunächst bei jeder Integration in einen Branch ausgeführt werden und durchläuft dabei eine Build-,
 Testing- und Deployment-Stage.
 Im Build-Prozess werden die \acrshort{ci}-Tools und die Abhängigkeiten der Shopware-Platform installiert.
@@ -198,7 +217,82 @@ definierter Deployment-Umgebung durchführen zu lassen, falls dessen Laufzeit zu
 Abschließend liefern Jobs in der Deployment-Stage den entwickelten Code an die jeweilig für den Branch definierte
 Umgebung aus.
 \\\\
-In Abbildung\ \ref{fig:ci-pipeline-concept} wird die für das Projekt erstellte\ \acrshort{ci}-Pipeline vorgestellt.
+Die hierbei implementierten Phasen und Jobs der Pipeline wurden zur Ausführung in GitLab CI/CD in Form von YAML-Dateien
+angelegt.
+Erstellte Pipeline-Konfigurationsdateien werden dabei im Repository des Projekts hinterlegt, welches diese ausliest und
+die Anweisungen an GitLab CI/CD weitergibt.
+Somit konnten die einzelnen Stages der Pipeline und darin durchzuführende Jobs angelegt werden, sowie dessen
+Ausführungsregeln, Beziehungen zueinander, anfallende Artifacts und Abhängigkeiten in Form von Services.
+Nachfolgend wird ein kurzer Überblick der Implementierung einzelner Phasen der Pipeline in GitLab CI/CD gegeben:
+
+\begin{itemize}
+    \item {
+        \textbf{Build-Stage}\par
+        Die Build-Stage besteht aus einem einzelnen Build-Job, welcher die Installation der Abhängigkeiten
+        von Shopware und der\ \acrshort{ci}-Tools durch Composer und \acrshort{npm} vornimmt.
+        Im Folgenden wird die erstellte Konfiguration dieses Jobs für GitLab CI/CD aufgezeigt:
+
+        \yamlfile{code/build.yml}\vspace{-2.3em}
+
+        Die hierbei erzeugten Dateien werden als Artifacts für die Nutzung durch darauffolgende Jobs hinterlegt.
+        Außerdem referenziert der Build-Job die Regel\ \glqq run-always\grqq, welche zuvor angelegt wurde und dafür
+        sorgt, dass der Job bei jeder Integration in das Repository und auch bei Merge-Requests gestartet wird.
+    }
+
+    \item {
+        \textbf{Testing-Stage}\par
+        In der Testing-Stage werden die für das Projekt vorgesehenen Test- und \acrshort{qa}-Tools durchgeführt.
+        Die Test-Jobs nutzen dabei die in der Build-Stage erstellten Artifacts, anstatt diese selbst erneut zu
+        installieren, um die Ausführung der Pipeline insgesamt zu beschleunigen.
+        Als Beispiel wird nachfolgend die Job-Konfiguration für das Unit-Testing-Tool \shellinline{PHPUnit} aufgezeigt:
+
+        \yamlfile{code/test.yml}\vspace{-2.3em}
+
+        Dieser Job gibt als Abhängigkeit den zuvor definierten Build-Job an und kann somit dessen installierte
+        Artifacts nutzen.
+        Da Unit-Tests in der Regel keine besonders Zeitaufwändigen Tests darstellen, referenziert dieser Job auch
+        die\ \glqq run-always\grqq-Regel.
+        Außerdem generiert der Job eigene Artifacts in Form von Test-Reports, welche in GitLab CI/CD ausgewertet
+        und in der jeweiligen Pipeline angezeigt werden.
+        Tests die weitere Abhängigkeiten voraussetzen, so wie Functional-Tests durch das Tool\ \shellinline{Cypress},
+        folgen dabei dem gleichen Konfigurationsprinzip.
+        Sie erweitern lediglich die Job-Konfiguration, um die benötigten Services, Umgebungsvariablen und weitere
+        Abhängigkeiten, die spezifisch für den jeweiligen Test benötigt werden, zu installieren.
+        Im weiteren Verlauf des Projekts können eigene spezielle Regeln für lang-andauernde Test-Jobs erstellt
+        werden, sodass diese nur bei bestimmten Branches oder Aktionen im\ \acrshort{vcs} ausgeführt werden.
+    }
+
+    \item {
+        \textbf{Deployment-Stage}\par
+        Nach dem Erstellen der Build- und Testing-Stage wurde zuletzt die Deployment-Stage angelegt.
+        Hierbei wurden verschiedene Jobs definiert, die jeweils zur Ausführung bei einer Integration in einen
+        bestimmten Ziel-Branch konfiguriert wurden.
+        Nachfolgend wird der Deployment-Job des\ \shellinline{main}-Branches aufgezeigt:
+
+        \yamlfile{code/deploy.yml}\vspace{-2.3em}
+
+        Der Job wurde so konfiguriert, dass die finale Ausführung zwar automatisiert abläuft, dabei aber manuell
+        angestoßen werden muss, womit die umgesetzte Strategie effektiv\ \acrlong{cde} betreibt.
+        Dies kann je nach den Bedürfnissen des Projekts angepasst werden und ermöglicht somit optional auch die
+        Nutzung von\ \acrshort{cd} durch das vollautomatische Ausliefern nach dem erfolgreichem Durchlaufen der Build-
+        und Testing-Jobs.
+        Für den \shellinline{development}- und die \shellinline{release}-Branches, für welche auch
+        Deployment-Umgebungen angelegt wurden, sind jeweils eigene Jobs definiert worden.
+        Diese Jobs folgen dabei dem selben Prinzip und nutzen das Tool \shellinline{Deployer}, welches das Ausliefern
+        der Software an die jeweilige Umgebung anhand von eigens vorgegebenen Konfigurationen vornimmt.
+        Die hierbei angelegten \shellinline{Deployer}-Konfigurationen für die verschiedenen Umgebungen wurden in Form
+        von PHP-Code im Repository persistiert.
+    }
+\end{itemize}
+
+Die grundlegenden Phasen und Jobs der Pipeline konnten somit anhand der erarbeiteten Strategie modelliert und
+implementiert werden.
+Sowohl der Build-Prozess, als auch das automatisierte Testen und das Ausliefern des integrierten Codes wurden hierbei
+mit einbezogen und umgesetzt.
+Die Pipeline-Konfiguration bietet dabei eine gewisse flexibilität und ermöglicht die Anpassung an verschiedene
+Vorgaben und Anforderungen, welche sich im Verlauf des Projekts ändern können.
+\\\\
+In Abbildung\ \ref{fig:ci-pipeline-concept} wird die für das Projekt erstellte\ \acrshort{ci}-Pipeline visualisiert.
 Hierbei werden verschiedene Arten von Branches in einem\ \acrshort{vcs} dargestellt, welche zunächst die gleiche Aktion
 auslösen, den Build-Prozess.
 Dort werden die \acrshort{ci}-Tools und die Abhängigkeiten von Shopware für die anschließende Nutzung in der
@@ -219,8 +313,8 @@ Ausgangs-Branches an den Development-, Staging- oder Produktions-Server aus.
     \label{fig:ci-pipeline-concept}
 \end{figure}
 
-Die visuelle Ausgabe durchgeführter Pipelines des Projekts durch GitLab CI/CD kann aus Anhang\ \ref{sec:appendix-2}
-entnommen werden.
+Eine visuelle Ausgabe einzelner durchgeführter Pipelines des Projekts in GitLab CI/CD kann aus
+Anhang\ \ref{sec:appendix-2} entnommen werden.
 
 \subsubsection{Implementierung der Shop-Funktionen}
 
@@ -241,6 +335,8 @@ Diese können grob in drei verschiedene Bereiche eingeteilt werden:
         Dies hat den Vorteil dass Bugs, die durch Updates der Standard-\acrshort{ui} mit bestehenden Anpassungen
         entstehen, schneller erkannt und gefixed werden können.
     }
+
+    \clearpage
 
     \item {
         \textbf{Entwicklung des Plugins zur Anpassung der Produktkacheln}\par
@@ -292,8 +388,8 @@ Außerdem wurde\ \shellinline{Danger JS} zur steigerung der Transparenz des\ \ac
 den Status der einzelnen Jobs einer durchgelaufenen Pipeline in Form eines Kommentars im\ \acrshort{vcs} hinterlegt.
 Letztlich wurden die Deployments für die jeweiligen Umgebungen durch das PHP-basierte Tool\ \shellinline{Deployer}
 durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.
-\\\\
-Drittanbieter-Plugins und Shop-Konfigurationen wurden hierbei nicht weiter getestet, da es sich nicht um
+\\
+Drittanbieter-Plugins und Shop-Konfigurationen wurden hierbei nicht weiter getestet, da es sich bei ihnen nicht um
 Eigenentwicklungen handelt und diese durch die jeweiligen Hersteller oder die Shopware-Platform selbst geprüft werden.
 Des Weiteren wurden im Verlauf des Projekts neben den automatisierten Tests durch die\ \acrshort{ci}-Pipeline auch
 manuelle Tests von Entwicklern, Projektleitern und den Kunden durchgeführt, um die System-Funktionalität

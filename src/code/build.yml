@@ -1,0 +1,17 @@
+build-shopware-project:
+  stage: build
+  script:
+    # Install shopware
+    - cd "$PROJECT_ROOT"
+    - composer install --no-interaction --optimize-autoloader --no-scripts
+
+    # Install ci-tools
+    - cd "$CI_PROJECT_DIR" && composer install --no-interaction && npm install
+  rules:
+    - !reference [ .rules, run-always ]
+  artifacts:
+    paths:
+      - vendor/
+      - node_modules/
+      - cache/Cypress/
+      - shopware/vendor/

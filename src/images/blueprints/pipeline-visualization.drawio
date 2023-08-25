@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-16T10:51:01.188Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/115.0" etag="GASkgtwSZBNWej96iIc_" version="21.6.8" type="device">
+<mxfile host="app.diagrams.net" modified="2023-08-24T15:27:27.288Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/116.0" etag="NFPANlNNohr0AhHPghw_" version="21.6.9" type="device">
   <diagram name="Page-1" id="Igu_BJj3ePW4wTze_0mT">
-    <mxGraphModel dx="795" dy="491" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="954" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -35,8 +35,8 @@
         <mxCell id="WVgN2BpvuZmh8Fgh5VFi-7" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="230" y="40" width="250" height="290" as="geometry" />
         </mxCell>
-        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-8" value="Test stage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="230" y="40" width="80" height="30" as="geometry" />
+        <mxCell id="WVgN2BpvuZmh8Fgh5VFi-8" value="Testing stage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="230" y="40" width="90" height="30" as="geometry" />
         </mxCell>
         <mxCell id="WVgN2BpvuZmh8Fgh5VFi-12" value="Unit test jobs" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;" parent="1" vertex="1">
           <mxGeometry x="250" y="80" width="210" height="30" as="geometry" />

@@ -34,7 +34,7 @@ die technischen Anforderungen an das Konzept im Hinblick auf die Gegebenheiten d
         \textbf{Automatisierte Software-Tests und Quality-Checks}\par
         Da Testing einen integralen Bestandteil der\ \acrshort{ci} bildet, muss die zu konzipierende Strategie ein
         umfassendes Test-Konzept bieten.
-        Dies schließt sowohl Unit- und Module-Tests, als auch programmübergreifende Prüfungen wie Integration- und
+        Dies schließt sowohl Unit- und Module-Tests als auch programmübergreifende Prüfungen wie Integration- und
         System-Tests ein.
         Zudem soll die Qualitätssicherung der zu entwickelnden Software eines Projekts durch statische
         Code-Analyse-Tools in die \acrshort{ci}-Strategie integriert werden.
@@ -63,8 +63,8 @@ die technischen Anforderungen an das Konzept im Hinblick auf die Gegebenheiten d
 
     \item {
         \textbf{Einheitliche Daten-Verwaltung}\par
-        Um Konsistenz und Nachvollziehbarkeit zu gewährleisten, sollte alles, von Code über Konfigurationen bis hin
-        zu Datenbank-Skripten und Tests, in einem Versionskontrollsystem verwaltet werden.
+        Um Konsistenz und Nachvollziehbarkeit zu gewährleisten, sollte alles von Code über Konfigurationen bis hin
+        zu Datenbank-Skripten und Tests in einem Versionskontrollsystem verwaltet werden.
         Dies ermöglicht eine klare Historie von Änderungen und erleichtert das Rollback im Falle von Problemen.
         Ein zentralisiertes\ \acrshort{vcs} stellt sicher, dass alle Teammitglieder stets mit der aktuellsten Version
         arbeiten und Änderungen nachvollziehbar sind.
@@ -105,7 +105,7 @@ die definierten Ziele $Z_n$ der Arbeit ermöglichen.
 
 \subsection{Analyse der Ausgangssituation} \label{subsec:03-concept-2}
 
-Die aktuelle Situation stellt sich wie folgt dar: In E-Commerce-Unternehmen die Shopware-Projekte betreiben, gibt es in
+Die aktuelle Situation stellt sich wie folgt dar: In E-Commerce-Unternehmen, die Shopware-Projekte betreiben, gibt es in
 der Regel verschiedene Kunden, die mit unterschiedlichen Versionen von der Software arbeiten.
 Diese Kunden können bei verschiedenen Hosting-Anbietern untergebracht sein, was zu einer Vielfalt an technischen
 Umgebungen führt, in denen die Software betrieben wird.
@@ -130,7 +130,7 @@ Ungeachtet von Projekt und Version gibt es jedoch einige Grundvoraussetzungen f�
 In Abbildung\ \ref{fig:shopware-requirements} werden die grundsätzlichen Abhängigkeiten der Shopware-Platform und die
 verschiedenen Services für den Betrieb der Software aufgezeigt.
 Hierbei werden optionale Services in gestrichelt dargestellt.
-Um ein Projekt installieren und ausführen zu können, oder um Tests auf der Codebase durchzuführen, wird also eine
+Um ein Projekt installieren und ausführen zu können oder um Tests auf der Codebase durchzuführen, wird also eine
 Umgebung vorausgesetzt, in der die benötigten Services und Tools installiert sind.
 Nachfolgend werden die in der Grafik aufgezeigten Abhängigkeiten und Services erläutert:
 
@@ -149,7 +149,7 @@ Nachfolgend werden die in der Grafik aufgezeigten Abhängigkeiten und Services e
 
             \item {
                 \textbf{Paketmanager\ \glqq Composer\grqq}\par
-                Durch Composer werden sowohl die Abhängigkeiten von Symfony und Shopware, als auch Third-Party-Plugins
+                Durch Composer werden sowohl die Abhängigkeiten von Symfony und Shopware als auch Third-Party-Plugins
                 und eigene Entwicklungen im Projekt verwaltet und zur Nutzung im PHP-Code bereitgestellt.
             }
         \end{itemize}
@@ -157,17 +157,17 @@ Nachfolgend werden die in der Grafik aufgezeigten Abhängigkeiten und Services e
 
     \item {
         \textbf{JavaScript}\par
-        JavaScript bei der Nutzung der Shopware-Platform sowohl im Browser, als auch Serverseitig ausgeführt.
+        JavaScript bei der Nutzung der Shopware-Platform sowohl im Browser als auch serverseitig ausgeführt.
 
         \begin{itemize}
             \item {
                 \textbf{JavaScript-Runtime\ \glqq Node\grqq}\par
-                Zur Serverseitigen Ausführung von JavaScript-Code wird die Node-Runtime als Abhängigkeit vorausgesetzt.
+                Zur serverseitigen Ausführung von JavaScript-Code wird die Node-Runtime als Abhängigkeit vorausgesetzt.
             }
 
             \item {
                 \textbf{Node-Paketmanager\ \glqq\acrshort{npm}\grqq}\par
-                Der Paktemanager\ \acrshort{npm} ist eine weitere Abhängigkeit von Shopware.
+                Der Paketmanager\ \acrshort{npm} ist eine weitere Abhängigkeit von Shopware.
                 Dieser verwaltet JavaScript-Pakete, welche zur Ausführung der Software benötigt werden.
             }
         \end{itemize}
@@ -188,7 +188,7 @@ Nachfolgend werden die in der Grafik aufgezeigten Abhängigkeiten und Services e
     \item {
         \textbf{Search Engine}\par
         Um den Besuchern des Online-Shops eine Textsuche für Produkte und Hersteller zu bieten, unterstützt Shopware
-        das optionale Anbinden verschiedener Suchmachinen.
+        das optionale Anbinden verschiedener Suchmaschinen.
     }
 
     \item {
@@ -223,7 +223,7 @@ eigene Phasen und Jobs unterteilt werden.
 \subsubsection{Projekt-Struktur und Umgebung}
 
 Die Anforderungen des Projekts setzten eine Umgebung, in der die Shopware-Platform ausgeführt, getestet und analysiert
-werden kann voraus.
+werden kann, voraus.
 Eine Umgebung muss in diesem Fall sowohl lokal als auch in einer \acrshort{ci}-Pipeline ausführbar sein und die
 Grundbedürfnisse der Shopware-Instanz bereitstellen.
 Dies beinhaltet die von Shopware genutzte PHP-Version mit PHP-Erweiterungen, Composer, Node, eine
@@ -235,9 +235,9 @@ Hierzu empfiehlt sich die Nutzung von Containerization, wobei die Abhängigkeite
 und der\ \acrshort{ci}-Tools gebündelt und wiederverwendet werden können.
 Ein lokal entwickeltes Feature kann so nach der Fertigstellung über ein\ \acrshort{vcs} integriert werden, welches dann
 die Pipeline-Orchestration anstößt.
-Die Pipeline soll zur Ausführung der einzelnen Jobs das gegebene Image instanziieren und als ausführende
+Die Pipeline soll zur Ausführung der einzelnen Jobs das gegebene Image instanziieren und als Ausführende
 Umgebung verwenden, sodass diese möglichst der lokalen Entwicklungsumgebung gleicht.
-Nach dem erfolgreichen Durchlaufen des Software-Builds, Tests und Qualitäts-Checks soll die Software letztlich durch
+Nach dem erfolgreichen Durchlaufen des Software-Builds, Tests und Qualitätschecks soll die Software letztlich durch
 einen Deployment-Job innerhalb der Pipeline automatisiert an verschiedene Umgebungen ausgeliefert werden können.
 Hierbei kann es sich um die Produktionsumgebung oder andere Infrastrukturen handeln, wie zum Beispiel einen
 Development-Server zum Testen von Features oder einen Staging-Server für die Abnahme von neuen Änderungen durch
@@ -284,7 +284,7 @@ Aufbau erläutert.
     }
 
     \item {
-        \textbf{Test-Stage}\par
+        \textbf{Testing-Stage}\par
         Wenn die Build-Stage erfolgreich durchgelaufen ist und ein Artifact erzeugt wurde, beginnt die Testing-Phase.
         In der Strategie ist hierbei das parallele Ausführen von Tests und\ \acrshort{qa}-Tools auf der bestehenden
         Codebase angedacht.
@@ -299,8 +299,8 @@ Aufbau erläutert.
         jeweiligen Job installiert werden.
         Parallel zu den verschiedenen Test-Arten können in diesem Schritt Tools zur Static-Code-Analysis ausgeführt
         werden.
-        Die Test-Stage umfasst somit die automatisierte Qualitäts- und Funktionalitäts-Prüfung der Shop-Software in der
-        \acrshort{ci}-Pipeline.
+        Die Testing-Stage umfasst somit die automatisierte Qualitäts- und Funktionalitäts-Prüfung der Shop-Software in
+        der\ \acrshort{ci}-Pipeline.
         Dabei anfallende Metriken und Stati sollen kontinuierlich überwacht werden, wobei auch Monitoring-Tools zur
         weiteren Prüfung der Applikations-Performance und anderen Qualitäts-Indikatoren eingesetzt werden können.
     }

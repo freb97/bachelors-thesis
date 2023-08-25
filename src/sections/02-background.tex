@@ -11,12 +11,12 @@ Darüber hinaus wird eine Übersicht über die Funktionen und Mechanismen der Sh
 
 \subsection{Continuous-Software-Engineering} \label{subsec:02-background-1}
 
-Continuous-Software-Engineering fasst die Prinzipien der \acrfull{ci}, \acrfull{cde}, und \acrfull{cd} zusammen.
+Continuous-Software-Engineering fasst die Prinzipien der \acrfull{ci}, \acrfull{cde} und \acrfull{cd} zusammen.
 Shahin et al.\ definieren den Begriff als einen Bereich der Softwareentwicklung, bei dem es um die Entwicklung,
 Auslieferung und das schnelle Feedback von Software und Kunde geht.
-Die Disziplin umfasst Geschäftsstrategie und Planung, sowie Entwicklung und den Betrieb der Software.
+Die Disziplin umfasst Geschäftsstrategie und Planung sowie Entwicklung und den Betrieb der Software.
 \footpartcite[3910--3911]{tools-and-practises}
-Diese kontinuierliche Integrierung von Software ist sehr kompatibel mit den häufigen iterationen in der agilen
+Diese kontinuierliche Integrierung von Software ist sehr kompatibel mit den häufigen Iterationen in der agilen
 Softwareentwicklung und wurde unter anderem durch die agile Methodik des Extreme Programming bekannt.
 \footpartcite[181]{fitzgerald}
 Nachfolgend werden die Bereiche der agilen Softwareentwicklung und der \acrshort{ci},\ \acrshort{cde} und \acrshort{cd}
@@ -37,7 +37,7 @@ und Umgebungen zusammen.\footpartcite{agile}
 \subsubsection{Continuous Integration}
 
 \acrfull{ci} ist ein Softwareentwicklungsprozess, bei dem Entwickler ihre Änderungen
-regelmäßig, oft mehrmals täglich, in eine gemeinsam geführte Hauptversion der Software integrieren.
+regelmäßig - oft mehrmals täglich - in eine gemeinsam geführte Hauptversion der Software integrieren.
 Jede dieser Integrationen wird dann von einem automatisierten Build-System überprüft, um sicherzustellen, dass die
 Änderungen mit der bestehenden Codebase kompatibel sind und keine Fehler verursachen.
 Dieser Prozess ermöglicht es Teams, Probleme frühzeitig zu erkennen und zu beheben, was die Qualität der Software
@@ -88,9 +88,9 @@ Beck behauptet hierbei, dass ein Feature, für welches es keine automatisierten 
 Im Jahr 2006 fasste Software-Entwickler Martin Fowler einige Bereiche dieser Methodiken in dem Artikel
 \glqq \acrlong{ci}\grqq\ unter dem gleichnamigen Begriff zusammen.
 Fowler beschreibt\ \acrshort{ci} als einen Prozess, bei dem Teammitglieder ihre Arbeit regelmäßig Integrieren,
-wobei Integration als der Build-Prozess, inklusive automatisierter Tests, für die vollständige Software mitsamt der
+wobei Integration als der Build-Prozess inklusive automatisierter Tests für die vollständige Software mitsamt der
 erarbeiteten Änderungen zu verstehen ist.\footpartcite{fowler}
-Ein grundlegendes Ziel dieser Vorgehensweise ist, neben der frühzeitigen Erkennung von Fehlern im Quellcode durch
+Ein grundlegendes Ziel dieser Vorgehensweise ist neben der frühzeitigen Erkennung von Fehlern im Quellcode durch
 automatisierte Tests und \acrshort{qa}-Prüfungen, die Reduzierung der\ \glqq Cycle Time\grqq, welche die Zeitspanne von
 der Entwicklung eines Features bis zum Erhalten des Kundenfeedbacks nach dessen Auslieferung beschreibt.
 \footpartcite[2580]{benefits-challenges}
@@ -107,9 +107,9 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
 \begin{itemize}
     \item {
         \textbf{Regelmäßige Integration}\par
-        Die namensgebende Methodik der\ \acrshort{ci} ist das regelmäßige Integrieren von Software und damit Verbunden
+        Die namensgebende Methodik der\ \acrshort{ci} ist das regelmäßige Integrieren von Software und damit verbunden
         ist der Software-Release.
-        In der traditionellen Softwareentwicklung wird der Release als ein einmaliges, großes Ereignis betrachtet.
+        In der traditionellen Softwareentwicklung wird der Release als ein einmaliges großes Ereignis betrachtet.
         Als Integration wird der Prozess des Einbindens einer einzeln entwickelten Komponente in die bisher bestehende
         Gesamtheit einer Software bezeichnet, wobei der Release das Zusammenfinden aller Komponenten und das Ausführen
         des Build-Prozesses bis hin zur fertigen, ausführbaren und auslieferbaren Software beschreibt.
@@ -133,7 +133,7 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         wichtiger Aspekt von\ \acrshort{ci}.
         Hierbei werden oftmals Unit-Tests verwendet, welche eine einzelne Softwarekomponente auf
         ihre Funktion prüfen, abgekapselt von anderen Komponenten.\footpartcite[280]{test-driven-development}
-        Wenn ein Test fehlschlägt, wird in der Regel die Pipeline unterbroche.
+        Wenn ein Test fehlschlägt, wird in der Regel die Pipeline unterbrochen.
         Neben den typischerweise schnell durchlaufenden Unit-Tests, die aufgrund ihrer isolierten Natur spezifische
         Komponenten prüfen, können nach dem Build-Prozess umfassende End-To-End-Tests für die gesamte Software
         durchgeführt werden.
@@ -143,7 +143,7 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         Automatisierten Tests in einer\ \acrshort{ci}-Pipeline können insgesamt dabei helfen, Fehler in eingeführtem
         Quellcode zu finden.\footpartcite[2572]{benefits-challenges}
         Oftmals kommen auch Static-Code-Analysis Tools zum Einsatz, welche den Code eines Projekts anhand gegebener
-        Regeln prüfen können um gegebenenfalls die Pipeline abzubrechen.
+        Regeln prüfen können, um gegebenenfalls die Pipeline abzubrechen.
         Diese Programme können zusätzliche Qualitätsprüfungen und Coding-Standards in ein Projekt einführen.
         \footpartcite[338]{static-analysis}
     }
@@ -155,8 +155,8 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         standardisiert, was bedeutet, dass diese unter den gleichen Bedingungen und mit den gleichen Ergebnissen
         wiederholt werden können.
         Dies ist von entscheidender Bedeutung, um sicherzustellen, dass die Software in verschiedenen Umgebungen
-        (z.B.\ Entwicklung, Test, Produktion) konsistent funktioniert.
-        Durch das Zentralisieren der Software und der \acrshort{ci}-Tools in einer Versionierungs-Software, in
+        (z. B.\ Entwicklung, Test, Produktion) konsistent funktioniert.
+        Durch das Zentralisieren der Software und der \acrshort{ci}-Tools in einer Versionierungssoftware in
         Verbindung mit dem Automatisieren des Build- und Testing-Prozesses, wird das Wiederherstellen von früheren
         Ständen in der Entwicklung und das Nachvollziehen von Fehlern im Entwicklungsprozess vereinfacht.
         \footpartcite[74--75]{duvall}
@@ -170,7 +170,7 @@ Verwaltung von Softwareprojekten fußt, werden im Folgenden einige dieser Schlü
         der Fortschritte und möglicher Probleme.
         Durch den Einsatz von\ \acrshort{ci} und der Automatisierung des Build- und Test-Prozesses können Teammitglieder
         schnell Feedback über den Status von Änderungen an der Codebase erhalten.
-        Wenn ein Problem auftritt, z.B.\ ein Test fehlschlägt oder ein Build abbricht, wird das Team sofort
+        Wenn ein Problem auftritt, z. B.\ ein Test fehlschlägt oder ein Build abbricht, wird das Team sofort
         benachrichtigt, sodass das Problem schnell behoben werden kann.
         Dies reduziert die Zeit und den Aufwand, die benötigt werden, um Fehler zu finden und zu beheben, und verbessert
         die Qualität der Software.
@@ -205,15 +205,15 @@ in einen Branch des Repositories integriert werden.
 Versionskontroll-Software ermöglicht es außerdem, verschiedene Versionen in Form von Branches zusammenzuführen.
 Der Prozess des Zusammenführens verschiedener Branches wird hierbei als\ \glqq Merge\grqq\ bezeichnet.
 In vielen\ \acrshort{vcs} können Merges zunächst durch sogenannten Merge-Requests angefragt werden, bevor diese
-final Durchgeführt werden.
+final durchgeführt werden.
 Die Strukturierung von Branches kann anhand gewisser Vorgaben in Form einer Branching-Strategie definiert werden, wobei
 Branches für gewisse Aufgaben innerhalb des Projekts einer Namenskonvention folgen und Regeln für Merges
 vorgeschrieben werden.
-Die Nutzung eines\ \acrshort{vcs} in welchem verschiedene Branches angelegt werden können, ermöglicht Teammitgliedern
-die gleichzeitige Arbeit an einer einzelnen Codebase ohne sich dabei gegenseitig zu beeinflussen.
+Die Nutzung eines\ \acrshort{vcs}, in welchem verschiedene Branches angelegt werden können, ermöglicht Teammitgliedern
+die gleichzeitige Arbeit an einer einzelnen Codebase, ohne sich dabei gegenseitig zu beeinflussen.
 \footpartcite[388--390]{duvall}
 Fowler setzt für die Nutzung von\ \acrshort{ci} das Führen eines Source-Repositories voraus, welches die
-Projekt-Software, inklusive aller dazugehörigen Build- und Testing-Konfigurationen, verwaltet.\footpartcite{fowler}
+Projekt-Software inklusive aller dazugehörigen Build- und Testing-Konfigurationen, verwaltet.\footpartcite{fowler}
 
 \subsubsection{Pipelines}
 
@@ -225,7 +225,7 @@ zur automatischen Integration und dem Testen von Code genutzt werden.
 Sie werden durch sogenannte Pipeline- oder Task-Runner verwaltet und können verschiedene Aufgaben verrichten,
 welche durch das Ausführen von Befehlen innerhalb sogenannter\ \glqq Jobs\grqq\ durchgeführt werden.
 Pipelines können mehrere Jobs starten, teilweise auch parallel, wobei nacheinander laufende Jobs voneinander
-Abhängig sein und Artifacts für nachfolgende Jobs zwischengespeichert werden können.
+abhängig sein und Artifacts für nachfolgende Jobs zwischengespeichert werden können.
 Pipelines spielen durch das kontinuierliche Integrieren von entwickeltem Code eine integrale Rolle bei der Reduzierung
 der Cycle Time\footpartcite{fowler} und sind somit wichtig zum Erreichen des Ziels $Z_1$ der Arbeit.
 Eine Pipeline in einem\ \acrshort{ci}-Prozess wird in der Regel bei jeder Änderung am Quellcode des Source-Repositories
@@ -285,7 +285,7 @@ Die Visualisierung zeigt im linken Teil den Aufbau eines Systems, in dem ein Hyp
 Hardware-Ressourcen verwendet wird (a).
 Die Technologie kann hierbei auf einem bereits installierten Host-Betriebssystem (Host\ \acrshort{os}) oder ganz ohne
 \acrshort{os} betrieben werden.
-Einzelne\ \acrshort{vm}s die durch den Hypervisor betrieben werden können, nutzen hierbei jeweils ein eigenes
+Einzelne\ \acrshort{vm}s, die durch den Hypervisor betrieben werden können, nutzen hierbei jeweils ein eigenes
 Gast-Betriebssystem (Guest\ \acrshort{os}).
 Im Kontrast dazu steht die Container-Architektur, welche das Betreiben eines Host\ \acrshort{os} voraussetzt und
 dessen Ressourcen zur Ausführung isolierter Container-Instanzen verwendet (b).
@@ -306,7 +306,7 @@ ausgeführt werden.
 In\ \acrshort{ci}-Projekten werden automatisierte Tests oftmals eingesetzt, um Probleme bei der
 Einführung von Features mit vorher entwickelter Logik zu vermeiden und um Fehler im Entwicklungsprozess früher
 entdecken zu können.
-Häufiges, automatisiertes Testing in der\ \acrshort{ci} kann sich positiv auf die Qualität der entwickelten Software
+Häufiges automatisiertes Testing in der\ \acrshort{ci} kann sich positiv auf die Qualität der entwickelten Software
 auswirken.\footpartcite[281]{test-driven-development}\textsuperscript{,\ }\footpartcite[2570]{benefits-challenges}
 \\
 Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorgestellt:
@@ -316,14 +316,14 @@ Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorge
     \item {
         \textbf{Unit-Tests}\par
         Unit-Tests prüfen das Verhalten von einzelnen Programm-Einheiten.
-        Eine Programm-Einheit oder Prozedur stellt eine oder mehrere zusammenhängende Anweisungen in Form von Code dar,
+        Eine Programmeinheit oder Prozedur stellt eine oder mehrere zusammenhängende Anweisungen in Form von Code dar,
         welche durch andere Teile der Software namentlich aufgerufen werden können.
         Durch Unit-Tests werden also die Implementierungsschritte eines Software-Programms einzeln geprüft.
     }
 
     \item {
         \textbf{Module-Tests}\par
-        Ein Modul besteht aus einer Sammlung zusammengehöriger Programm-Einheiten die in einer Datei, einem Paket oder
+        Ein Modul besteht aus einer Sammlung zusammengehöriger Programmeinheiten, die in einer Datei, einem Paket oder
         einer Klasse zusammengefasst sind.
         Module-Tests, auch Component-Tests genannt, zielen darauf ab, diese Module isoliert zu bewerten, im Hinblick auf
         die Interaktionen zwischen den Einheiten und ihren dazugehörigen Datenstrukturen.
@@ -336,15 +336,15 @@ Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorge
         Integration-Tests fokussieren sich auf die Integration verschiedener Module einer Software.
         Sie prüfen das Zusammenspiel von unterschiedlichen Komponenten des Programms und stellen so sicher, dass die
         Kommunikation zwischen verschiedenen Bereichen der Applikation korrekt verläuft.
-        Integrations-Tests stützen sich dabei auf die Annahme, dass die Module selbst bereits vollständig funktionieren.
+        Integrationstests stützen sich dabei auf die Annahme, dass die Module selbst bereits vollständig funktionieren.
     }
 
     \item {
         \textbf{System-Tests}\par
-        Ähnlich wie Integration-Tests, prüfen System-Tests mehrere Komponenten eines einzelnen Systems auf ihre
+        Ähnlich wie Integration-Tests prüfen System-Tests mehrere Komponenten eines einzelnen Systems auf ihre
         Zusammenarbeit.
         System-Tests grenzen sich hierbei allerdings durch ihren Bezug auf vorher definierte Produktanforderungen ab.
-        Sie prüfen ob ein Programm in gänze funktioniert, wobei der Erfolg der Tests aus der Erfüllung von
+        Sie prüfen, ob ein Programm in Gänze funktioniert, wobei der Erfolg der Tests aus der Erfüllung von
         vordefinierten, geschäftsseitigen Anforderungen an das Programm besteht.
         Diese Art von Test wird auch als\ \glqq Functional Test\grqq\ bezeichnet.\footpartcite[441]{agile-testing}
     }
@@ -352,20 +352,20 @@ Nachfolgend werden verschiedene Arten von Tests in der Softwareentwicklung vorge
     \item {
         \textbf{Acceptance-Tests}\par
         Acceptance-Tests werden manuell ausgeführt.
-        Sie prüfen, ob die Bedürfnisse des Projekt-Kunden durch die fertiggestellte Software abgedeckt werden.
-        Hierbei werden also Tests aus der Sicht der Kunden oder vom Kunden selbst durchgeführt, welche fehlschlagen
+        Sie prüfen, ob die Bedürfnisse des Projektkunden durch die fertiggestellte Software abgedeckt werden.
+        Hierbei werden also Tests aus der Sicht der Kunden oder vom Kunden selbst durchgeführt, welche fehlschlagen,
         wenn dessen Anforderungen an das Programm nicht erfüllt werden.
     }
 \end{itemize}
 
 Durch diese verschiedenen Test-Arten kann ein großer Bereich der zu testenden Software und dessen Codebase abgedeckt
 werden.
-Da bereits erstellte Tests immer wieder verwendet werden können, werden diese oftmals eingesetzt um zu prüfen, ob neu
+Da bereits erstellte Tests immer wieder verwendet werden können, werden diese oftmals eingesetzt, um zu prüfen, ob neu
 eingeführter Code diese bestehenden Tests fehlschlagen lässt.
 Dieser Einsatz von existierenden Tests zur Sicherstellung der Funktionalität des Systems wird Regression-Testing
 genannt und stellt einen wichtigen Aspekt des automatisierten Prüfens von Software in einem\ \acrshort{ci}-Kontext dar.
 \footpartcite[53--54]{duvall}
-Um beim Ausführen von Tests etwaige Abhängigkeiten die zur Ausführung des Codes innerhalb Test benötigt werden zu
+Um beim Ausführen von Tests etwaige Abhängigkeiten, die zur Ausführung des Codes innerhalb Test benötigt werden, zu
 umgehen, werden\ \glqq Mocks\grqq\ eingesetzt.
 Ein Mock stellt eine Nachahmung der Vorgehensweise einer Abhängigkeit dar, so kann zum Beispiel das Verhalten
 einer Datenbank oder eines anderen System-Moduls simuliert werden, ohne diese als Service im Testing-Prozess zu
@@ -375,9 +375,9 @@ wichtiger Indikator ist jedoch die Test-Abdeckung.
 Der Anteil von durch Tests abgedeckten Klassen und Funktionen im Kontrast zu der Anzahl an
 ungetesteten Komponenten der Software wird als Abdeckung oder\ \glqq Coverage\grqq\ bezeichnet.
 \footpartcite[132--133]{duvall}
-Neben Test-Coverage können noch weitere Metriken, wie Mutation-Tests zur Bestimmung der Qualität von Tests genutzt
+Neben Test-Coverage können noch weitere Metriken wie Mutation-Tests zur Bestimmung der Qualität von Tests genutzt
 werden.
-Hierbei wird der zu testende Source-Code verändert, oder mutiert, und dieser abgeänderte Code mit einem
+Hierbei wird der zu testende Source-Code verändert oder mutiert und dieser abgeänderte Code mit einem
 bestehenden Test-Set geprüft.
 Wenn die mutierte Variante des Codes durch das Test-Set aufgedeckt wurde, indem der Test fehlschlägt, wird
 der mutierte Code, auch Mutant genannt, als eliminiert betrachtet.
@@ -396,6 +396,12 @@ Dies zwingt die Entwickler eines Projekts dazu, eine einheitliche Code-Struktur 
 von Fehlern verringern.
 Außerdem können Static-Code-Analysis-Tools durch Warnungen verhindern, dass unoptimierter Code in die
 Produktionsumgebung gerät.\footpartcite{static-analysis}
+Statische Code-Analyse basiert oftmals auf der Erstellung von einem
+sogenannten\ \glqq\acrlong{ast}\grqq\ (\acrshort{ast}) welcher eine hierarchische Struktur des Quellcodes darstellt.
+Der \acrshort{ast} zerlegt den Code in seine grundlegenden Bestandteile und stellt Beziehungen zwischen diesen Teilen
+her.\footpartcite{abstract-syntax-trees}
+Dies ermöglicht es Analysewerkzeugen, den Code systematisch zu durchsuchen, Muster zu erkennen und potenzielle Fehler,
+Schwachstellen, Dopplungen oder Abweichungen von gegebenen Code-Standards zu identifizieren, ohne diesen auszuführen.
 
 \subsubsection{Monitoring}
 
@@ -417,7 +423,7 @@ Neben E-Commerce-Systemen wie Spryker, Commercetools oder Shopify hat sich Shopw
 Anpassbarkeit in der Branche einen Namen gemacht.
 Die Software bietet heute in ihrer aktuellen Major-Version 6 eine moderne E-Commerce-Plattform auf Basis des
 PHP-Frameworks\ \glqq Symfony\grqq.
-Das Symfony-Framework wird neben Shopware noch von anderen PHP-Basierten Projekten wie dem Content-Management-System
+Das Symfony-Framework wird neben Shopware noch von anderen PHP-basierten Projekten wie dem Content-Management-System
 (\acrshort{cms})\ \glqq Drupal\grqq, dem Shop-System\ \glqq Magento\grqq\ und einigen weiteren
 Programmen\footpartcite{symfony-projects} als Grundlage genutzt und bildet somit ein erprobtes Fundament für die
 Shopware-Platform.
@@ -429,7 +435,7 @@ Die Software kann auf verschiedenen Plattformen gehostet werden, darunter Linux-
 Darüber hinaus bietet Shopware als Unternehmen auch eine eigene Hosting-Lösung an, die speziell auf die Anforderungen
 der Software zugeschnitten ist.
 Die Plattform kann sowohl im Einzelbetrieb als auch als Cluster genutzt werden, wobei mehrere, oftmals geografisch
-verteilte Instanzen der Software gleichzeitig betrieben werden um eine hohe Verfügbarkeit und Skalierbarkeit zu
+verteilte Instanzen der Software gleichzeitig betrieben werden, um eine hohe Verfügbarkeit und Skalierbarkeit zu
 gewährleisten.\footpartcite{shopware-cluster}
 Nachfolgend wird der Aufbau des Symfony-Frameworks dargestellt und die Architektur der darauf basierenden
 Shopware-Platform aufgezeigt.
@@ -443,7 +449,7 @@ Gleichzeitig bietet Symfony eine Reihe von Konventionen und Best Practises für 
 welche die Entwicklung von Anwendungen erleichtern und beschleunigen.
 Das Framework ist weit verbreitet und stellt eine robuste Grundlage für die Entwicklung umfangreicher Softwareprojekte
 dar.
-Es beinhaltet essenzielle Funktionen, wie Abhängigkeiten-Verwaltung, Performance-Reviews, Datenverwaltung,
+Es beinhaltet essenzielle Funktionen wie Abhängigkeiten-Verwaltung, Performance-Reviews, Datenverwaltung,
 Handling von Nutzer-Sessions, Routing, Formularverwaltung und eine Template-Engine.
 Durch den Einsatz des Paket-Managers\ \glqq Composer\grqq\ können diese Grundfunktionen erweitert und zusätzliche
 Features in ein Projekt importiert werden.
@@ -457,15 +463,9 @@ was die Zuverlässigkeit und Stabilität des Frameworks unterstreicht.\footpartc
 \subsubsection{Architektur der Shopware-Platform}
 
 Shopware 6 bietet eine modulare Architektur.
-Die Plattform besteht aus drei Kernkomponenten, dem Shopware-Core, der Administrations-Oberfläche und der Storefront.
-Der Core bildet hierbei die grundlegenden Shop-Funktionen und Ressourcen, und stellt für diese verschiedene
+Die Plattform besteht aus drei Kernkomponenten, dem Shopware-Core, der Administrationsoberfläche und der Storefront.
+Der Core bildet hierbei die grundlegenden Shop-Funktionen und Ressourcen und stellt für diese verschiedene
 Schnittstellen zur Nutzung bereit.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{images/content/shopware-architecture}
-    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
-    \label{fig:shopware-architecture}
-\end{figure}
 Die Verwaltung der Shop-Daten, Produkte und weiterer Betriebsfunktionen wird mit der Administrations-Oberfläche
 vorgenommen.
 Diese bildet eine eigene Komponente und kommuniziert mit dem Shopware-Core über die Admin-\acrshort{api}.
@@ -485,11 +485,18 @@ Plugins können direkt an den Core angebunden werden und ermöglichen die Erweit
 der Storefront oder Anpassungen an der Administration.
 Zusätzlich kann die Sync-\acrshort{api} für die Anbindung externer Anwendungen verwendet werden, wie zum Beispiel
 Zahlungsanbieter oder E-Mail-Dienste.\footpartcite{shopware-architecture-pickware}
-\\\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.71\textwidth]{images/content/shopware-architecture}
+    \captioncite[Eigene Darstellung nach]{shopware-architecture-pickware}{Visalisierung der Shopware-Architektur}
+    \label{fig:shopware-architecture}
+\end{figure}
+
 Eine grobe Zusammenfassung der Architektur kann aus Abbildung\ \ref{fig:shopware-architecture} entnommen werden.
 Hierbei werden die Kernkomponenten von Shopware aufgezeigt und optionale Services in gestrichelt dargestellt.
 Für die Entwicklung der \acrshort{ci}-Strategie wird der Fokus auf Shopware-Plugins gesetzt.
-Durch Plugins können der Shopware-Core, die Administrations-Oberfläche und die Storefront angepasst werden, wobei diese
+Durch Plugins können der Shopware-Core, die Administrationsoberfläche und die Storefront angepasst werden, wobei diese
 als abgekapselte Module entwickelt oder als Monolith zusammen mit dem Shopware-Projekt in einem gemeinsamen Repository
 verwaltet werden können.
 Shopwares Plugin-System baut auf dem Bundle-System von Symfony auf, um standardisierte, modulare Erweiterungen der

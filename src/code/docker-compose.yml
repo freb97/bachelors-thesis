@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  shop:
+    container_name: shop
+    image: shopware/development:8.2-composer-2
+    ports:
+      - "80:80"
+    volumes:
+      - ./shopware:/app
+    networks:
+      - web
+
+  database:
+    container_name: database
+    image: mariadb:10.3
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - "database_volume:/var/lib/mysql"
+    networks:
+      - web
+
+volumes:
+  database_volume:
+    driver: local
+
+networks:
+  web:
+    external: false
