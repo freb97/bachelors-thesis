@@ -9,9 +9,12 @@
     \end{hangparas}
 }
 
-% Remove list of figures title
+% Remove list of figures and tables titles
 \renewcommand\listoffigures{%
     \@starttoc{lof}%
+}
+\renewcommand\listoftables{%
+    \@starttoc{lot}%
 }
 \makeatother
 

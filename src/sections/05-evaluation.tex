@@ -3,48 +3,164 @@
 
 \section{Evaluierung} \label{sec:05-evaluation}
 
-Nach der detaillierten Darstellung und Implementierung der \acrshort{ci}-Strategie im vorherigen Abschnitt, folgt nun
+Nach der Implementierung der \acrshort{ci}-Strategie im vorherigen Abschnitt folgt nun
 die kritische Evaluierung des Konzepts anhand der entwickelten Fallstudie.
 In diesem Kapitel wird die Effektivität und Anwendbarkeit der umgesetzten \acrshort{ci}-Strategie im Kontext des
 erstellten Shopware-Projekts untersucht.
 Dabei wird nicht nur die technische Umsetzung in den Blick genommen, sondern auch die praktischen Auswirkungen der
 Strategie auf den Entwicklungsprozess und das Endprodukt.
+Zunächst wird eine Analyse der Durchlaufzeit verwendeter Tools und durchgeführter Phasen der Strategie durchgeführt.
+Dabei wird sowohl die lokale als auch die\ \acrshort{ci}-Umgebung betrachtet.
+Anschließend wird anhand der durchgeführten Analyse eine Bewertung der Strategie vorgenommen, wobei Rückschlüsse auf
+dessen Qualität und Effektivität gezogen, Erkenntnisse dargelegt und Auswirkungen diskutiert werden.
 
-\subsection{Erkenntnisse und Auswirkungen der Strategie} \label{subsec:05-evaluation-1}
+\subsection{Analyse und Vergleich} \label{subsec:05-evaluation-1}
 
-Die Umsetzung der \acrshort{ci}-Strategie in der durchgeführten Fallstudie hat gezeigt, dass das
-primäre Ziel, eine qualitativ hochwertige Online-Shop-Lösung zu entwickeln, durch das Konzept erfüllt werden konnte.
-Ein wesentlicher Grund dieser hohen Qualität war dabei die Implementierung umfangreicher automatisierter Tests.
-Diese Tests konnten in der Fallstudie gewährleisten, dass ein Großteil der Softwarefehler und Probleme bereits vor der
-Auslieferung an den Endnutzer identifiziert und behoben werden.
-Hinderlich in der Nutzung der definierten\ \acrshort{ci}-Praktiken war hierbei das Implementieren komplexer
-Test-Vorgänge und aufwändiger System-Tests, was allerdings auch zu einer erhöhten Test-Abdeckung führte.
-Diese konnten im Verlauf des Projekts viele Fehler frühzeitig identifizieren und die Qualität der
-entwickelten Software so wie die Interoperabilität verschiedener Komponenten überwachen.
-Die vollständige Automatisierung der Pipeline verkürzte die Cycle Time, wodurch Änderungen insgesamt schneller an
-den Projekt-Kunden ausgeliefert werden konnten.
-Dieser beschleunigte Auslieferungsprozess ermöglicht es der Anwendung außerdem, sich schnell an neue Vorschriften und
-Kundenanforderungen anzupassen.
-Ein weiterer Vorteil der \acrshort{ci}-Strategie ergab sich durch den automatisierten Release-Prozess.
-Ein störungsfreies und schnelles Deployment konnte verhindern, dass Kunden während der Nutzung der Software
-Beeinträchtigungen erfahren.
-Dies ist insbesondere im E-Commerce-Kontext von Bedeutung, da jede Unterbrechung oder Verzögerung zu einem monetären
-Verlust führen kann.
+Um die Effektivität der eingesetzten Strategie bewerten zu können, wurde zunächst eine Analyse der Durchlaufzeit
+eingesetzter Tools durchgeführt.
+Um eine vergleichbare Grundlage zu bieten, wurde die Zeit, die für die Durchführung einzelner Tools benötigt wird, je
+dreimal lokal und in einer \acrshort{ci}-Pipeline gemessen und daraus die durchschnittliche Ausführungszeit ermittelt.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{4cm}||p{4cm}|p{4cm}|}
+        \hline
+        Name des Tools & Durchlaufzeit \acrshort{ci} & Durchlaufzeit lokal                      \\
+        \hline
+        AuditJS               & \multicolumn{1}{r|}{$47s$}     & \multicolumn{1}{r|}{$19s$}     \\
+        Cypress               & \multicolumn{1}{r|}{$2m\ 16s$} & \multicolumn{1}{r|}{$1m\ 32s$} \\
+        Danger JS             & \multicolumn{1}{r|}{$1m\ 1s$}  & \multicolumn{1}{r|}{$-$}       \\
+        Eslint                & \multicolumn{1}{r|}{$51s$}     & \multicolumn{1}{r|}{$12s$}     \\
+        Jest                  & \multicolumn{1}{r|}{$54s$}     & \multicolumn{1}{r|}{$11s$}     \\
+        (JS) License Checker  & \multicolumn{1}{r|}{$55s$}     & \multicolumn{1}{r|}{$14s$}     \\
+        \hline
+        Deptrac               & \multicolumn{1}{r|}{$36s$}     & \multicolumn{1}{r|}{$5s$}      \\
+        Infection             & \multicolumn{1}{r|}{$1m\ 11s$} & \multicolumn{1}{r|}{$47s$}     \\
+        \acrshort{phpcs}      & \multicolumn{1}{r|}{$44s$}     & \multicolumn{1}{r|}{$2s$}      \\
+        \acrshort{phpmd}      & \multicolumn{1}{r|}{$42s$}     & \multicolumn{1}{r|}{$3s$}      \\
+        PHPUnit               & \multicolumn{1}{r|}{$1m\ 7s$}  & \multicolumn{1}{r|}{$14s$}     \\
+        PHPStan               & \multicolumn{1}{r|}{$38s$}     & \multicolumn{1}{r|}{$19s$}     \\
+        PHP Security Checker  & \multicolumn{1}{r|}{$41s$}     & \multicolumn{1}{r|}{$9s$}      \\
+        (PHP) License Checker & \multicolumn{1}{r|}{$44s$}     & \multicolumn{1}{r|}{$7s$}      \\
+        \hline
+        Deployer              & \multicolumn{1}{r|}{$5m\ 18s$} & \multicolumn{1}{r|}{$5m\ 58s$} \\
+        \hline
+    \end{tabular}
+    \caption{Durchlaufzeit der Test-, \acrshort{qa}- und Deployment-Tools}
+    \label{tab:ci-tools-time}
+\end{table}
+
+In Tabelle\ \ref{tab:ci-tools-time} werden die durchschnittlichen Zeiten für die Ausführung einzelner Test-,
+\acrshort{qa}- und Deployment-Tools in der lokalen Entwicklungsumgebung und in der\ \acrshort{ci}-Pipeline aufgezeigt.
+Es zeigt sich, dass das lokale Durchführen der Tools in der Regel schneller ist als in der\ \acrshort{ci}-Umgebung.
+Dies lässt sich auf verschiedene Faktoren zurückschließen, wie der Mehraufwand durch das Initialisieren der einzelnen
+Jobs und dessen Images im Pipeline-Runner, Wartezeiten durch die Speicherung von Job-Artifacts, Unterschiede in
+der genutzten Hardware oder weiteren Umständen.
+Da in der Tabelle nur die rohen Ausführungszeiten der Tools dargestellt werden, muss außerdem beachtet werden, dass bei
+der manuellen lokalen Durchführung zwischen jedem Tool eine Unterbrechung stattfindet.
+Dies ist dadurch bedingt, dass die testende Person die einzelnen Befehle zur Ausführung der Tools heraussuchen, in die
+Kommandozeile einfügen und somit von Hand durchführen muss.
+Da \shellinline{Danger JS} nur in einer\ \acrshort{ci}-Pipeline genutzt werden kann, wurde dieses bei den lokalen Tools
+ausgelassen.
+Bei der Ausführung der Tools in der Pipeline werden diese teils zeitgleich gestartet und laufen parallel, was die
+Durchlaufzeit der Phasen der Pipeline insgesamt verkürzt.
+Die Testing-Phase, welche Tools in Jobs parallel ausführt, dauert also nur so lange wie der langsamste Job.
+Anhand der gemessenen Ausführungszeiten der Tools wurden anschließend Rückschlüsse auf die Durchlaufzeit der
+Integrationsphasen des Projekts gezogen.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{4cm}||p{4cm}|p{4cm}|}
+        \hline
+        Name der Phase & Durchlaufzeit \acrshort{ci} & Durchlaufzeit lokal         \\
+        \hline
+        Build  & \multicolumn{1}{r|}{$2m\ 12s$}  & \multicolumn{1}{r|}{$2m\ 47s$}  \\
+        Test   & \multicolumn{1}{r|}{$2m\ 16s$}  & \multicolumn{1}{r|}{$4m\ 14s$}  \\
+        Deploy & \multicolumn{1}{r|}{$5m\ 6s$}   & \multicolumn{1}{r|}{$5m\ 58s$}  \\
+        \hline
+        Gesamt & \multicolumn{1}{|r|}{$9m\ 34s$} & \multicolumn{1}{r|}{$12m\ 59s$} \\
+        \hline
+    \end{tabular}
+    \caption{Dauer der Phasen einer Integration}
+    \label{tab:integrations-time}
+\end{table}
+
+In Tabelle\ \ref{tab:integrations-time} werden die errechneten Durchlaufzeiten der Integrationsphasen des Projekts
+aufgezeigt.
+Die aufgelistete Zeit für die Build-Phase der\ \acrshort{ci}-Umgebung wurde hierbei aus dem Durchschnittswert von drei
+in Pipelines ausgeführten Build-Jobs errechnet.
+Für die Build-Phase in der lokalen Umgebung wurden dreimal die einzelnen Schritte des Vorgangs gemessen und
+summiert, woraus anschließend auch der Durchschnitt ermittelt wurde.
+Die Zeiten der Test- und Deploy-Phasen stützen sich auf die zuvor gemessenen Ausführungszeiten der im Projekt
+verwendeten Tools.
+Aus den Daten kann entnommen werden, dass eine Integration aus der lokalen Entwicklungsumgebung heraus theoretisch
+nicht signifikant länger andauert als eine Integration durch die\ \acrshort{ci}-Umgebung.
+Hierbei wird allerdings außer acht gelassen, dass die benötigte Zeit zur lokalen Ausführung des Build-Prozesses sowie
+der Tests, \acrshort{qa}-Tools und der Deployment-Lösung in der Praxis viel höher sein kann.
+Da Entwickler diese aktiv ausführen müssen, kommt es zwischen jedem Tool zu Verzögerungen.
+Somit stellt die zur lokalen Durchführung errechnete Zeit gleichzeitig auch die bestmöglich zu erreichende Zeit für
+den Integrationsprozess aus dieser Umgebung heraus dar.
+Außerdem stützt sich die dargestellte Durchlaufzeit für lokale Deployments auf der Annahme, dass \shellinline{Deployer}
+bereits vor der Implementierung der\ \acrshort{ci}-Strategie zur automatisierten Auslieferung genutzt wurde.
+Ein vollständig manuell durchgeführtes Deployment würde hierbei wieder für Verzögerungen zwischen einzelnen Schritten
+führen und die Durchlaufzeit der Phase erhöhen.
 \\\\
-Die \acrshort{ci}-Strategie unterstütze durch den Einsatz von Containerization eine hohe Reproduzierbarkeit und
-Konsistenz über verschiedene Umgebungen hinweg.
-Hierdurch konnte sichergestellt werden, dass die in den Tests verwendete Anwendung nahezu identisch mit der später
-ausgelieferten Produktions-Anwendung sind.
-Darüber hinaus ermöglichte die Container-Technologie schnelle und zuverlässige Deployments, wodurch die
-Cycle Time weiter reduziert werden konnte.
-Die Transparenz der Strategie konnte durch die Nutzung von Tools zur kontinuierlichen Messung von Test-Ergebnissen
-weiter gesteigert werden, da Entwickler so einen direkten Zugriff auf Pipeline-Ergebnisse und damit den Status der
-erstellten Software erhielten.
-Die Umsetzung der Strategie hat außerdem aufgezeigt, dass diese eine hohe Flexibilität aufweist und an die Bedürfnisse
-eines individuellen Shopware-Projekts angepasst werden kann.
-Zusammenfassend bestätigen die Ergebnisse die anfänglichen Hypothesen und zeigen die Vorteile der
-\acrshort{ci}-Strategie sowohl aus wirtschaftlicher als auch aus technischer Sicht auf.
-Insgesamt konnten die definierten geschäftsseitigen Ziele $Z_n$ der Arbeit durch den Einsatz der entwickelten Strategie
-erreicht werden.
+Durch die Analyse-Tools von GitLab CI/CD konnte außerdem ermittelt werden, dass im Verlauf des Projekts insgesamt 132
+Pipelines gestartet wurden, wovon 56 durch Fehler im Integrationsprozess abgebrochen wurden.
+Die Erfolgsrate von Integrationen in der durchgeführten Fallstudie beträgt somit circa $42\%$.
+Diese hohe Fehlerzahl lässt sich zum Teil durch das häufige Fehlschlagen von Pipelines im frühen Entwicklungsstadium
+des Projekts erklären.
+Da anfangs die Erstellung einzelner Jobs und die ersten Konfigurationen von Test-, \acrshort{qa}- und
+Deployment-Tools vorgenommen wurden, fielen in dieser Phase des Projekts vermehrt Fehler bei dessen Ausführung an.
+\\
+Insgesamt geben die in Tabelle\ \ref{tab:ci-tools-time} und\ \ref{tab:integrations-time} aufgeführten Zeiten
+nur eine grobe Richtung vor, da verschiedene Aspekte wie die Qualität der vorhandenen Internetverbindung und
+Hardwareressourcen, Wartezeiten von Jobs im Pipeline-Runner und weitere Faktoren die gemessenen Zeiten beeinflussen
+können.
+Sie können allerdings in Betrachtung der zuvor aufgeführten Umstände einen Indikator für die weitere Bewertung des
+Erfolgs der Strategie bieten.
+Die ermittelte Fehlerrate ausgeführter Integrationen ist dabei ein weiterer hilfreicher Anhaltspunkt.
+
+\subsection{Erkenntnisse und Auswirkungen der Strategie} \label{subsec:05-evaluation-2}
+
+Die Evaluierung der im vorherigen Abschnitt aufgezeigten Durchführungszeiten liefert einige Erkenntnisse über die
+\acrshort{ci}-Strategie und hilft dabei, dessen Auswirkungen auf ein Projekt nachvollziehen zu können.
+Es wird ersichtlich, dass die Nutzung einer\ \acrshort{ci}-Pipeline zur Automatisierung von Integrationen zumindest
+einen kleinen zeitlichen Vorteil bietet.
+Betrachtet man darüber hinaus den Aspekt, dass bei der manuellen Durchführung der einzelnen Schritte einer Integration
+immer menschliche Verzögerungen und potenzielle Fehlerquellen hinzukommen, wird dieser Vorteil noch deutlicher.
+Da Integrationen in modernen und agilen Softwareprojekten oft mehrmals stattfinden, summiert sich diese Zeitersparnis
+mit jeder weiteren Durchführung.
+\\\\
+Durch die automatisierte und parallele Ausführung von Integrationsphasen in einer\ \acrshort{ci}-Pipeline konnte der
+Entwicklungsprozess insgesamt beschleunigt werden.
+Erstellte Features und Anpassungen konnten somit zügig und verlässlich integriert werden.
+Außerdem verringerte dessen Einsatz den manuellen Aufwand des Integrationsprozesses, wodurch diese Zeit für andere
+Aufgaben verwendet werden konnte.
+Durch die Steigerung der Entwicklungsgeschwindigkeit unter der Verwendung der erstellten\ \acrshort{ci}-Strategie
+konnte somit die geschäftsseitige Anforderung und Ziel der Arbeit\ \hyperlink{project-goals}{$Z_1$} erreicht werden.
+\\\\
+Neben der Beschleunigung des Entwicklungsprozesses führte die Verwendung der\ \acrshort{ci}-Strategie in der Fallstudie
+zu der Findung von Fehlern beim Integrationsprozess.
+Im Verlauf des Projekts wurden einige Pipelines aufgrund von Fehlern in der eingeführten Integration abgebrochen und
+konnten somit die Entwickler des Projekts auf die zugrunde liegenden Probleme hinweisen.
+Fehler und Inkonsistenzen konnten somit frühzeitig im Entwicklungszyklus erkannt und behoben werden.
+Dieser Ansatz trug zur Erfüllung des Ziels\ \hyperlink{project-goals}{$Z_2$} bei, indem er die Anzahl an Fehlern, welche
+die ausführenden Deployment-Umgebungen der Software und somit den Endkunden erreichen, mindert.
+\\\\
+Die\ \acrshort{ci}-Strategie hat außerdem die kontinuierliche Auslieferung neuer Softwareversionen erleichtert.
+Durch die Automatisierung der Build- und Deployment-Prozesse konnten neue Features und Bugfixes schneller und
+konsistenter an die Kunden ausgeliefert werden.
+Hierdurch wurde die Fähigkeit des Entwicklungsteams gestärkt, auf sich ändernde Geschäftsanforderungen und
+Marktbedingungen zu reagieren.
+Die Strategie konnte somit auch zur Erreichung des Ziels\ \hyperlink{project-goals}{$Z_3$} beigetragen, indem sie eine
+flexible und anpassbare Entwicklungsumgebung einführt, welche die kontinuierliche Weiterentwicklung und Auslieferung
+von Software unterstützt.
+\\\\
+Zusammenfassend lässt sich sagen, dass die Implementierung der \acrshort{ci}-Strategie in der Fallstudie die
+Effizienz und Qualität der entwickelten Software positiv beeinflusst hat.
+Die Vorteile in Bezug auf Zeitersparnis, Fehlerreduktion und kontinuierliche Auslieferung haben dabei direkt zu der
+Erreichung der zuvor definierten geschäftsseitigen Ziele $Z_n$ beigetragen und den Wert einer ganzheitlichen
+\acrshort{ci}-Strategie weiter unterstrichen.
 
 \clearpage

@@ -16,7 +16,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         Es bietet alle verteilten Versionskontroll- und Quellcodeverwaltungsfunktionen von Git sowie einige zusätzliche
         Features.
         Dies umfasst zum Beispiel eine Zugriffskontrolle und mehrere Kollaborationsfunktionen wie Aufgabenverwaltung,
-        Fehlerverfolgung und Feature-Anfragen für Projekte, sowie eine integrierte Wiki-Funktion für die
+        Fehlerverfolgung und Feature-Anfragen für Projekte sowie eine integrierte Wiki-Funktion für die
         Dokumentation.
         Der Service bietet außerdem \acrshort{ci}-Tools und Pipeline-Verwaltung an.
         Dieser wird unter einer Open-Source-Lizenz vertrieben und dessen Self-Managed-Version ermöglicht es,
@@ -44,7 +44,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
 \begin{itemize}
     \item {
         \textbf{PHPUnit}\par
-        PHPUnit ist ein weit verbreitetes Open-Source Unit-Testing-Framework, welches zum Erstellen von
+        PHPUnit ist ein weitverbreitetes Open-Source Unit-Testing-Framework, welches zum Erstellen von
         Unit-Tests in PHP-basierten Applikationen verwendet wird.
         Das Framework ermöglicht das Erstellen von Mocks und das Auswerten der Test-Coverage für das zu
         testende Projekt.
@@ -66,7 +66,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         \textbf{Jest}\par
         Jest ist ein Javascript Testing-Framework und ermöglicht das Einbringen von Unit-Tests in
         JavaScript-basierten Applikationen.
-        Ähnlich wie PHPUnit, unterstützt Jest das Erstellen von Mocks und bietet Funktionen zur Coverage an.
+        Ähnlich wie PHPUnit unterstützt Jest das Erstellen von Mocks und bietet Funktionen zur Coverage an.
         Das Framework parallelisiert laufende Tests, um eine möglichst hohe Performance zu bieten.
         \footpartcite{jest}
     }
@@ -76,7 +76,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         Cypress ist ein Framework für Webapplikationen, um Functional-Tests durchzuführen.
         Es ermöglicht das automatisierte Testen von Benutzerinteraktionen innerhalb einer Webapplikation in
         einem realen Browser.
-        Durch Cypress kann das Zusammenspiels des gesamten Projekts prüfen und zur automatisierung
+        Durch Cypress kann das Zusammenspiels des gesamten Projekts prüfen und zur Automatisierung
         von Testfällen genutzt werden, bei denen normalerweise Nutzer-Interaktion erforderlich ist.
         \footpartcite{cypress}
         Shopware bietet eine eigene Test-Suite für System-Tests durch Cypress an.\footpartcite{shopware-cypress}
@@ -97,9 +97,9 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
 
     \item {
         \textbf{PHP Mess Detector}\par
-        \acrfull{phpmd} ist eine Software die nach vorgegebenen Problemen und Unstimmigkeiten in
+        \acrfull{phpmd} ist eine Software, die nach vorgegebenen Problemen und Unstimmigkeiten in
         PHP-Code sucht.
-        Das Tool kann zum verhindern des Einführens von überflüssigen Variablen und Methoden, unoptimiertem Code und
+        Das Tool kann zum Verhindern des Einführens von überflüssigen Variablen und Methoden, unoptimiertem Code und
         möglichen Fehlern in die Zielumgebung genutzt werden.
         \acrshort{phpmd} kann ergänzend zu Danger und \acrshort{phpcs} zur statischen Analyse von PHP-Code verwendet
         werden.\footpartcite{php-mess-detector}
@@ -109,7 +109,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         \textbf{PHPStan}\par
         PHPStan ist ein weiteres \acrshort{qa}-Tool für das statische Analysieren von PHP-Code.
         Es konzentriert sich auf die Erkennung von Fehlern, die im laufenden Betrieb zu Problemen führen können, wie
-        z.B. Aufrufe von nicht existierenden Methoden, ungenutzte Variablen, usw.
+        z. B. Aufrufe von nicht existierenden Methoden, ungenutzte Variablen etc.
         PHPStan kann in den Entwicklungsprozess integriert werden, um die Codequalität kontinuierlich zu verbessern.
         \footpartcite{phpstan}
     }
@@ -129,7 +129,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         ESLint ist ein statisches Tool zur Analyse von JavaScript-Code.
         Das Tool ist sehr anpassbar und kann für das Entwickeln mit verschiedenen Frameworks und Libraries genutzt
         werden.
-        Viele \acrshort{ide}s unterstützen ESLint und zeigen Analyse-Resultate bereits bei der Entwicklung im Editor
+        Viele Text- und Code-Editoren unterstützen ESLint und zeigen Analyse-Resultate bereits bei der Entwicklung im Editor
         an.
         Das Tool unterstützt außerdem das automatische Beheben von bestimmten Syntax-Fehlern mit einem eingebauten
         Kommandozeilenbefehl.\footpartcite{eslint}
@@ -141,7 +141,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
         Das Tool läuft während des \acrshort{ci}-Prozesses und kann zur Automatisierung von Code-Review-Aufgaben
         genutzt werden.
         Mit Danger können Warnungen und Fehler in der Pipeline geworfen werden, wenn geplante Integrationen zu
-        groß werden, kein Changelog-Eintrag für Änderungen angelegt wurde, Abhängigkeiten nicht up-to-date sind und
+        groß werden, kein Changelog-Eintrag für Änderungen angelegt wurde, Abhängigkeiten nicht up to date sind und
         vieles mehr.
         Danger kann außerdem Job-Ergebnisse einer Pipeline in Form von Kommentaren in Merge-Requests hinterlegen,
         um Entwickler schneller über den Status des Projekts zu informieren.
@@ -151,7 +151,7 @@ Im Folgenden wird eine Übersicht der genutzten Tools und dessen Funktionen und 
 
     \item {
         \textbf{License Checker}\par
-        License checker sind Tools, die Lizenzen von Abhängigkeiten in einem Projekt überprüfen.
+        License Checker sind Tools, die Lizenzen von Abhängigkeiten in einem Projekt überprüfen.
         Sie können dabei helfen, Lizenzprobleme bei Plugins und Erweiterungen von Drittanbietern zu identifizieren
         und zu vermeiden.
         Für das Prüfen von Composer- und\ \acrshort{npm}-Paketen existieren jeweils eigene PHP- und JavaScript-basierte
@@ -230,7 +230,7 @@ Durchführung von System-Tests durch Cypress abgebrochen.
 Der erfolgreiche Job wird hierbei mit einem grünen Haken markiert, während der abgebrochene Job mit einem roten X
 gekennzeichnet wurde.
 \\\\
-Neben den Job-Informationen werden in der Pipeline-Detail-Ansicht noch weitere Metriken, wie die Anzahl der in den Jobs
+Neben den Job-Informationen werden in der Pipeline-Detail-Ansicht noch weitere Metriken wie die Anzahl der in den Jobs
 durchgeführten Tests oder die Dauer der gesamten Pipeline ausgegeben.
 Eine Übersicht aller Jobs einer ausgewählten Pipeline wird in Abbildung\ \ref{fig:job-overview} angezeigt.
 Diese implementiert die in Kapitel\ \ref{subsec:04-implementation-2} ausgewählten Tools der \acrshort{ci}-Strategie,

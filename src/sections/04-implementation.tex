@@ -47,7 +47,7 @@ verschiedene Informationen anzeigen, wie zum Beispiel eine Auswahl an Varianten 
 Durch das Klicken auf eine der Kacheln wird auf die jeweilige Produkt-Detail-Seite verwiesen.
 Diese Seiten zeigen die Detail-Ansicht der Produkte auf und bieten weitere Informationen und Varianten- und
 Kaufoptionen.
-Für einige weitere benötigte Features des Shops, wie eine Filialsuche und Social-Media-Feeds, wurde der Einsatz von
+Für einige weitere benötigte Features des Shops wie eine Filialsuche und Social-Media-Feeds wurde der Einsatz von
 Drittanbieter-Plugins eingeplant, um Entwicklungszeit einzusparen.
 
 \subsection{Implementierung des Konzepts} \label{subsec:04-implementation-2}
@@ -196,7 +196,7 @@ Diese führt Namenskonventionen und verschiedene Arten von Branches ein, wobei n
 \shellinline{feature}-Branches entwickelt werden.
 Anschließend werden diese in den\ \shellinline{development}-Branch gemerged, wo die Änderungen gesammelt werden.
 Die gesammelten Features können daraufhin in einen\ \shellinline{release}-Branch überführt werden, in welchem keine
-substantiellen Änderungen, sondern nur noch Fehlerbehebungen vorgenommen werden.
+substanziellen Änderungen, sondern nur noch Fehlerbehebungen vorgenommen werden.
 \shellinline{release}-Branches können zuletzt in den\ \shellinline{main}-Branch integriert werden.
 Dieser stellt den Haupt-Versionsstand des Software-Projekts dar und speichert die aktuell ausgelieferte Version der
 Software.
@@ -249,11 +249,11 @@ Nachfolgend wird ein kurzer Überblick der Implementierung einzelner Phasen der 
 
         Dieser Job gibt als Abhängigkeit den zuvor definierten Build-Job an und kann somit dessen installierte
         Artifacts nutzen.
-        Da Unit-Tests in der Regel keine besonders Zeitaufwändigen Tests darstellen, referenziert dieser Job auch
+        Da Unit-Tests in der Regel keine besonders zeitaufwändigen Tests darstellen, referenziert dieser Job auch
         die\ \glqq run-always\grqq-Regel.
         Außerdem generiert der Job eigene Artifacts in Form von Test-Reports, welche in GitLab CI/CD ausgewertet
         und in der jeweiligen Pipeline angezeigt werden.
-        Tests die weitere Abhängigkeiten voraussetzen, so wie Functional-Tests durch das Tool\ \shellinline{Cypress},
+        Tests, die weitere Abhängigkeiten voraussetzen, so wie Functional-Tests durch das Tool\ \shellinline{Cypress},
         folgen dabei dem gleichen Konfigurationsprinzip.
         Sie erweitern lediglich die Job-Konfiguration, um die benötigten Services, Umgebungsvariablen und weitere
         Abhängigkeiten, die spezifisch für den jeweiligen Test benötigt werden, zu installieren.
@@ -273,11 +273,11 @@ Nachfolgend wird ein kurzer Überblick der Implementierung einzelner Phasen der 
         Der Job wurde so konfiguriert, dass die finale Ausführung zwar automatisiert abläuft, dabei aber manuell
         angestoßen werden muss, womit die umgesetzte Strategie effektiv\ \acrlong{cde} betreibt.
         Dies kann je nach den Bedürfnissen des Projekts angepasst werden und ermöglicht somit optional auch die
-        Nutzung von\ \acrshort{cd} durch das vollautomatische Ausliefern nach dem erfolgreichem Durchlaufen der Build-
+        Nutzung von\ \acrshort{cd} durch das vollautomatische Ausliefern nach dem erfolgreichen Durchlaufen der Build-
         und Testing-Jobs.
         Für den \shellinline{development}- und die \shellinline{release}-Branches, für welche auch
         Deployment-Umgebungen angelegt wurden, sind jeweils eigene Jobs definiert worden.
-        Diese Jobs folgen dabei dem selben Prinzip und nutzen das Tool \shellinline{Deployer}, welches das Ausliefern
+        Diese Jobs folgen dabei demselben Prinzip und nutzen das Tool \shellinline{Deployer}, welches das Ausliefern
         der Software an die jeweilige Umgebung anhand von eigens vorgegebenen Konfigurationen vornimmt.
         Die hierbei angelegten \shellinline{Deployer}-Konfigurationen für die verschiedenen Umgebungen wurden in Form
         von PHP-Code im Repository persistiert.
@@ -286,9 +286,9 @@ Nachfolgend wird ein kurzer Überblick der Implementierung einzelner Phasen der 
 
 Die grundlegenden Phasen und Jobs der Pipeline konnten somit anhand der erarbeiteten Strategie modelliert und
 implementiert werden.
-Sowohl der Build-Prozess, als auch das automatisierte Testen und das Ausliefern des integrierten Codes wurden hierbei
+Sowohl der Build-Prozess als auch das automatisierte Testen und das Ausliefern des integrierten Codes wurden hierbei
 mit einbezogen und umgesetzt.
-Die Pipeline-Konfiguration bietet dabei eine gewisse flexibilität und ermöglicht die Anpassung an verschiedene
+Die Pipeline-Konfiguration bietet dabei eine gewisse Flexibilität und ermöglicht die Anpassung an verschiedene
 Vorgaben und Anforderungen, welche sich im Verlauf des Projekts ändern können.
 \\\\
 In Abbildung\ \ref{fig:ci-pipeline-concept} wird die für das Projekt erstellte\ \acrshort{ci}-Pipeline visualisiert.
@@ -300,10 +300,10 @@ Die Testing-Stage wird nach erfolgreichem Durchlaufen der Build-Stage ausgeführ
 Teile separiert.
 Im oberen Teil werden die gewählten Testing- und \acrshort{qa}-Tools für JavaScript-Code der Strategie aufgezeigt,
 während der untere Teil die Tools für PHP darstellt.
-Wenn alle Jobs der Testing-Stage erfolgreich durchgelaufen sind, wird, je nach Art des Ausgangs-Branches, ein
+Wenn alle Jobs der Testing-Stage erfolgreich durchgelaufen sind, wird je nach Art des Ausgangs-Branches ein
 Deployment-Prozess für die jeweilige Umgebung angestoßen.
 Die Deployment-Stage wird nur für Branches mit definierter Umgebung ausgeführt und liefert dabei den Code des
-Ausgangs-Branches an den Development-, Staging- oder Produktions-Server aus.
+Ausgangs-Branches an den Development-, Staging- oder Produktionsserver aus.
 
 \begin{figure}[H]
     \centering
@@ -326,12 +326,12 @@ Diese können grob in drei verschiedene Bereiche eingeteilt werden:
         \textbf{Entwicklung des Shop-Themes}\par
         Bei der Entwicklung des Themes für die Shopware-Instanz handelt es sich um viele kleine Anpassungen an dem
         bestehenden \acrfull{ui} des Standardumfangs.
-        Da\ \acrshort{ui}-Anpassungen aufwändig zu testen sind und die Standard-\acrshort{ui} durch
+        Da\ \acrshort{ui}-Anpassungen aufwendig zu testen sind und die Standard-\acrshort{ui} durch
         Shopwares eigene Tests abgedeckt ist, wurde das Theme ohne weitere Tests angelegt.
-        Für Anpassungen, welche substantiell die Funktion von\ \acrshort{ui}-Komponenten verändern, können jedoch
+        Für Anpassungen, welche substanziell die Funktion von\ \acrshort{ui}-Komponenten verändern, können jedoch
         System-Tests angelegt werden, wobei geprüft wird, ob sich die angepasste\ \acrshort{ui} nach den gegebenen
         Vorschriften verhält.
-        Dies hat den Vorteil dass Bugs, die durch Updates der Standard-\acrshort{ui} mit bestehenden Anpassungen
+        Dies hat den Vorteil, dass Bugs, die durch Updates der Standard-\acrshort{ui} mit bestehenden Anpassungen
         entstehen, schneller erkannt und gefixed werden können.
     }
 
@@ -343,10 +343,10 @@ Diese können grob in drei verschiedene Bereiche eingeteilt werden:
         Produkt-Daten in den Kacheln auf Produkt-Listing-Seiten des Shops anzeigt.
         Hier wird im Standard-Umfang der Shopware-Platform eine Auswahl an Varianten angeboten, welche durch das
         Plugin ersetzt werden soll.
-        Statt der Variantenauswahl, soll an dieser Stelle der Preis der günstigsten Variante angezeigt werden.
+        Statt der Variantenauswahl soll an dieser Stelle der Preis der günstigsten Variante angezeigt werden.
         Bei der Integration dieses Plugins konnten verschiedene Bereiche durch den Einsatz der Pipeline auf ihre
         Richtigkeit geprüft werden.
-        Da die günstigste Artikelvariante zunächst Backend-Seitig bestimmt und dem Frontend zur Verfügung
+        Da die günstigste Artikelvariante zunächst Backend-seitig bestimmt und dem Frontend zur Verfügung
         gestellt werden musste, wurde bei der Entwicklung PHP-Code produziert.
         Für diesen konnten Unit-, Module- und Integration-Tests angelegt und dazugehörige\ \acrshort{ui}-Anpassungen
         im Frontend durch System-Tests abgedeckt werden.
@@ -383,7 +383,7 @@ JavaScript-Code erhoben werden.
 Sicherheitslücken überprüfen.
 Um die Lizenzen der im Projekt installierten Pakete für das Projekt zu überwachen, wurden\ \shellinline{License Checker}
 eingesetzt, welche die Lizenzen der von Composer und\ \acrshort{npm} installierten Pakete beobachten.
-Außerdem wurde\ \shellinline{Danger JS} zur steigerung der Transparenz des\ \acrshort{ci}-Prozesses eingesetzt, welches
+Außerdem wurde\ \shellinline{Danger JS} zur Steigerung der Transparenz des\ \acrshort{ci}-Prozesses eingesetzt, welches
 den Status der einzelnen Jobs einer durchgelaufenen Pipeline in Form eines Kommentars im\ \acrshort{vcs} hinterlegt.
 Letztlich wurden die Deployments für die jeweiligen Umgebungen durch das PHP-basierte Tool\ \shellinline{Deployer}
 durchgeführt, wodurch die Ausfallzeiten beim Ausliefern der Software minimiert werden konnten.
@@ -396,7 +396,7 @@ sicherzustellen.
 Darüber hinaus wurde durch die Verwendung einer flexiblen Pipeline die Möglichkeit eingeräumt, das Projekt durch
 Performance- und Last-Tests zu überwachen oder weitere Tools und Services zum Testen der Applikation anzubinden.
 Dank des parallelen Ausführens der Test-Jobs konnte die Durchlaufzeit der Pipeline minimiert werden, wobei die
-Strategie auch die Möglichkeit bietet Jobs konditionell auszuführen, sollte deren Dauer die gesetzte Zehn-Minuten-Marke
+Strategie auch die Möglichkeit bietet, Jobs konditionell auszuführen, sollte deren Dauer die gesetzte Zehn-Minuten-Marke
 übersteigen.
 
 \clearpage
